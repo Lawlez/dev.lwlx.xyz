@@ -1,1 +1,0 @@
-{"ast":null,"code":"var __jsx = React.createElement;\nimport React from 'react';\nimport { BlogPost } from '../../components/BlogPost';\n\nfunction Post(props) {\n  var post = props.post;\n  return __jsx(BlogPost, {\n    post: post\n  });\n}\n\nexport var __N_SSG = true;\nexport default Post;","map":null,"metadata":{},"sourceType":"module"}
