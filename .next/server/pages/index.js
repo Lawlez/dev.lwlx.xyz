@@ -49,7 +49,7 @@ module.exports =
 /******/
 /******/ 		// "0" is the signal for "already loaded"
 /******/ 		if(installedChunks[chunkId] !== 0) {
-/******/ 			var chunk = require("../" + ({}[chunkId]||chunkId) + "." + {"0":"62c19013d22e12d3b6cb","9":"30515909aa4744892f99","10":"3750b4fa7f0a1e7a0927","11":"c95bea62d06891d4b466","12":"30f64b4f0d4340116f4c","13":"b53e3cc7ab7d645f7a19"}[chunkId] + ".js");
+/******/ 			var chunk = require("../" + ({}[chunkId]||chunkId) + "." + {"0":"62c19013d22e12d3b6cb","9":"a312e78ed3328f17ff9a","10":"db40015de709b3fe69bb","11":"1cf26a59b494826d1c3d","12":"274e57352f20a31bdb77","13":"2653859699e7dd70033e","14":"018ee768b5c328f8080a"}[chunkId] + ".js");
 /******/ 			var moreModules = chunk.modules, chunkIds = chunk.ids;
 /******/ 			for(var moduleId in moreModules) {
 /******/ 				modules[moduleId] = moreModules[moduleId];
@@ -132,24 +132,22 @@ module.exports =
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getStaticProps", function() { return getStaticProps; });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("cDcd");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("F5FC");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var next_head__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("xnum");
 /* harmony import */ var next_head__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(next_head__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _loader__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__("NGu5");
 /* harmony import */ var _components_PostCard__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__("ikY9");
 /* harmony import */ var _rssUtil__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__("90ZH");
-/* harmony import */ var _components_Markdown__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__("4/34");
-/* harmony import */ var _globals__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__("nB16");
+/* harmony import */ var _globals__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__("nB16");
 
-var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
+
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 
 
 
@@ -165,87 +163,89 @@ const sectionStyle = {
 };
 
 const Home = props => {
-  return __jsx("div", {
+  return /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsxs"])("div", {
     style: {
       width: '100%'
-    }
-  }, __jsx(next_head__WEBPACK_IMPORTED_MODULE_1___default.a, null, __jsx("title", null, "Introducing dev.lwlx.xyz"), __jsx("link", {
-    rel: "icon",
-    href: "/favicon.ico"
-  })), __jsx("div", {
-    style: sectionStyle
-  }, __jsx("h2", {
-    style: {
-      margin: '4px 0px',
-      fontSize: '34pt'
-    }
-  }, "recent posts"), __jsx("div", {
-    style: {
-      display: 'grid',
-      gridTemplateColumns: `repeat(auto-fit, minmax(300px, 1fr))`,
-      gridRowGap: '8px',
-      gridColumnGap: '8px',
-      width: '100%',
-      padding: '0px 7vw'
-    }
-  }, props.posts.map((post, j) => {
-    return __jsx(_components_PostCard__WEBPACK_IMPORTED_MODULE_3__[/* PostCard */ "a"], {
-      post: post,
-      key: j
-    });
-  }))), __jsx("div", {
-    style: _objectSpread({}, sectionStyle)
-  }, __jsx("h2", {
-    style: {
-      textAlign: 'center',
-      fontSize: '34pt'
-    }
-  }, "README.md"), __jsx("p", {
-    style: {
-      textAlign: 'center',
-      maxWidth: '960px',
-      margin: 'auto',
-      lineHeight: 1.7
-    }
-  }, "Below is the README.md for devii. It was imported and rendered using Next.js dynamic imports. The rest of this page (including this paragraph) are rendered with React. You can also read the README on GitHub at", ' ', __jsx("a", {
-    href: "https://github.com/Lawlez/dev.lwlx.xyz"
-  }, "https://github.com/Lawlez/dev.lwlx.xyz"), ".")), __jsx("div", {
-    style: {
-      width: '100%',
-      backgroundColor: '#eeeeee',
-      padding: '0px 3vw 50px 3vw'
-    }
-  }, __jsx("div", {
-    style: {
-      maxWidth: '960px',
-      margin: 'auto'
-    }
-  }, __jsx(_components_Markdown__WEBPACK_IMPORTED_MODULE_5__[/* Markdown */ "a"], {
-    source: props.readme
-  }))), __jsx("div", {
-    style: sectionStyle
-  }, __jsx("h2", {
-    style: {
-      margin: '4px 0px',
-      fontSize: '22pt',
-      paddingBottom: '30px'
-    }
-  }, "Get started"), __jsx("a", {
-    href: "https://github.com/Lawlez/dev.lwlx.xyz",
-    style: {
-      cursor: 'pointer'
-    }
-  }, __jsx("button", {
-    style: {
-      padding: '10px 30px',
-      backgroundColor: _globals__WEBPACK_IMPORTED_MODULE_6__[/* globals */ "a"].accentColor,
-      color: 'white',
-      fontSize: '14pt',
-      border: 'none',
-      borderRadius: '10px',
-      cursor: 'pointer'
-    }
-  }, "Fork dev.lwlx.xyz on GitHub"))));
+    },
+    children: [/*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsxs"])(next_head__WEBPACK_IMPORTED_MODULE_1___default.a, {
+      children: [/*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("title", {
+        children: "Introducing dev.lwlx.xyz"
+      }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("link", {
+        rel: "icon",
+        href: "/favicon.ico"
+      })]
+    }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsxs"])("div", {
+      style: sectionStyle,
+      children: [/*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("h2", {
+        style: {
+          margin: '4px 0px',
+          fontSize: '34pt'
+        },
+        children: "recent posts"
+      }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("div", {
+        style: {
+          display: 'grid',
+          gridTemplateColumns: `repeat(auto-fit, minmax(300px, 1fr))`,
+          gridRowGap: '8px',
+          gridColumnGap: '8px',
+          width: '100%',
+          padding: '0px 7vw'
+        },
+        children: props.posts.map((post, j) => {
+          return /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_PostCard__WEBPACK_IMPORTED_MODULE_3__[/* PostCard */ "a"], {
+            post: post
+          }, j);
+        })
+      })]
+    }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsxs"])("div", {
+      style: _objectSpread({}, sectionStyle),
+      children: [/*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("h2", {
+        style: {
+          textAlign: 'center',
+          fontSize: '34pt'
+        },
+        children: "about this blog"
+      }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsxs"])("p", {
+        style: {
+          textAlign: 'center',
+          maxWidth: '960px',
+          margin: 'auto',
+          lineHeight: 1.7
+        },
+        children: ["Below is the README.md. It was imported and rendered using Next.js dynamic imports. The rest of this page (including this paragraph) are rendered with React. You can also read the README on GitHub at", ' ', /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("a", {
+          href: "https://github.com/Lawlez/dev.lwlx.xyz",
+          children: "https://github.com/Lawlez/dev.lwlx.xyz"
+        }), "."]
+      })]
+    }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsxs"])("div", {
+      style: sectionStyle,
+      children: [/*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("h2", {
+        style: {
+          margin: '4px 0px',
+          fontSize: '22pt',
+          paddingBottom: '30px'
+        },
+        children: "Work  in  Progress . . ."
+      }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("a", {
+        href: "https://github.com/Lawlez/dev.lwlx.xyz",
+        style: {
+          cursor: 'pointer'
+        },
+        children: /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("button", {
+          style: {
+            padding: '10px 30px',
+            backgroundColor: _globals__WEBPACK_IMPORTED_MODULE_5__[/* globals */ "a"].primaryColor,
+            color: 'white',
+            fontSize: '14pt',
+            border: 'none',
+            borderRadius: '8px',
+            cursor: 'pointer'
+          },
+          children: "check dev.lwlx.xyz on GitHub"
+        })
+      })]
+    })]
+  });
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Home);
@@ -285,92 +285,10 @@ module.exports = __webpack_require__("23aj");
 
 /***/ }),
 
-/***/ "4/34":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, "a", function() { return /* binding */ Markdown; });
-
-// EXTERNAL MODULE: external "styled-jsx/style"
-var style_ = __webpack_require__("HJQg");
-var style_default = /*#__PURE__*/__webpack_require__.n(style_);
-
-// EXTERNAL MODULE: external "react"
-var external_react_ = __webpack_require__("cDcd");
-var external_react_default = /*#__PURE__*/__webpack_require__.n(external_react_);
-
-// EXTERNAL MODULE: external "react-markdown/with-html"
-var with_html_ = __webpack_require__("Q25H");
-var with_html_default = /*#__PURE__*/__webpack_require__.n(with_html_);
-
-// EXTERNAL MODULE: external "react-syntax-highlighter"
-var external_react_syntax_highlighter_ = __webpack_require__("RyM3");
-
-// EXTERNAL MODULE: external "react-syntax-highlighter/dist/cjs/styles/prism"
-var prism_ = __webpack_require__("88KH");
-
-// CONCATENATED MODULE: ./components/Code.tsx
-var __jsx = external_react_default.a.createElement;
-
-
-
-class Code_Code extends external_react_default.a.PureComponent {
-  render() {
-    const {
-      language,
-      value
-    } = this.props;
-    return __jsx(external_react_syntax_highlighter_["Prism"], {
-      language: (language === 'ts' ? 'typescript' : language) || 'typescript',
-      style: prism_["darcula"]
-    }, value);
-  }
-
-}
-// EXTERNAL MODULE: ./globals.ts
-var globals = __webpack_require__("nB16");
-
-// CONCATENATED MODULE: ./components/Markdown.tsx
-
-var Markdown_jsx = external_react_default.a.createElement;
-
-
-
-
-const Markdown = props => {
-  return Markdown_jsx("div", {
-    style: {
-      width: '100%'
-    },
-    className: style_default.a.dynamic([["314242526", [globals["a" /* globals */].accentColor]]]) + " " + "devii-markdown"
-  }, Markdown_jsx(with_html_default.a, {
-    key: "content",
-    source: props.source,
-    renderers: {
-      code: Code_Code
-    },
-    escapeHtml: false
-  }), Markdown_jsx(style_default.a, {
-    id: "314242526",
-    dynamic: [globals["a" /* globals */].accentColor]
-  }, [".devii-markdown p,.devii-markdown li{line-height:1.7;color:#333;}", ".devii-markdown h1,.devii-markdown h2,.devii-markdown h3,.devii-markdown h4,.devii-markdown h5,.devii-markdown h6{margin:0px;padding:0px;}", ".devii-markdown h1>a,.devii-markdown h2>a,.devii-markdown h3>a,.devii-markdown h4>a,.devii-markdown h5>a,.devii-markdown h6>a{-webkit-text-decoration:none;text-decoration:none;}", ".devii-markdown hr{margin:20px 0px;opacity:0.35;}", ".devii-markdown h1{padding-top:30px;padding-bottom:10px;margin-top:30px;margin-bottom:30px;}", ".devii-markdown h2{padding-top:25px;padding-bottom:10px;margin-top:25px;margin-bottom:25px;}", ".devii-markdown h3{padding-top:20px;padding-bottom:10px;margin-top:20px;margin-bottom:20px;}", ".devii-markdown h4{padding-top:15px;padding-bottom:10px;margin-top:15px;margin-bottom:15px;}", ".devii-markdown h5{padding-top:10px;padding-bottom:10px;margin-top:10px;margin-bottom:10px;}", ".devii-markdown h6{padding-top:5px;padding-bottom:10px;margin-top:5px;margin-bottom:5px;}", ".devii-markdown p{padding:10px 0px;margin:10px 0px;}", ".devii-markdown li{padding:10px 0px;}", ".devii-markdown img{width:100%;border-radius:8px;box-shadow:0px 4px 30px #00000040;}", ".devii-markdown code{background-color:#00000010;padding:3px 3px;border-radius:2px;}", ".devii-markdown pre{margin:20px 0px !important;}", ".devii-markdown ol pre,.devii-markdown ol p{margin:0px 0px !important;}", `.devii-markdown blockquote{margin:0px;padding-left:1em;border-left:4px solid ${globals["a" /* globals */].accentColor};}`]));
-};
-
-/***/ }),
-
 /***/ "4ugE":
 /***/ (function(module, exports) {
 
 module.exports = require("showdown");
-
-/***/ }),
-
-/***/ "88KH":
-/***/ (function(module, exports) {
-
-module.exports = require("react-syntax-highlighter/dist/cjs/styles/prism");
 
 /***/ }),
 
@@ -423,9 +341,9 @@ const generateRSS = async posts => {
     feed.item({
       title: post.title,
       description: html,
-      url: `https://vriad.com/${post.path}`,
+      url: `https://dev.lwlx.xyz/blog/${post.path}`,
       categories: post.tags || [],
-      author: post.author || 'Colin McDonnell',
+      author: post.author || 'Dominik Feger',
       date: new Date(post.datePublished || 0).toISOString()
     });
   }
@@ -439,10 +357,10 @@ const generateRSS = async posts => {
 
 /***/ }),
 
-/***/ "HJQg":
+/***/ "F5FC":
 /***/ (function(module, exports) {
 
-module.exports = require("styled-jsx/style");
+module.exports = require("react/jsx-runtime");
 
 /***/ }),
 
@@ -512,20 +430,6 @@ const loadBlogPosts = async () => {
 
 /***/ }),
 
-/***/ "Q25H":
-/***/ (function(module, exports) {
-
-module.exports = require("react-markdown/with-html");
-
-/***/ }),
-
-/***/ "RyM3":
-/***/ (function(module, exports) {
-
-module.exports = require("react-syntax-highlighter");
-
-/***/ }),
-
 /***/ "Wsj/":
 /***/ (function(module, exports) {
 
@@ -555,37 +459,41 @@ module.exports = require("react");
 // EXPORTS
 __webpack_require__.d(__webpack_exports__, "a", function() { return /* binding */ PostCard; });
 
+// EXTERNAL MODULE: external "react/jsx-runtime"
+var jsx_runtime_ = __webpack_require__("F5FC");
+
 // EXTERNAL MODULE: external "react"
 var external_react_ = __webpack_require__("cDcd");
-var external_react_default = /*#__PURE__*/__webpack_require__.n(external_react_);
 
 // EXTERNAL MODULE: external "fecha"
 var external_fecha_ = __webpack_require__("Wsj/");
 
 // CONCATENATED MODULE: ./components/Tag.tsx
-var __jsx = external_react_default.a.createElement;
+
 
 const Tag = props => {
-  return __jsx("div", {
+  return /*#__PURE__*/Object(jsx_runtime_["jsx"])("div", {
     style: {
       display: 'inline-block',
       padding: '3px 12px',
       borderRadius: '20px',
       backgroundColor: '#dddddd',
       color: '#333333',
-      marginRight: '7px',
+      marginRight: '8px',
       boxShadow: '0px 1px 1px #00000030'
-    }
-  }, props.tag);
+    },
+    children: props.tag
+  });
 };
 // CONCATENATED MODULE: ./components/PostCard.tsx
-var PostCard_jsx = external_react_default.a.createElement;
+
+
 
 
 
 const PostCard = props => {
   const post = props.post;
-  return PostCard_jsx("a", {
+  return /*#__PURE__*/Object(jsx_runtime_["jsx"])("a", {
     href: `/${post.path}`,
     style: {
       textDecoration: 'inherit',
@@ -595,52 +503,65 @@ const PostCard = props => {
       flexDirection: 'row',
       justifyContent: 'center',
       height: '300px'
-    }
-  }, PostCard_jsx("div", {
-    style: {
-      opacity: 0.92,
-      boxShadow: '0px 2px 10px #00000040',
-      width: '100%',
-      maxWidth: '960px',
-      overflow: 'hidden',
-      borderRadius: '8px',
-      display: 'flex',
-      flexDirection: 'column',
-      height: '100%'
-    }
-  }, post.thumbnailPhoto && PostCard_jsx("div", {
-    style: {
-      background: `url(${post.thumbnailPhoto}) no-repeat center center`,
-      backgroundSize: 'cover',
-      width: '100%',
-      flex: 1
-    }
-  }), PostCard_jsx("div", {
-    style: {
-      padding: '15px 10px',
-      display: 'flex',
-      flexDirection: 'column',
-      borderTop: '1px solid #00000020'
-    }
-  }, post.title && PostCard_jsx("h2", {
-    style: {
-      margin: '0px 0px 7px 0px',
-      fontSize: '14pt',
-      fontWeight: 600,
-      padding: '2px 10%',
-      textAlign: 'center'
-    }
-  }, post.title),  false && false, PostCard_jsx("p", {
-    style: {
-      opacity: 0.6,
-      textAlign: 'center',
-      margin: '0px'
-    }
-  }, props.post.datePublished ? Object(external_fecha_["format"])(new Date(props.post.datePublished), 'MMMM Do, YYYY') : ''), PostCard_jsx("div", {
-    style: {
-      flex: 1
-    }
-  }, " "),  false && false)));
+    },
+    children: /*#__PURE__*/Object(jsx_runtime_["jsxs"])("div", {
+      style: {
+        opacity: 0.92,
+        boxShadow: '0px 2px 10px #00000040',
+        width: '100%',
+        maxWidth: '960px',
+        overflow: 'hidden',
+        borderRadius: '8px',
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100%'
+      },
+      children: [post.thumbnailPhoto && /*#__PURE__*/Object(jsx_runtime_["jsx"])("div", {
+        style: {
+          background: `url(${post.thumbnailPhoto}) no-repeat center center`,
+          backgroundSize: 'cover',
+          width: '100%',
+          flex: 1
+        }
+      }), /*#__PURE__*/Object(jsx_runtime_["jsxs"])("div", {
+        style: {
+          padding: '15px 10px',
+          display: 'flex',
+          flexDirection: 'column',
+          borderTop: '1px solid #00000020'
+        },
+        children: [post.title && /*#__PURE__*/Object(jsx_runtime_["jsx"])("h2", {
+          style: {
+            margin: '0px 0px 8px 0px',
+            fontSize: '14pt',
+            fontWeight: 600,
+            padding: '2px 10%',
+            textAlign: 'center'
+          },
+          children: post.title
+        }),  false && /*#__PURE__*/false, /*#__PURE__*/Object(jsx_runtime_["jsx"])("p", {
+          style: {
+            opacity: 0.6,
+            textAlign: 'center',
+            margin: '0px'
+          },
+          children: props.post.datePublished ? Object(external_fecha_["format"])(new Date(props.post.datePublished), 'MMMM Do, YYYY') : ''
+        }), /*#__PURE__*/Object(jsx_runtime_["jsx"])("div", {
+          style: {
+            flex: 1
+          },
+          children: " "
+        }), /*#__PURE__*/Object(jsx_runtime_["jsx"])("div", {
+          style: {
+            marginTop: '8px'
+          },
+          children: post.tags && (post.tags || []).map(tag => /*#__PURE__*/Object(jsx_runtime_["jsx"])(Tag, {
+            tag: tag
+          }))
+        })]
+      })]
+    })
+  });
 };
 
 /***/ }),
@@ -660,6 +581,7 @@ module.exports = require("fs");
 let globals;
 
 (function (_globals) {
+  const version = _globals.version = '0.1.0';
   const yourName = _globals.yourName = 'Dominik (lwlx) Feger';
   const siteName = _globals.siteName = `dev.lwlx.xyz`;
   const siteDescription = _globals.siteDescription = "Dev / Sec / Ops ";
@@ -667,7 +589,10 @@ let globals;
   const twitterHandle = _globals.twitterHandle = '@lwlx';
   const email = _globals.email = `lwlx@lwlx.xyz`;
   const url = _globals.url = 'https://dev.lwlx.xyz';
-  const accentColor = _globals.accentColor = `#4E5C63`;
+  const primaryColor = _globals.primaryColor = `#1177AB`;
+  const secondaryColor = _globals.secondaryColor = `#F07693`;
+  const accentColor = _globals.accentColor = `#04060A`;
+  const backgroundColor = _globals.backgroundColor = `#C9C0BE`;
   const googleAnalyticsId = _globals.googleAnalyticsId = ``;
 })(globals || (globals = {}));
 
@@ -684,25 +609,29 @@ module.exports = require("gray-matter");
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"./blog/dan-abramov.md": [
-		"LvrK",
+	"./archive/dan-abramov.md": [
+		"q/Ub",
 		9
 	],
-	"./blog/devii.md": [
-		"zghA",
+	"./archive/devii.md": [
+		"66Ls",
 		10
 	],
-	"./blog/the-ultimate-tech-stack.md": [
-		"N8vF",
+	"./archive/the-ultimate-tech-stack.md": [
+		"TStj",
 		11
+	],
+	"./blog/consistent-x-device-encryption.md": [
+		"2IaP",
+		12
 	],
 	"./features.md": [
 		"bnIu",
-		12
+		13
 	],
 	"./introduction.md": [
 		"uqF7",
-		13
+		14
 	]
 };
 function webpackAsyncContext(req) {

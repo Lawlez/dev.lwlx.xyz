@@ -244,7 +244,7 @@ function getOptionalModernScriptVariant(path) {
 
 function getDocumentFiles(buildManifest, pathname) {
   const sharedFiles = (0, _getPageFiles.getPageFiles)(buildManifest, '/_app');
-  const pageFiles = pathname !== '/_error' ? (0, _getPageFiles.getPageFiles)(buildManifest, pathname) : [];
+  const pageFiles = (0, _getPageFiles.getPageFiles)(buildManifest, pathname);
   return {
     sharedFiles,
     pageFiles,
@@ -299,10 +299,12 @@ Document.headTagsMiddleware =  false ? undefined : () => [];
 function Html(props) {
   const {
     inAmpMode,
-    docComponentsRendered
+    docComponentsRendered,
+    locale
   } = (0, _react.useContext)(_documentContext.DocumentContext);
   docComponentsRendered.Html = true;
   return /*#__PURE__*/_react.default.createElement("html", Object.assign({}, props, {
+    lang: props.lang || locale || undefined,
     amp: inAmpMode ? '' : undefined,
     "data-ampdevmode": inAmpMode && false ? '' : undefined
   }));
@@ -492,7 +494,7 @@ class Head extends _react.Component {
       const hasStyles = el => {
         var _el$props, _el$props$dangerously;
 
-        return el === null || el === void 0 ? void 0 : (_el$props = el.props) === null || _el$props === void 0 ? void 0 : (_el$props$dangerously = _el$props.dangerouslySetInnerHTML) === null || _el$props$dangerously === void 0 ? void 0 : _el$props$dangerously.__html;
+        return el == null ? void 0 : (_el$props = el.props) == null ? void 0 : (_el$props$dangerously = _el$props.dangerouslySetInnerHTML) == null ? void 0 : _el$props$dangerously.__html;
       }; // @ts-ignore Property 'props' does not exist on type ReactElement
 
 
@@ -519,10 +521,7 @@ class Head extends _react.Component {
       dangerouslySetInnerHTML: {
         __html: `body{display:block}`
       }
-    }))), children, head, /*#__PURE__*/_react.default.createElement("meta", {
-      name: "next-head-count",
-      content: _react.default.Children.count(head || []).toString()
-    }), inAmpMode && /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("meta", {
+    }))), children, head, inAmpMode && /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("meta", {
       name: "viewport",
       content: "width=device-width,minimum-scale=1,initial-scale=1"
     }), !hasCanonicalRel && /*#__PURE__*/_react.default.createElement("link", {
@@ -629,7 +628,7 @@ class NextScript extends _react.Component {
       devOnlyCacheBusterQueryString
     } = this.context;
     const normalScripts = files.allFiles.filter(file => file.endsWith('.js'));
-    const lowPriorityScripts = (_buildManifest$lowPri = buildManifest.lowPriorityFiles) === null || _buildManifest$lowPri === void 0 ? void 0 : _buildManifest$lowPri.filter(file => file.endsWith('.js'));
+    const lowPriorityScripts = (_buildManifest$lowPri = buildManifest.lowPriorityFiles) == null ? void 0 : _buildManifest$lowPri.filter(file => file.endsWith('.js'));
     return [...normalScripts, ...lowPriorityScripts].map(file => {
       let modernProps = {};
 

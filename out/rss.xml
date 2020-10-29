@@ -1,12 +1,17 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[dev.lwlx.xyz]]></title><description><![CDATA[Dev / Sec / Ops ]]></description><link>https://dev.lwlx.xyz</link><image><url>https://dev.lwlx.xyz/icon.png</url><title>dev.lwlx.xyz</title><link>https://dev.lwlx.xyz</link></image><generator>RSS for Node</generator><lastBuildDate>Thu, 29 Oct 2020 11:14:26 GMT</lastBuildDate><atom:link href="https://dev.lwlx.xyz/rss.xml" rel="self" type="application/rss+xml"/><pubDate>Tue, 27 Oct 2020 04:00:00 GMT</pubDate><copyright><![CDATA[2020 Dominik (lwlx) Feger]]></copyright><language><![CDATA[en]]></language><managingEditor><![CDATA[lwlx@lwlx.xyz]]></managingEditor><webMaster><![CDATA[lwlx@lwlx.xyz]]></webMaster><ttl>60</ttl><item><title><![CDATA[Getting consistent Encryption in Node / PHP / Browser and openSSL]]></title><description><![CDATA[<p>I recently set out to build my personal website — the one you're reading now, as it happens!</p>
-<p>Surprisingly, it was much harder than expected to put together a "tech stack" that met my criteria. My criteria are pretty straightforward; I would expect most React devs to have a similar list. Yet it was surprisingly hard to put all these pieces together.</p>
-<p>Given the lack of a decent out-of-the-box solution, I worry that many developers are settling for static-site generators that place limits on the interactivity and flexibility of your website. We can do better.</p>
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[dev.lwlx.xyz]]></title><description><![CDATA[Dev / Sec / Ops ]]></description><link>https://dev.lwlx.xyz</link><image><url>https://dev.lwlx.xyz/icon.png</url><title>dev.lwlx.xyz</title><link>https://dev.lwlx.xyz</link></image><generator>RSS for Node</generator><lastBuildDate>Thu, 29 Oct 2020 15:18:44 GMT</lastBuildDate><atom:link href="https://dev.lwlx.xyz/rss.xml" rel="self" type="application/rss+xml"/><pubDate>Tue, 27 Oct 2020 04:00:00 GMT</pubDate><copyright><![CDATA[2020 Dominik (lwlx) Feger]]></copyright><language><![CDATA[en]]></language><managingEditor><![CDATA[lwlx@lwlx.xyz]]></managingEditor><webMaster><![CDATA[lwlx@lwlx.xyz]]></webMaster><ttl>60</ttl><item><title><![CDATA[Getting consistent Encryption in Node / PHP / Browser and openSSL]]></title><description><![CDATA[<p>I recently was tasked to find a solution for encrypting data in different places and to be able to decrypt them all in a browser during runtime.</p>
+<p>Surprisingly, it was much harder than expected since there was so little documentation around this online. What was available were a few code only examples, so I was forced to do R&amp;D and just try all implementations and compare the in- &amp; outputs</p>
+<p>Given the lack of a decent out-of-the-box solution, I worry that many developers are settling for easy to use, insecure, solutions which place limits on the security and flexibility of your project. Security should be easy to use and accessible.</p>
 <blockquote>
-  <p>Clone the repo here to get started with this setup: https://github.com/Lawlez/dev.lwlx.xyz</p>
+  <p>Clone the repo here to get started with this setup: <a href="https://gist.github.com/Lawlez/88e04e3541cc0608c953a118b86bfc1a">https://gist.github.com/Lawlez/88e04e3541cc0608c953a118b86bfc1a</a></p>
 </blockquote>
-<p>Let's quickly run through my list of design goals:</p>
+<p>Let's quickly run through each implementation:</p>
 <h3 id="usingnodejscryptomodule">Using Node JS Crypto module</h3>
-<p>I want to build the site with React and TypeScript. I love them both wholeheartedly, I use them for my day job, and they're gonna be around for a long time. Plus writing untyped JS makes me feel dirty.</p>
+<p>Node Provides a nice <code>crypto</code>  implementation. It's documentation is rather sparse, but this is what i ended up with by using:</p>
+<ul>
+<li><code>crypto.randomBytes()</code></li>
+<li><code>crypto.createCipheriv()</code></li>
+<li><code>crypto.createDecipheriv()</code></li>
+</ul>
 <pre><code class="javascript language-javascript">const crypto = require('crypto')
 
 /**********************************************************************
@@ -41,8 +46,8 @@ const encryption = (data = 'TestString {} Héllöüä') =&gt; {
 }
 </code></pre>
 <h3 id="usingbrowserifyaessnodecryptolikeimplementationinsidethebrowser">Using browserify-aes's node crypto like implementation inside the Browser</h3>
-<p>If it's obnoxious to write new blog posts, I won't do it. That's a regrettable law of the universe. Even writing blog posts with plain HTML — just a bunch of <code>&lt;p&gt;</code> tags in a div — is just annoying enough to bug me. The answer: Markdown of course!</p>
-<pre><code class="javascript language-javascript">import crypto from 'browserify-aes'
+<p>Inside the browser, we cannot use Nodes.js built-in modules. Using <code>browserify-aes</code> we can use a node-like crypto implementation, which uses the same syntax as the node implementation. In my use case, I only need to decipher in the browser, this means I don’t have to worry about a true random key generation or ciphering.</p>
+<pre><code class="js language-js">import crypto from 'browserify-aes'
 
 /**********************************************************************
 *
@@ -70,7 +75,8 @@ const decrypt = hash =&gt; {
 }
 </code></pre>
 <h3 id="encryptiondecryptionmoduleforphp7usingopenssl">ENCRYPTION &amp; DECRYPTION MODULE FOR PHP7+ USING OPENSSL</h3>
-<p>As much as I love the Jamstack, it doesn't cut it from an SEO perspective. Many blogs powered by a "headless CMS" require two round trips before rendering the blog content (one to fetch the static JS bundle and another to fetch the blog content from a CMS). This degrades page load speeds and user experience, which accordingly degrades your rankings on Google.</p>
+<p>In PHP 7 we make use of the <code>openssl_encrypt</code> implementation to encrypt an utf8 string and finally encode it with <code>base64_encode</code>.
+For decryption we also make use of the official openssl implementation <code>openssl_decrypt</code>, before decrypting we need to decode using <code>base64_decode</code>.</p>
 <pre><code class="php language-php">/**********************************************************************
 *
 *        ENCRYPTION &amp; DECRYPTION MODULE FOR PHP7+ USING OPENSSL       *
@@ -121,7 +127,8 @@ class AESEncryption {
 }
 </code></pre>
 <h3 id="usingopensslforuseincli">Using openssl for use in CLI</h3>
-<p>I describe my final architecture design below, along with my rationale for each choice. I distilled this setup into a website starter/boilerplate available here: https://github.com/Lawlez/dev.lwlx.xyz. Below, I allude to certain files/functions I implemented; to see the source code of these, just clone the repo <code>git clone git@github.com:vriad/devii.git</code></p>
+<p>Inside of a Command Line Interface we use <code>openssl</code> do en- or decrypt data.</p>
+<p>for node/browserify to be able to decrypt it we need to add the <code>-nosalt</code> option, which disables salting the data.</p>
 <pre><code class="bash language-bash">#########################################################################################
 #                                                                                       #
 #               ENCRYPTION FOR CLI IN / MACOS / LINUX / WINDOWS                         #
@@ -135,4 +142,4 @@ cat config.json | openssl aes-256-cbc -iv $(cat iv)  -K $(cat key) -A -nosalt -b
 echo "encryptedString" | openssl aes-256-cbc -d -iv $(cat iv)  -K $(cat key) -base64 -A
 </code></pre>
 <h2 id="finalsolution">final solution</h2>
-<p>…</p>]]></description><link>https://vriad.com/blog/consistent-x-device-encryption</link><guid isPermaLink="true">https://vriad.com/blog/consistent-x-device-encryption</guid><category><![CDATA[encryption]]></category><category><![CDATA[decryption]]></category><category><![CDATA[openssl]]></category><category><![CDATA[nodejs]]></category><category><![CDATA[php]]></category><dc:creator><![CDATA[lwlx]]></dc:creator><pubDate>Thu, 29 Oct 2020 10:26:43 GMT</pubDate></item></channel></rss>
+<p>…</p>]]></description><link>https://dev.lwlx.xyz/blog/blog/consistent-x-device-encryption</link><guid isPermaLink="true">https://dev.lwlx.xyz/blog/blog/consistent-x-device-encryption</guid><category><![CDATA[encryption]]></category><category><![CDATA[decryption]]></category><category><![CDATA[openssl]]></category><category><![CDATA[nodejs]]></category><category><![CDATA[php]]></category><dc:creator><![CDATA[lwlx]]></dc:creator><pubDate>Thu, 29 Oct 2020 10:26:43 GMT</pubDate></item></channel></rss>

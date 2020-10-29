@@ -1,6 +1,5 @@
 import React from 'react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { vs } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 
 const converted = {
     'pre[class*="language-"], code[class*="language-"]': {
@@ -66,8 +65,6 @@ const converted = {
         color: "#f07693"
       }, 'attr-name': {
         color: "#f07693"
-      }, string: {
-        color: "#f07693"
       }, char: {
         color: "#f07693"
       }, builtin: {
@@ -81,7 +78,8 @@ const converted = {
       },
       entity: {
         color: "#c9c0be",
-        background: "#000000"
+        background: "#000000",
+        cursor: "help"
       }, url: {
         color: "#c9c0be",
         background: "#000000",
@@ -95,16 +93,12 @@ const converted = {
       }, style: {
         color: "#c9c0be",
         background: "#000000"
-      }, string: {
-      color: "#c9c0be",
-      background: "#000000"
-    },
+      },
     atrule: { color: "#1177ab" }, 'attr-value': { color: "#1177ab" }, keyword: { color: "#1177ab" },
     function: { color: "#c7526d" },
-    regex: { color: "#ee9900" }, important: { color: "#ee9900" }, variable: { color: "#ee9900" },
-    important: { fontWeight: "bold" }, bold: { fontWeight: "bold" },
+    regex: { color: "#ee9900" }, important: { color: "#ee9900" ,fontWeight: "bold"}, variable: { color: "#ee9900" },
+ bold: { fontWeight: "bold" },
     italic: { fontStyle: "italic" },
-    entity: { cursor: "help" },
     "pre[data-line]": { position: "relative" },
     'pre[class*="language-"] > code[class*="language-"]': {
       position: "relative",

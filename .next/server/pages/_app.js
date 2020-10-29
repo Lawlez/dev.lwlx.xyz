@@ -101,6 +101,13 @@ module.exports = __webpack_require__("cha2");
 
 /***/ }),
 
+/***/ "F5FC":
+/***/ (function(module, exports) {
+
+module.exports = require("react/jsx-runtime");
+
+/***/ }),
+
 /***/ "HJQg":
 /***/ (function(module, exports) {
 
@@ -122,6 +129,9 @@ module.exports = require("react");
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
+// EXTERNAL MODULE: external "react/jsx-runtime"
+var jsx_runtime_ = __webpack_require__("F5FC");
+
 // EXTERNAL MODULE: external "styled-jsx/style"
 var style_ = __webpack_require__("HJQg");
 var style_default = /*#__PURE__*/__webpack_require__.n(style_);
@@ -132,16 +142,16 @@ var head_default = /*#__PURE__*/__webpack_require__.n(head_);
 
 // EXTERNAL MODULE: external "react"
 var external_react_ = __webpack_require__("cDcd");
-var external_react_default = /*#__PURE__*/__webpack_require__.n(external_react_);
 
 // EXTERNAL MODULE: ./globals.ts
 var globals = __webpack_require__("nB16");
 
 // CONCATENATED MODULE: ./components/Header.tsx
-var __jsx = external_react_default.a.createElement;
 
 
-const Header = () => __jsx("div", {
+
+
+const Header = () => /*#__PURE__*/Object(jsx_runtime_["jsxs"])("div", {
   style: {
     top: 0,
     width: '100%',
@@ -153,72 +163,91 @@ const Header = () => __jsx("div", {
     backgroundColor: globals["a" /* globals */].accentColor,
     padding: '30px',
     fontSize: '12pt'
-  }
-}, __jsx("a", {
-  href: "/",
-  style: {
-    textDecoration: 'none'
-  }
-}, __jsx("p", {
-  style: {
-    color: 'white'
-  }
-}, globals["a" /* globals */].siteName)), __jsx("div", {
-  style: {
-    flex: 1
-  }
-}), __jsx("a", {
-  href: "https://github.com/Lawlez/dev.lwlx.xyz",
-  style: {
-    textDecoration: 'none'
-  }
-}, __jsx("p", {
-  style: {
-    padding: '0px 1em',
-    color: 'white'
-  }
-}, "GitHub")), __jsx("a", {
-  href: "/blog/the-ultimate-tech-stack",
-  style: {
-    textDecoration: 'none'
-  }
-}, __jsx("p", {
-  style: {
-    padding: '0px 1em',
-    color: 'white'
-  }
-}, "Motivation")));
+  },
+  children: [/*#__PURE__*/Object(jsx_runtime_["jsx"])("a", {
+    href: "/",
+    style: {
+      textDecoration: 'none'
+    },
+    children: /*#__PURE__*/Object(jsx_runtime_["jsx"])("p", {
+      style: {
+        color: globals["a" /* globals */].secondaryColor
+      },
+      children: globals["a" /* globals */].siteName
+    })
+  }), /*#__PURE__*/Object(jsx_runtime_["jsx"])("div", {
+    style: {
+      flex: 1
+    }
+  }), /*#__PURE__*/Object(jsx_runtime_["jsx"])("a", {
+    href: "https://github.com/Lawlez/dev.lwlx.xyz",
+    style: {
+      textDecoration: 'none'
+    },
+    children: /*#__PURE__*/Object(jsx_runtime_["jsx"])("p", {
+      style: {
+        padding: '0px 1em',
+        color: globals["a" /* globals */].secondaryColor
+      },
+      children: "GitHub"
+    })
+  }), /*#__PURE__*/Object(jsx_runtime_["jsx"])("a", {
+    href: "https://github.com/InfoSecx0",
+    style: {
+      textDecoration: 'none'
+    },
+    children: /*#__PURE__*/Object(jsx_runtime_["jsx"])("p", {
+      style: {
+        padding: '0px 1em',
+        color: globals["a" /* globals */].secondaryColor
+      },
+      children: "Twitter"
+    })
+  })]
+});
 // CONCATENATED MODULE: ./components/Footer.tsx
-var Footer_jsx = external_react_default.a.createElement;
 
 
-const Footer = () => Footer_jsx("div", {
+
+
+const Footer = () => /*#__PURE__*/Object(jsx_runtime_["jsxs"])("div", {
   style: {
     top: 0,
     width: '100%',
-    height: '50px',
+    height: '56px',
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     backgroundColor: globals["a" /* globals */].accentColor,
-    color: 'white',
-    padding: '30px',
+    color: globals["a" /* globals */].secondaryColor,
+    padding: '32px',
     fontSize: '12pt'
-  }
-}, Footer_jsx("p", null, `© ${globals["a" /* globals */].yourName} ${new Date().getFullYear()}`), Footer_jsx("a", {
-  href: "/rss.xml"
-}, Footer_jsx("img", {
-  src: "/rss-white.svg",
-  alt: "RSS Feed",
-  height: "30",
-  width: "30"
-})));
+  },
+  children: [/*#__PURE__*/Object(jsx_runtime_["jsx"])("p", {
+    children: `© ${globals["a" /* globals */].yourName} ${new Date().getFullYear()}`
+  }), /*#__PURE__*/Object(jsx_runtime_["jsx"])("a", {
+    href: "/rss.xml",
+    children: /*#__PURE__*/Object(jsx_runtime_["jsx"])("img", {
+      src: "/rss-white.svg",
+      alt: "RSS Feed",
+      height: "24",
+      width: "24"
+    })
+  }), /*#__PURE__*/Object(jsx_runtime_["jsxs"])("p", {
+    children: ["Version ", globals["a" /* globals */].version]
+  })]
+});
 // CONCATENATED MODULE: ./pages/_app.tsx
 
-var _app_jsx = external_react_default.a.createElement;
 
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
 
@@ -230,7 +259,7 @@ const App = ({
   Component,
   pageProps
 }) => {
-  return _app_jsx("div", {
+  return /*#__PURE__*/Object(jsx_runtime_["jsxs"])("div", {
     style: {
       display: 'flex',
       flexDirection: 'column',
@@ -238,32 +267,36 @@ const App = ({
       alignItems: 'center',
       minHeight: '100vh'
     },
-    className: "jsx-2179548495"
-  }, _app_jsx(head_default.a, null, globals["a" /* globals */].googleAnalyticsId && _app_jsx("script", {
-    async: true,
-    src: `https://www.googletagmanager.com/gtag/js?id=${globals["a" /* globals */].googleAnalyticsId}`,
-    className: "jsx-2179548495"
-  }), globals["a" /* globals */].googleAnalyticsId && _app_jsx("script", {
-    dangerouslySetInnerHTML: {
-      __html: `
+    className: "jsx-2179548495",
+    children: [/*#__PURE__*/Object(jsx_runtime_["jsxs"])(head_default.a, {
+      children: [globals["a" /* globals */].googleAnalyticsId && /*#__PURE__*/Object(jsx_runtime_["jsx"])("script", {
+        async: true,
+        src: `https://www.googletagmanager.com/gtag/js?id=${globals["a" /* globals */].googleAnalyticsId}`,
+        className: "jsx-2179548495"
+      }), globals["a" /* globals */].googleAnalyticsId && /*#__PURE__*/Object(jsx_runtime_["jsx"])("script", {
+        dangerouslySetInnerHTML: {
+          __html: `
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
 
             gtag('globals', '${globals["a" /* globals */].googleAnalyticsId}');
             `
-    },
-    className: "jsx-2179548495"
-  })), _app_jsx(Header, null), _app_jsx(Component, _extends({}, pageProps, {
-    className: "jsx-2179548495" + " " + (pageProps && pageProps.className != null && pageProps.className || "")
-  })), _app_jsx("div", {
-    style: {
-      flex: 1
-    },
-    className: "jsx-2179548495"
-  }), _app_jsx(Footer, null), _app_jsx(style_default.a, {
-    id: "2179548495"
-  }, ["html,body,#__next{min-height:100%;padding:0;margin:0;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto, Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue, sans-serif;}", "*{box-sizing:border-box;}"]));
+        },
+        className: "jsx-2179548495"
+      })]
+    }), /*#__PURE__*/Object(jsx_runtime_["jsx"])(Header, {}), /*#__PURE__*/Object(jsx_runtime_["jsx"])(Component, _objectSpread(_objectSpread({}, pageProps), {}, {
+      className: "jsx-2179548495" + " " + (pageProps && pageProps.className != null && pageProps.className || "")
+    })), /*#__PURE__*/Object(jsx_runtime_["jsx"])("div", {
+      style: {
+        flex: 1
+      },
+      className: "jsx-2179548495"
+    }), /*#__PURE__*/Object(jsx_runtime_["jsx"])(Footer, {}), /*#__PURE__*/Object(jsx_runtime_["jsx"])(style_default.a, {
+      id: "2179548495",
+      children: ["html,body,#__next{min-height:100%;padding:0;margin:0;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto, Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue, sans-serif;}", "*{box-sizing:border-box;}"]
+    })]
+  });
 };
 
 /* harmony default export */ var _app = __webpack_exports__["default"] = (App);
@@ -278,6 +311,7 @@ const App = ({
 let globals;
 
 (function (_globals) {
+  const version = _globals.version = '0.1.0';
   const yourName = _globals.yourName = 'Dominik (lwlx) Feger';
   const siteName = _globals.siteName = `dev.lwlx.xyz`;
   const siteDescription = _globals.siteDescription = "Dev / Sec / Ops ";
@@ -285,7 +319,10 @@ let globals;
   const twitterHandle = _globals.twitterHandle = '@lwlx';
   const email = _globals.email = `lwlx@lwlx.xyz`;
   const url = _globals.url = 'https://dev.lwlx.xyz';
-  const accentColor = _globals.accentColor = `#4E5C63`;
+  const primaryColor = _globals.primaryColor = `#1177AB`;
+  const secondaryColor = _globals.secondaryColor = `#F07693`;
+  const accentColor = _globals.accentColor = `#04060A`;
+  const backgroundColor = _globals.backgroundColor = `#C9C0BE`;
   const googleAnalyticsId = _globals.googleAnalyticsId = ``;
 })(globals || (globals = {}));
 

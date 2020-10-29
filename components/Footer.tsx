@@ -21,5 +21,6 @@ export const Footer: React.FC = () => (
     <a href="/rss.xml">
       <img src="/rss-white.svg" alt="RSS Feed" height="24" width="24" />
     </a>
+<p>Version {globals.version}</p>
   </div>
 );
