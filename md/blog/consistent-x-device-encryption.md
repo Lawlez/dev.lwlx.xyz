@@ -24,11 +24,16 @@ Given the lack of a decent out-of-the-box solution, I worry that many developers
 
 > Clone the repo here to get started with this setup: <a href="https://gist.github.com/Lawlez/88e04e3541cc0608c953a118b86bfc1a">https://gist.github.com/Lawlez/88e04e3541cc0608c953a118b86bfc1a</a>
 
+Okay, so lets assume we use following input data to test each implementation:
+- **`key`** = '5035ae3567f2e69320b083d59a7364cf8d4b14e77d7b798051241ce546b327d9'  ` //must be 256 bits`
+- **`iv`** = '1d6ef201e0e7a9019ddf8414034325e2' ` //must be 128 bits`
+- **`inputData`** = `{"TestData":"w17h Spé^cIäl chàær§¢tèrs", "OK":"://seems/fine?x=lol"}`
+
 Let's quickly run through each implementation:
 
 ### Using Node JS Crypto module
 
-Node Provides a nice `crypto`  implementation. It's documentation is rather sparse, but this is what i ended up with by using:
+Node Provides a nice `crypto`  implementation. It's documentation is rather sparse, but this is what I ended up with by using:
 - `crypto.randomBytes()`
 - `crypto.createCipheriv()`
 - `crypto.createDecipheriv()`
@@ -67,6 +72,47 @@ const encryption = (data = 'TestString {} Héllöüä') => {
 
 }
 ```
+#### Testing the implementation
+
+the first thing we notice is that we need to trim the key to 32bytes and the IV to 16 bytes. this is likely because of the conversion from hex to string after creation of the key.
+
+- **`key`** = '5035ae3567f2e69320b083d59a7364cf'  ` //is now 32 bytes string`
+- **`iv`** = '1d6ef201e0e7a901' ` //is now 16 bytes string`
+
+this will probably lead to an issue later on, since other implementations actually want the longer strings. maybe we can find a work around by base64 encoding instead of stringifying the key and iv.
+
+a quick test reveals, yes we actually can:
+```
+const IV = crypto.randomBytes(16)
+console.log(IV) // <Buffer c1 1e 98 84 54 eb 85 f6 b3 d0 51 87 d2 62 80 a7>
+    console.log(IV.toString('base64')) // wR6YhFTrhfaz0FGH0mKApw==
+    console.log(Buffer.from(IV.toString('base64'), 'base64')) //<Buffer c1 1e 98 84 54 eb 85 f6 b3 d0 51 87 d2 62 80 a7>
+```
+
+The output we recieve is of type buffer, but when we convert it to string using `toString('hex')` we can read the data:
+
+- **`OUTPUT`** = '<Buffer f2 fb 62 b1 7e e9 da 0c 8c bd 56 f2 45 a9 87 60 b4 e2 a6 d0 c5 de f1 50 bc 6d 86 00 f8 5d b4 79>' ` //is 32 bytes`
+- **`OUTPUT_Stringified`** = 'f2fb62b17ee9da0c8cbd56f245a98760b4e2a6d0c5def150bc6d8600f85db479' ` //is now 64 bytes string`
+- **`OUTPUT_Base64`** = '8vtisX7p2gyMvVbyRamHYLTiptDF3vFQvG2GAPhdtHk=' ` //is now 44 bytes string`
+
+so using the codes below we can switch between theese three outputs as we like
+
+```javascript
+//output Buffer
+encrypted = Buffer.concat([encrypted, Cipher.final()])
+
+//output String
+encrypted = Buffer.concat([encrypted, Cipher.final()]).toString('hex')
+
+
+//output Base64
+encrypted = Buffer.concat([encrypted, Cipher.final()]).toString('base64')
+
+//revert conversion to base64
+Buffer.from(encrypted.toString('base64') , 'base64')
+```
+
+From what we have learned here i guess the best option is to use the base64 output method, since we can easily convert it to a buffer
 
 ### Using browserify-aes's node crypto like implementation inside the Browser
 
@@ -176,6 +222,29 @@ cat config.json | openssl aes-256-cbc -iv $(cat iv)  -K $(cat key) -A -nosalt -b
 #decrypt with key IV and base64
 echo "encryptedString" | openssl aes-256-cbc -d -iv $(cat iv)  -K $(cat key) -base64 -A
 ```
+#### testing the implementation
+
+I created a json file called `test.json` containing the inputData. so when we run the following command ...
+```bash
+cat test.json | openssl aes-256-cbc -iv "1d6ef201e0e7a9019ddf8414034325e2"  -K "5035ae3567f2e69320b083d59a7364cf8d4b14e77d7b798051241ce546b327d9" -A -nosalt
+```
+We get no warnings and an output like this:
+- **`OUTPUT`** = g??.G?٪a?W????ԝFv?? 0P0+v?'???R=CR??a?	?5!??N?"?e?q?M{C\??:u-?wH?? ` //weird looking binary data`
+
+as you can see this is not very usefull so we apply the base64 encoding after encryption
+```bash
+cat test.json | openssl aes-256-cbc -iv "1d6ef201e0e7a9019ddf8414034325e2"  -K "5035ae3567f2e69320b083d59a7364cf8d4b14e77d7b798051241ce546b327d9" -A -nosalt -base64
+```
+- **`OUTPUT_base64`** = Z8QIo6YuR7DZqmHHV4WqqorUnUZ2n88gMFADMCt2FKUn/ZeYUj1DEBNS2NthignUNR0hw+OOFU7qACKPZbxx8k0Pe0McXNDrOnUtl3dIwdg= ` //now this looks nice`
+
+now we can also decrypt the just created data like so
+
+```bash
+echo $encryptedData | openssl aes-256-cbc -d -iv "1d6ef201e0e7a9019ddf8414034325e2" -K "5035ae3567f2e69320b083d59a7364cf8d4b14e77d7b798051241ce546b327d9" -A -base64
+```
+This yields us this outpu
+- **`OUTPUT`** = {"TestData":"w17h Spé^cIäl chàær§¢tèrs", "OK":"://seems/fine?x=lol"} ` //yes, thats out original input! :)`
+
 
 ## final solution
 
