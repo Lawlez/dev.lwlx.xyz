@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[dev.lwlx.xyz]]></title><description><![CDATA[Dev / Sec / Ops ]]></description><link>https://dev.lwlx.xyz</link><image><url>https://dev.lwlx.xyz/icon.png</url><title>dev.lwlx.xyz</title><link>https://dev.lwlx.xyz</link></image><generator>RSS for Node</generator><lastBuildDate>Thu, 29 Oct 2020 10:54:27 GMT</lastBuildDate><atom:link href="https://dev.lwlx.xyz/rss.xml" rel="self" type="application/rss+xml"/><pubDate>Tue, 27 Oct 2020 04:00:00 GMT</pubDate><copyright><![CDATA[2020 Dominik (lwlx) Feger]]></copyright><language><![CDATA[en]]></language><managingEditor><![CDATA[lwlx@lwlx.xyz]]></managingEditor><webMaster><![CDATA[lwlx@lwlx.xyz]]></webMaster><ttl>60</ttl><item><title><![CDATA[Getting consistent Encryption in Node / PHP / Browser and openSSL]]></title><description><![CDATA[<p>I recently set out to build my personal website — the one you're reading now, as it happens!</p>
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[dev.lwlx.xyz]]></title><description><![CDATA[Dev / Sec / Ops ]]></description><link>https://dev.lwlx.xyz</link><image><url>https://dev.lwlx.xyz/icon.png</url><title>dev.lwlx.xyz</title><link>https://dev.lwlx.xyz</link></image><generator>RSS for Node</generator><lastBuildDate>Thu, 29 Oct 2020 11:03:49 GMT</lastBuildDate><atom:link href="https://dev.lwlx.xyz/rss.xml" rel="self" type="application/rss+xml"/><pubDate>Tue, 27 Oct 2020 04:00:00 GMT</pubDate><copyright><![CDATA[2020 Dominik (lwlx) Feger]]></copyright><language><![CDATA[en]]></language><managingEditor><![CDATA[lwlx@lwlx.xyz]]></managingEditor><webMaster><![CDATA[lwlx@lwlx.xyz]]></webMaster><ttl>60</ttl><item><title><![CDATA[Getting consistent Encryption in Node / PHP / Browser and openSSL]]></title><description><![CDATA[<p>I recently set out to build my personal website — the one you're reading now, as it happens!</p>
 <p>Surprisingly, it was much harder than expected to put together a "tech stack" that met my criteria. My criteria are pretty straightforward; I would expect most React devs to have a similar list. Yet it was surprisingly hard to put all these pieces together.</p>
 <p>Given the lack of a decent out-of-the-box solution, I worry that many developers are settling for static-site generators that place limits on the interactivity and flexibility of your website. We can do better.</p>
 <blockquote>
@@ -7,7 +7,7 @@
 <p>Let's quickly run through my list of design goals:</p>
 <h3 id="usingnodejscryptomodule">Using Node JS Crypto module</h3>
 <p>I want to build the site with React and TypeScript. I love them both wholeheartedly, I use them for my day job, and they're gonna be around for a long time. Plus writing untyped JS makes me feel dirty.</p>
-<pre><code class="JavaScript language-JavaScript">const crypto = require('crypto')
+<pre><code>const crypto = require('crypto')
 
 /**********************************************************************
 *
@@ -71,7 +71,7 @@ const decrypt = hash =&gt; {
 </code></pre>
 <h3 id="encryptiondecryptionmoduleforphp7usingopenssl">ENCRYPTION &amp; DECRYPTION MODULE FOR PHP7+ USING OPENSSL</h3>
 <p>As much as I love the Jamstack, it doesn't cut it from an SEO perspective. Many blogs powered by a "headless CMS" require two round trips before rendering the blog content (one to fetch the static JS bundle and another to fetch the blog content from a CMS). This degrades page load speeds and user experience, which accordingly degrades your rankings on Google.</p>
-<pre><code class="PHP language-PHP">/**********************************************************************
+<pre><code class="php language-php">/**********************************************************************
 *
 *        ENCRYPTION &amp; DECRYPTION MODULE FOR PHP7+ USING OPENSSL       *
 *

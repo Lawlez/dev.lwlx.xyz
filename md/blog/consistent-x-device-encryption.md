@@ -30,7 +30,7 @@ Let's quickly run through my list of design goals:
 
 I want to build the site with React and TypeScript. I love them both wholeheartedly, I use them for my day job, and they're gonna be around for a long time. Plus writing untyped JS makes me feel dirty.
 
-```
+```javascript
 const crypto = require('crypto')
 
 /**********************************************************************
@@ -69,7 +69,7 @@ const encryption = (data = 'TestString {} Héllöüä') => {
 
 If it's obnoxious to write new blog posts, I won't do it. That's a regrettable law of the universe. Even writing blog posts with plain HTML — just a bunch of `<p>` tags in a div — is just annoying enough to bug me. The answer: Markdown of course!
 
-```
+```javascript
 import crypto from 'browserify-aes'
 
 /**********************************************************************
@@ -102,7 +102,7 @@ const decrypt = hash => {
 
 As much as I love the Jamstack, it doesn't cut it from an SEO perspective. Many blogs powered by a "headless CMS" require two round trips before rendering the blog content (one to fetch the static JS bundle and another to fetch the blog content from a CMS). This degrades page load speeds and user experience, which accordingly degrades your rankings on Google.
 
-```
+```php
 /**********************************************************************
 *
 *        ENCRYPTION & DECRYPTION MODULE FOR PHP7+ USING OPENSSL       *
@@ -173,6 +173,4 @@ echo "encryptedString" | openssl aes-256-cbc -d -iv $(cat iv)  -K $(cat key) -ba
 
 ## final solution
 
-I chose to build my site with Next.js. This won't be a surprising decision to anyone who's played with statically-rendered or server-side rendered React in recent years. Next.js is quickly eating everyone else's lunch in this market, especially Gatsby's (sorry Gatsby fans).
-
-<!-- Check out the Next.js documentation [here](https://nextjs.org/docs) to make sure it's the right choice for your project. -->
+...
