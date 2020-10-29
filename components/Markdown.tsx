@@ -37,7 +37,8 @@ export const Markdown: React.FC<{ source: string }> = (props) => {
         .devii-markdown h4 > a,
         .devii-markdown h5 > a,
         .devii-markdown h6 > a {
-          text-decoration: none;
+          text-decoration: underline;
+          color: #F07693;
         }
 
         .devii-markdown hr {
@@ -103,9 +104,10 @@ export const Markdown: React.FC<{ source: string }> = (props) => {
         }
 
         .devii-markdown code {
-          background-color: #00000010;
+          background-color: #F0769320;
           padding: 3px 3px;
           border-radius: 2px;
+          font-size: 16px;
         }
 
         .devii-markdown pre {
@@ -120,8 +122,13 @@ export const Markdown: React.FC<{ source: string }> = (props) => {
         .devii-markdown blockquote {
           margin: 0px;
           padding-left: 1em;
-          border-left: 4px solid ${globals.accentColor};
+          border-left: 4px solid ${globals.secondaryColor};
         }
+
+        a {
+            text-decoration: underline;
+            color: #F07693;
+          }
       `}</style>
     </div>
   );

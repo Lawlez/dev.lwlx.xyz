@@ -6,20 +6,20 @@ export const Footer: React.FC = () => (
     style={{
       top: 0,
       width: '100%',
-      height: '50px',
+      height: '56px',
       display: 'flex',
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
       backgroundColor: globals.accentColor,
-      color: 'white',
-      padding: '30px',
+      color: globals.secondaryColor,
+      padding: '32px',
       fontSize: '12pt',
     }}
   >
     <p>{`© ${globals.yourName} ${new Date().getFullYear()}`}</p>
     <a href="/rss.xml">
-      <img src="/rss-white.svg" alt="RSS Feed" height="30" width="30" />
+      <img src="/rss-white.svg" alt="RSS Feed" height="24" width="24" />
     </a>
   </div>
 );

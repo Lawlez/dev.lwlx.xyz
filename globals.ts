@@ -6,6 +6,9 @@ export namespace globals {
   export const twitterHandle = '@lwlx';
   export const email = `lwlx@lwlx.xyz`;
   export const url = 'https://dev.lwlx.xyz';
-  export const accentColor = `#4E5C63`;
+  export const primaryColor = `#1177AB`;
+  export const secondaryColor = `#F07693`;
+  export const accentColor = `#04060A`;
+  export const backgroundColor = `#C9C0BE`;
   export const googleAnalyticsId = ``; // e.g. 'UA-999999999-1'
 }

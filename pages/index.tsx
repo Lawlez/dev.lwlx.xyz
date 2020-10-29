@@ -62,7 +62,7 @@ const Home = (props: {
             fontSize: '34pt',
           }}
         >
-          README.md
+          about this blog
         </h2>
         <p
           style={{
@@ -72,7 +72,7 @@ const Home = (props: {
             lineHeight: 1.7,
           }}
         >
-          Below is the README.md for devii. It was imported and rendered using
+          Below is the README.md. It was imported and rendered using
           Next.js dynamic imports. The rest of this page (including this
           paragraph) are rendered with React. You can also read the README on
           GitHub at{' '}
@@ -83,22 +83,6 @@ const Home = (props: {
         </p>
       </div>
 
-      <div
-        style={{
-          width: '100%',
-          backgroundColor: '#eeeeee',
-          padding: '0px 3vw 50px 3vw',
-        }}
-      >
-        <div
-          style={{
-            maxWidth: '960px',
-            margin: 'auto',
-          }}
-        >
-          <Markdown source={props.readme} />
-        </div>
-      </div>
 
       <div style={sectionStyle}>
         <h2
@@ -108,21 +92,21 @@ const Home = (props: {
             paddingBottom: '30px',
           }}
         >
-          Get started
+          Work  in  Progress . . .
         </h2>
         <a href="https://github.com/Lawlez/dev.lwlx.xyz" style={{ cursor: 'pointer' }}>
           <button
             style={{
               padding: '10px 30px',
-              backgroundColor: globals.accentColor,
+              backgroundColor: globals.primaryColor,
               color: 'white',
               fontSize: '14pt',
               border: 'none',
-              borderRadius: '10px',
+              borderRadius: '8px',
               cursor: 'pointer',
             }}
           >
-            Fork dev.lwlx.xyz on GitHub
+            check dev.lwlx.xyz on GitHub
           </button>
         </a>
       </div>

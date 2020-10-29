@@ -52,7 +52,7 @@ export const PostCard: React.FC<{ post: PostData }> = (props) => {
           {post.title && (
             <h2
               style={{
-                margin: '0px 0px 7px 0px',
+                margin: '0px 0px 8px 0px',
                 fontSize: '14pt',
                 fontWeight: 600,
                 padding: '2px 10%',
@@ -80,11 +80,9 @@ export const PostCard: React.FC<{ post: PostData }> = (props) => {
               : ''}
           </p>
           <div style={{ flex: 1 }}> </div>
-          {false && (
-            <div style={{ marginTop: '7px' }}>
+            <div style={{ marginTop: '8px' }}>
               {post.tags && (post.tags || []).map((tag) => <Tag tag={tag} />)}
             </div>
-          )}
         </div>
       </div>
     </a>

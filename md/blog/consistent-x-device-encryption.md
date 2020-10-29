@@ -16,19 +16,22 @@ bannerPhoto: /crypto.jpg
 canonicalUrl: https://dev.lwlx.xyz/
 ---
 
-I recently set out to build my personal website — the one you're reading now, as it happens!
+I recently was tasked to find a solution for encrypting data in different places and to be able to decrypt them all in a browser during runtime.
 
-Surprisingly, it was much harder than expected to put together a "tech stack" that met my criteria. My criteria are pretty straightforward; I would expect most React devs to have a similar list. Yet it was surprisingly hard to put all these pieces together.
+Surprisingly, it was much harder than expected since there was so little documentation around this online. What was available were a few code only examples, so I was forced to do R&D and just try all implementations and compare the in- & outputs
 
-Given the lack of a decent out-of-the-box solution, I worry that many developers are settling for static-site generators that place limits on the interactivity and flexibility of your website. We can do better.
+Given the lack of a decent out-of-the-box solution, I worry that many developers are settling for easy to use, insecure, solutions which place limits on the security and flexibility of your project. Security should be easy to use and accessible.
 
-> Clone the repo here to get started with this setup: https://github.com/Lawlez/dev.lwlx.xyz
+> Clone the repo here to get started with this setup: <a href="https://gist.github.com/Lawlez/88e04e3541cc0608c953a118b86bfc1a">https://gist.github.com/Lawlez/88e04e3541cc0608c953a118b86bfc1a</a>
 
-Let's quickly run through my list of design goals:
+Let's quickly run through each implementation:
 
 ### Using Node JS Crypto module
 
-I want to build the site with React and TypeScript. I love them both wholeheartedly, I use them for my day job, and they're gonna be around for a long time. Plus writing untyped JS makes me feel dirty.
+Node Provides a nice `crypto`  implementation. It's documentation is rather sparse, but this is what i ended up with by using:
+- `crypto.randomBytes()`
+- `crypto.createCipheriv()`
+- `crypto.createDecipheriv()`
 
 ```javascript
 const crypto = require('crypto')
@@ -67,9 +70,9 @@ const encryption = (data = 'TestString {} Héllöüä') => {
 
 ### Using browserify-aes's node crypto like implementation inside the Browser
 
-If it's obnoxious to write new blog posts, I won't do it. That's a regrettable law of the universe. Even writing blog posts with plain HTML — just a bunch of `<p>` tags in a div — is just annoying enough to bug me. The answer: Markdown of course!
+Inside the browser, we cannot use Nodes.js built-in modules. Using `browserify-aes` we can use a node-like crypto implementation, which uses the same syntax as the node implementation. In my use case, I only need to decipher in the browser, this means I don’t have to worry about a true random key generation or ciphering.
 
-```javascript
+```js
 import crypto from 'browserify-aes'
 
 /**********************************************************************
@@ -100,7 +103,8 @@ const decrypt = hash => {
 
 ### ENCRYPTION & DECRYPTION MODULE FOR PHP7+ USING OPENSSL
 
-As much as I love the Jamstack, it doesn't cut it from an SEO perspective. Many blogs powered by a "headless CMS" require two round trips before rendering the blog content (one to fetch the static JS bundle and another to fetch the blog content from a CMS). This degrades page load speeds and user experience, which accordingly degrades your rankings on Google.
+In PHP 7 we make use of the `openssl_encrypt` implementation to encrypt an utf8 string and finally encode it with `base64_encode`.
+For decryption we also make use of the official openssl implementation `openssl_decrypt`, before decrypting we need to decode using `base64_decode`.
 
 ```php
 /**********************************************************************
@@ -155,7 +159,9 @@ class AESEncryption {
 
 ### Using openssl for use in CLI
 
-I describe my final architecture design below, along with my rationale for each choice. I distilled this setup into a website starter/boilerplate available here: https://github.com/Lawlez/dev.lwlx.xyz. Below, I allude to certain files/functions I implemented; to see the source code of these, just clone the repo `git clone git@github.com:vriad/devii.git`
+Inside of a Command Line Interface we use `openssl` do en- or decrypt data.
+
+for node/browserify to be able to decrypt it we need to add the `-nosalt` option, which disables salting the data.
 
 ```bash
 #########################################################################################

@@ -9,7 +9,7 @@ export const Tag: React.FC<{ tag: string }> = (props) => {
         borderRadius: '20px',
         backgroundColor: '#dddddd',
         color: '#333333',
-        marginRight: '7px',
+        marginRight: '8px',
         boxShadow: '0px 1px 1px #00000030',
       }}
     >

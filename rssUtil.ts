@@ -41,9 +41,9 @@ export const generateRSS = async (posts: PostData[]) => {
     feed.item({
       title: post.title,
       description: html,
-      url: `https://vriad.com/${post.path}`,
+      url: `https://dev.lwlx.xyz/blog/${post.path}`,
       categories: post.tags || [],
-      author: post.author || 'Colin McDonnell',
+      author: post.author || 'Dominik Feger',
       date: new Date(post.datePublished || 0).toISOString(),
     });
   }
