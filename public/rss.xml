@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[dev.lwlx.xyz]]></title><description><![CDATA[Dev / Sec / Ops ]]></description><link>https://dev.lwlx.xyz</link><image><url>https://dev.lwlx.xyz/icon.png</url><title>dev.lwlx.xyz</title><link>https://dev.lwlx.xyz</link></image><generator>RSS for Node</generator><lastBuildDate>Thu, 29 Oct 2020 11:03:49 GMT</lastBuildDate><atom:link href="https://dev.lwlx.xyz/rss.xml" rel="self" type="application/rss+xml"/><pubDate>Tue, 27 Oct 2020 04:00:00 GMT</pubDate><copyright><![CDATA[2020 Dominik (lwlx) Feger]]></copyright><language><![CDATA[en]]></language><managingEditor><![CDATA[lwlx@lwlx.xyz]]></managingEditor><webMaster><![CDATA[lwlx@lwlx.xyz]]></webMaster><ttl>60</ttl><item><title><![CDATA[Getting consistent Encryption in Node / PHP / Browser and openSSL]]></title><description><![CDATA[<p>I recently set out to build my personal website — the one you're reading now, as it happens!</p>
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[dev.lwlx.xyz]]></title><description><![CDATA[Dev / Sec / Ops ]]></description><link>https://dev.lwlx.xyz</link><image><url>https://dev.lwlx.xyz/icon.png</url><title>dev.lwlx.xyz</title><link>https://dev.lwlx.xyz</link></image><generator>RSS for Node</generator><lastBuildDate>Thu, 29 Oct 2020 11:14:26 GMT</lastBuildDate><atom:link href="https://dev.lwlx.xyz/rss.xml" rel="self" type="application/rss+xml"/><pubDate>Tue, 27 Oct 2020 04:00:00 GMT</pubDate><copyright><![CDATA[2020 Dominik (lwlx) Feger]]></copyright><language><![CDATA[en]]></language><managingEditor><![CDATA[lwlx@lwlx.xyz]]></managingEditor><webMaster><![CDATA[lwlx@lwlx.xyz]]></webMaster><ttl>60</ttl><item><title><![CDATA[Getting consistent Encryption in Node / PHP / Browser and openSSL]]></title><description><![CDATA[<p>I recently set out to build my personal website — the one you're reading now, as it happens!</p>
 <p>Surprisingly, it was much harder than expected to put together a "tech stack" that met my criteria. My criteria are pretty straightforward; I would expect most React devs to have a similar list. Yet it was surprisingly hard to put all these pieces together.</p>
 <p>Given the lack of a decent out-of-the-box solution, I worry that many developers are settling for static-site generators that place limits on the interactivity and flexibility of your website. We can do better.</p>
 <blockquote>
@@ -7,7 +7,7 @@
 <p>Let's quickly run through my list of design goals:</p>
 <h3 id="usingnodejscryptomodule">Using Node JS Crypto module</h3>
 <p>I want to build the site with React and TypeScript. I love them both wholeheartedly, I use them for my day job, and they're gonna be around for a long time. Plus writing untyped JS makes me feel dirty.</p>
-<pre><code>const crypto = require('crypto')
+<pre><code class="javascript language-javascript">const crypto = require('crypto')
 
 /**********************************************************************
 *
@@ -42,7 +42,7 @@ const encryption = (data = 'TestString {} Héllöüä') =&gt; {
 </code></pre>
 <h3 id="usingbrowserifyaessnodecryptolikeimplementationinsidethebrowser">Using browserify-aes's node crypto like implementation inside the Browser</h3>
 <p>If it's obnoxious to write new blog posts, I won't do it. That's a regrettable law of the universe. Even writing blog posts with plain HTML — just a bunch of <code>&lt;p&gt;</code> tags in a div — is just annoying enough to bug me. The answer: Markdown of course!</p>
-<pre><code class="JavaScript language-JavaScript">import crypto from 'browserify-aes'
+<pre><code class="javascript language-javascript">import crypto from 'browserify-aes'
 
 /**********************************************************************
 *
@@ -135,5 +135,4 @@ cat config.json | openssl aes-256-cbc -iv $(cat iv)  -K $(cat key) -A -nosalt -b
 echo "encryptedString" | openssl aes-256-cbc -d -iv $(cat iv)  -K $(cat key) -base64 -A
 </code></pre>
 <h2 id="finalsolution">final solution</h2>
-<p>I chose to build my site with Next.js. This won't be a surprising decision to anyone who's played with statically-rendered or server-side rendered React in recent years. Next.js is quickly eating everyone else's lunch in this market, especially Gatsby's (sorry Gatsby fans).</p>
-<!-- Check out the Next.js documentation [here](https://nextjs.org/docs) to make sure it's the right choice for your project. -->]]></description><link>https://vriad.com/blog/consistent-x-device-encryption</link><guid isPermaLink="true">https://vriad.com/blog/consistent-x-device-encryption</guid><category><![CDATA[encryption]]></category><category><![CDATA[decryption]]></category><category><![CDATA[openssl]]></category><category><![CDATA[nodejs]]></category><category><![CDATA[php]]></category><dc:creator><![CDATA[lwlx]]></dc:creator><pubDate>Thu, 29 Oct 2020 10:26:43 GMT</pubDate></item></channel></rss>
+<p>…</p>]]></description><link>https://vriad.com/blog/consistent-x-device-encryption</link><guid isPermaLink="true">https://vriad.com/blog/consistent-x-device-encryption</guid><category><![CDATA[encryption]]></category><category><![CDATA[decryption]]></category><category><![CDATA[openssl]]></category><category><![CDATA[nodejs]]></category><category><![CDATA[php]]></category><dc:creator><![CDATA[lwlx]]></dc:creator><pubDate>Thu, 29 Oct 2020 10:26:43 GMT</pubDate></item></channel></rss>
