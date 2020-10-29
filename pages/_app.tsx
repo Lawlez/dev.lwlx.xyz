@@ -26,11 +26,11 @@ const App: React.FC = ({ Component, pageProps }: any) => {
           <script
             dangerouslySetInnerHTML={{
               __html: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
 
-            gtag('globals', '${globals.googleAnalyticsId}');
+            gtag('config', '${globals.googleAnalyticsId}');
             `,
             }}
           ></script>

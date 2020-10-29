@@ -11,5 +11,5 @@ export namespace globals {
   export const secondaryColor = `#F07693`;
   export const accentColor = `#04060A`;
   export const backgroundColor = `#C9C0BE`;
-  export const googleAnalyticsId = ``; // e.g. 'UA-999999999-1'
+  export const googleAnalyticsId = `G-TZ2VB384DV`; // e.g. 'UA-999999999-1'
 }
