@@ -25,6 +25,7 @@ a collection of useful, special, or just cool tools to use and try to get more d
 - [ ] [killcord](https://github.com/nomasters/killcord) | **`new`** |: a censorship resistant deadman's switch
 - [x] [OWASP ZAP](https://github.com/zaproxy/zaproxy) |  `active` |: autodetect security vulnerabilities in your web applications while developing and testing your applications
 - [ ] [ClamAV](https://github.com/Cisco-Talos/clamav-faq) | **`new`** |: open source antivirus engine for detecting trojans, viruses, malware & other malicious threats.
+- [ ] [endlessh](https://github.com/skeeto/endlessh) | **`new`** |: Endlessh is an SSH tarpit (honeypot) that very slowly sends an endless, random SSH banner
 
 ---
 
