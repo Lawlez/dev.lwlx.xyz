@@ -11,10 +11,10 @@ tags:
   - Next.js
 thumbnailPhoto: /pancakes_thumb.jpeg
 bannerPhoto: /pancakes.jpeg
-canonicalUrl: https://vriad.com/essays/devii
+canonicalUrl: https://dev.lwlx.xyz/essays/devii
 ---
 
-> Originally published at [https://vriad.com/essays/devii](https://vriad.com/essays/devii). Check out the HN <del>roast</del> discussion <a href="https://news.ycombinator.com/item?id=23309002">here</a>! 🤗
+> Originally published at [https://dev.lwlx.xyz/essays/devii](https://dev.lwlx.xyz/essays/devii). Check out the HN <del>roast</del> discussion <a href="https://news.ycombinator.com/item?id=23309002">here</a>! 🤗
 
 I recently set out to build my personal website — the one you're reading now, as it happens!
 
