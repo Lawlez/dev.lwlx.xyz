@@ -33,8 +33,8 @@ export const Meta: React.FC<{
       {meta.desc && <meta name="twitter:description" content={meta.desc} />}
       <meta name="twitter:site" content={globals.twitterHandle} />
       <meta name="twitter:creator" content={globals.twitterHandle} />
-      {meta.image && <meta name="twitter:image" content={meta.image} />}
-      {meta.image && <meta property="og:image" content={`${meta.image}`} />}
+      {meta.image && <meta name="twitter:image" content={'https://dev.lwlx.xyz'+meta.image} />}
+      {meta.image && <meta property="og:image" content={`https://dev.lwlx.xyz${meta.image}`} />}
     </NextHead>
   );
 };
