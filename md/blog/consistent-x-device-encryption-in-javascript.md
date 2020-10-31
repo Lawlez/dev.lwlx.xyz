@@ -3,7 +3,7 @@ title: Getting consistent Encryption in Node / PHP / Browser and openSSL
 published: true
 datePublished: 1603967203286
 author: lwlx
-authorTwitter: InfoSecx0
+authorTwitter: '0x0000005'
 authorPhoto: /profile.jpg
 tags:
  - encryption
