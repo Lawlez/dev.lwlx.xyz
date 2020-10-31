@@ -13,7 +13,7 @@ tags:
  - php
 thumbnailPhoto: /crypto_thumb.jpg
 bannerPhoto: /crypto.jpg
-canonicalUrl: https://dev.lwlx.xyz/
+canonicalUrl:
 ---
 
 I recently was tasked to find a solution for encrypting data in different places and to being able to decrypt them all in a browser during runtime.
