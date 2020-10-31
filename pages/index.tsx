@@ -61,7 +61,7 @@ const Home = (props: {
             fontSize: '34pt',
           }}
         >
-          about this blog
+          Open Source Security & Dev Blog
         </h2>
         <p
           style={{
@@ -71,17 +71,41 @@ const Home = (props: {
             lineHeight: 1.7,
           }}
         >
-          Below is the README.md. It was imported and rendered using
-          Next.js dynamic imports. The rest of this page (including this
-          paragraph) are rendered with React. You can also read the README on
-          GitHub at{' '}
-          <a href="https://github.com/Lawlez/dev.lwlx.xyz">
-            https://github.com/Lawlez/dev.lwlx.xyz
-          </a>
-          .
+          dev.lwlx.xyz is a blog focused on Cybersecurity and the occasional code project.
         </p>
+        <br/>
+        <a href="https://github.com/Lawlez/" style={{ cursor: 'pointer' }}>
+          <button
+            style={{
+              padding: '10px 30px',
+              backgroundColor: globals.primaryColor,
+              color: 'white',
+              fontSize: '14pt',
+              border: 'none',
+              borderRadius: '8px',
+              cursor: 'pointer',
+            }}
+          >
+            @Lawlez on GitHub
+          </button>
+        </a>
+<br />
+        <a href="https://twitter.com/0x0000005" style={{ cursor: 'pointer' }}>
+          <button
+            style={{
+              padding: '10px 30px',
+              backgroundColor: globals.secondaryColor,
+              color: 'white',
+              fontSize: '14pt',
+              border: 'none',
+              borderRadius: '8px',
+              cursor: 'pointer',
+            }}
+          >
+            @0x0000005 on twitter
+          </button>
+        </a>
       </div>
-
 
       <div style={sectionStyle}>
         <h2
@@ -91,7 +115,7 @@ const Home = (props: {
             paddingBottom: '30px',
           }}
         >
-          Work  in  Progress . . .
+          this is still a work  in  progress . . .
         </h2>
         <a href="https://github.com/Lawlez/dev.lwlx.xyz" style={{ cursor: 'pointer' }}>
           <button

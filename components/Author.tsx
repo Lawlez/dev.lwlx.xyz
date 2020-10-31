@@ -81,7 +81,7 @@ export const AuthorLines: React.FC<{ post: PostData }> = (props) => {
           <a
             style={{
               textDecoration: 'none',
-              color: '#3b9488',
+              color: globals.primaryColor,
             }}
             href={`https://twitter.com/${props.post.authorTwitter}`}
           >{`@${props.post.authorTwitter}`}</a>
