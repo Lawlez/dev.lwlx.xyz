@@ -2,22 +2,15 @@
   <h1 align="center">dev.lwlx.xyz</h1>
 </p>
 <p align="center">
-  A developer blog starter for 2020. <br/>Next.js<br/>React<br/>TypeScript<br/>Markdown<br/>syntax highlighting<br/>SEO<br/>RSS generation
+  A developer blog with <br/>Next.js<br/>React<br/>TypeScript<br/>Markdown<br/>syntax highlighting<br/>SEO<br/>RSS generation
 </p>
 <p align="center">
 if you're happy and you know it, star this repo
 </p>
-<p align="center">
-  <a href="https://opensource.org/licenses/MIT" rel="nofollow">
-    <img src="https://img.shields.io/github/license/vriad/devii?alt" alt="License" style="width:100px;">
-  </a>
-</p>
-
 <br/>
 <br/>
 <br/>
 
-A dev blog starter for 2020.
 
 - Works as a Markdown-based static-site generator out of the box: just add new blog posts to `/md/blog`
 - Supports exporting to fully static assets (powered by Next.js)
@@ -29,15 +22,13 @@ A dev blog starter for 2020.
 
 # Get started
 
-Your personal website is the online manifestation of you. dev doesn't really provide much out of the box. It provides some nice Medium-style default styles for your blog posts and some tools for loading/rendering Markdown. But you'll have to implement your own homepage more or less from scratch. And that's the point! Don't settle for some theme. Build something that represents you.
-
 To get started:
 
 1. Fork this repo
 2. ```
    git clone git@github.com:yourusername/devii.git my-blog
    cd my-blog
-   yarn
+   yarn install
    ```
 3. Start the development server with `yarn dev`. This should start a server on `http://localhost:3000`.
 
@@ -81,25 +72,11 @@ By default the repo only contains two pages: a home page (`/pages/index.tsx`) an
 
 The file `[blog].ts` follows the Next.js convention of using square brackets to indicate a [dynamic route](https://nextjs.org/docs/routing/dynamic-routes).
 
-## The home page
-
-The home page is intentionally minimal. You can put whatever you want in `index.tsx`; one of our goals in designing dev.lwlx.xyz was to place no restrictions on the developer. Use your imagination! Your website is the online manifestion of you. You can use whatever npm packages or styling libraries you like.
-
 ## Styling
 
 dev.lwlx.xyz is unopinionated about styling. Because your dev.lwlx.xyz site is a standard React app under the hood, you can use your favorite library from `npm` to do styling.
 
 dev.lwlx.xyz provides certain styles by default, notably in the Markdown renderer (`/components/Markdown.tsx`). Those styles are implemented using Next's built-in styling solution `styled-jsx`. Unfortunately it was necessary to make those styles global, since `styled-jsx` [doesn't play nice](https://github.com/vercel/styled-jsx/issues/573) with third-party components (in this case `react-markdown`).
-
-Feel free to re-implemement the built-in styles with your library of choice If you choose to use a separate styling library ([emotion](https://emotion.sh/) is pretty glorious) then you could re-implement the default styles
-
-## Adding a new blog post
-
-Just add a Markdown file under `md/blog/` to create a new blog post:
-
-1. Create a new Markdown file called `foo.md` within the `/md/blog` directory
-2. Add in some basic Markdown content
-3. Then go to `http://localhost:3000/blog/foo`. You should see the new post.
 
 ## Frontmatter support
 
@@ -129,13 +106,13 @@ For example, here is the frontmatter blog from the sample blog post (`md/blog/th
 title: Introducing dev.lwlx.xyz
 subtitle: Bringing the power of React, TypeScript, and static generation to dev blogs everywhere
 datePublished: 1589064522569
-author: Ben Bitdiddle
+author: Ben Benson
 tags:
   - dev.lwlx.xyz
   - Blogs
 authorPhoto: /profile.jpg
-bannerPhoto: /brook.jpg
-thumbnailPhoto: /brook.jpg
+bannerPhoto: /book.jpg
+thumbnailPhoto: /book.jpg
 ---
 ```
 
@@ -143,11 +120,8 @@ View `/loader.ts` to see how this works.
 
 ## Google Analytics
 
-Just add your Google Analytics ID (e.g. 'UA-999999999-1') to `globals.ts` and dev.lwlx.xyz will automatically add the appropriate Google Analytics snippet to your site. Go to `/pages/_app.ts` to see how this works or customize this behavior.
+Just add your Google Analytics ID (e.g. 'G-999999999-1') to `globals.ts` and dev.lwlx.xyz will automatically add the appropriate Google Analytics snippet to your site. Go to `/pages/_app.ts` to see how this works or customize this behavior.
 
-## Medium-inspired design
-
-The Markdown renderer (`Markdown.tsx`) provides a default style inspired by Medium. Just modify the CSS in `Markdown.tsx` to customize the design to your liking.
 
 ## GitHub-style code blocks
 
@@ -204,8 +178,6 @@ There are a few utility functions in `loader.ts` that dev.lwlx.xyz uses. All fun
 
 You can generate a fully static version of your site using `yarn build && yarn export`. This step is entirely powered by Next.js. The static site is exported to the `out` directory.
 
-After it's generated, use your static file hosting service of choice (Vercel, Netlify, Firebase Hosting, Amazon S3) to deploy your site.
-
 ## Global configs
 
 There is a `globals.ts` file in the project root containing some settings/configuration metadata about your site:
@@ -214,10 +186,9 @@ There is a `globals.ts` file in the project root containing some settings/config
 - `siteName`: The title of your blog, e.g. `Alyssa's Cool Blog`;
 - `siteDescription`: A short description, used in the `meta` description tag, e.g. 'I write about code \'n stuff';
 - `siteCreationDate`: Used in the generated RSS feed. Use this format: 'March 3, 2020 04:00:00 GMT';
-- `twitterHandle`: The twitter handle for you or your blog/company, used in the Twitter meta tags. Include the @ symbol, e.g. '@alyssaphacker';
+- `twitterHandle`: The twitter handle for you or your blog/company, used in the Twitter meta tags. Include the @ symbol, e.g. '@lawlez_';
 - `email`: Your email, used as the "webMaster" and "managingEditor" field of the generated RSS feed, e.g. `alyssa@example.com`;
-- `url`: The base URL of your website, used to "compute" default canonical links from relative paths, e.g. 'https://alyssaphacker.com';
-- `accentColor`: The header and footer background color, e.g. `#4fc2b4`;
+- `url`: The base URL of your website, used to "compute" default canonical links from relative paths, e.g. 'https://lwlx.xyz';
 
 ## RSS feed generation
 
