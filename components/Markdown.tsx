@@ -19,6 +19,7 @@ export const Markdown: React.FC<{ source: string }> = (props) => {
         .devii-markdown li {
           line-height: 1.7;
           color: #333;
+          overflow-wrap: break-word;
         }
 
         .devii-markdown h1,
@@ -107,7 +108,7 @@ export const Markdown: React.FC<{ source: string }> = (props) => {
           background-color: #F0769320;
           padding: 3px 3px;
           border-radius: 2px;
-          font-size: 16px;
+          font-size: 1em;
         }
 
         .devii-markdown pre {
@@ -128,6 +129,15 @@ export const Markdown: React.FC<{ source: string }> = (props) => {
         a {
             text-decoration: underline;
             color: #F07693;
+          }
+
+          @media only screen and (min-width: 768px) {
+            .devii-markdown code {
+                background-color: #F0769320;
+                padding: 3px 3px;
+                border-radius: 2px;
+                font-size: 16px;
+              }
           }
       `}</style>
     </div>

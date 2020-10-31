@@ -3,6 +3,7 @@ import { Markdown } from './Markdown';
 import { PostData } from '../loader';
 import { PostMeta } from './PostMeta';
 import { Author } from './Author';
+import {globals} from '../globals'
 
 export const BlogPost: React.FunctionComponent<{ post: PostData }> = ({
   post,
@@ -18,8 +19,14 @@ export const BlogPost: React.FunctionComponent<{ post: PostData }> = ({
         padding: '0px 0px 100px 0px',
       }}
     >
+        <style jsx global>{`
+        .blog-post{
+          width: 100%;
+          max-width: 1080px;
+        }
+        ` }</style>
       <PostMeta post={post} />
-      <div style={{ width: '100%', maxWidth: '960px' }}>
+      <div className="blog-post">
         {post.bannerPhoto && (
           <img
             style={{
@@ -57,10 +64,11 @@ export const BlogPost: React.FunctionComponent<{ post: PostData }> = ({
           )}
           <hr
             style={{
-              height: '1px',
-              color: '#eee',
-              opacity: 0.2,
+              height: '2px',
+              background: globals.primaryColor,
               margin: '25px 0px',
+              border: 'none',
+              borderRadius: 1
             }}
           />
           <Author post={post} />
