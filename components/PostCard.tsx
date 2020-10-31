@@ -20,10 +20,11 @@ export const PostCard: React.FC<{ post: PostData }> = (props) => {
     >
       <div
         style={{
-          opacity: 0.92,
+          opacity: 1,
           boxShadow: '0px 2px 10px #00000040',
           width: '100%',
-          maxWidth: '960px',
+          maxWidth: '680px',
+          minWidth:256,
           overflow: 'hidden',
           borderRadius: '8px',
           display: 'flex',
@@ -81,7 +82,7 @@ export const PostCard: React.FC<{ post: PostData }> = (props) => {
           </p>
           <div style={{ flex: 1 }}> </div>
             <div style={{ marginTop: '8px' }}>
-              {post.tags && (post.tags || []).map((tag) => <Tag tag={tag} />)}
+              {post.tags && (post.tags || []).map((tag,key) => <Tag key={key} tag={tag} />)}
             </div>
         </div>
       </div>

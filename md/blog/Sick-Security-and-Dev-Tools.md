@@ -3,7 +3,7 @@ title: A Collection of useful Security and DevOps tools.
 published: true
 datePublished: 1600786088187
 author: lwlx
-authorTwitter: InfoSecx0
+authorTwitter: '0x0000005'
 authorPhoto: /profile.jpg
 tags:
   - tools
@@ -11,8 +11,8 @@ tags:
   - security
   - javascript
   - devops
-thumbnailPhoto: /profile.jpg
-bannerPhoto: /profile.jpg
+thumbnailPhoto: /sicktools-sec-devops.jpg
+bannerPhoto: /sicktools-sec-devops.jpg
 canonicalUrl: https://dev.lwlx.xyz/
 ---
 # sickTools

@@ -1,8 +1,8 @@
-import Head from 'next/head';
-import { PostData, loadBlogPosts, loadMarkdownFile } from '../loader';
-import { PostCard } from '../components/PostCard';
-import { generateRSS } from '../rssUtil';
-import { globals } from '../globals';
+import Head from 'next/head'
+import { PostData, loadBlogPosts } from '../loader'
+import { PostCard } from '../components/PostCard'
+import { generateRSS } from '../rssUtil'
+import { globals } from '../globals'
 
 const sectionStyle = {
   width: '100%',
@@ -10,13 +10,11 @@ const sectionStyle = {
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-} as const;
+} as const
 
 const Home = (props: {
-  introduction: string;
-  features: string;
-  readme: string;
-  posts: PostData[];
+  introduction: string
+  posts: PostData[]
 }) => {
   return (
     <div
@@ -25,7 +23,7 @@ const Home = (props: {
       }}
     >
       <Head>
-        <title>Introducing dev.lwlx.xyz</title>
+        <title>dev.lwlx.xyz | Internet Freedom</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -36,7 +34,7 @@ const Home = (props: {
             fontSize: '34pt',
           }}
         >
-          recent posts
+          newest posts
         </h2>
         <div
           style={{
@@ -48,8 +46,90 @@ const Home = (props: {
             padding: '0px 7vw',
           }}
         >
-          {props.posts.map((post, j) => {
-            return <PostCard post={post} key={j} />;
+          {props.posts.map((post, key) => {
+              let isTagged = false
+              if(post && post.tags){post.tags.forEach(tag => {
+                  if (tag){
+                    isTagged = true
+                  }})
+                  if(
+                      isTagged && key === props.posts.length-1
+                      || isTagged && key === props.posts.length-2
+                      || isTagged && key === props.posts.length-3
+                      || isTagged && key === props.posts.length-4){
+                      return <PostCard key={key} post={post} />
+                  }
+                  return }
+              return `the post ${post.title} has no tags defined`
+
+          })}
+        </div>
+      </div>
+
+      <div style={sectionStyle}>
+        <h2
+          style={{
+            margin: '4px 0px',
+            fontSize: '34pt',
+          }}
+        >
+          CyberSecurity and Information Security posts
+        </h2>
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: `repeat(auto-fit, minmax(300px, 1fr))`,
+            gridRowGap: '8px',
+            gridColumnGap: '8px',
+            width: '100%',
+            padding: '0px 7vw',
+          }}
+        >
+          {props.posts.map((post, key) => {
+              let isCyberSecPost = false
+              if(post && post.tags){post.tags.forEach(tag => {
+                  if (tag === 'security' || tag === 'cybersecurity' || tag === 'appsec'){
+                    isCyberSecPost = true
+                  }})
+                  if(isCyberSecPost){
+                      return <PostCard key={key} post={post} />
+                  }return }
+              return `the post ${post.title} has no tags defined`
+
+          })}
+        </div>
+      </div>
+
+      <div style={sectionStyle}>
+        <h2
+          style={{
+            margin: '4px 0px',
+            fontSize: '34pt',
+          }}
+        >
+          Devtools and Js Resources
+        </h2>
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: `repeat(auto-fit, minmax(300px, 1fr))`,
+            gridRowGap: '8px',
+            gridColumnGap: '8px',
+            width: '100%',
+            padding: '0px 7vw',
+          }}
+        >
+          {props.posts.map((post, key) => {
+              let isDevPost = false
+              if(post && post.tags){post.tags.forEach(tag => {
+                  if (tag === 'javascript' || tag === 'devtools' || tag === 'nodejs'){
+                    isDevPost = true
+                  }})
+                  if(isDevPost){
+                      return <PostCard key={key} post={post} />
+                  }return }
+              return `the post ${post.title} has no tags defined`
+
           })}
         </div>
       </div>
@@ -134,27 +214,22 @@ const Home = (props: {
         </a>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home
 
 export const getStaticProps = async () => {
-  const introduction = await loadMarkdownFile('introduction.md');
-  const features = await loadMarkdownFile('features.md');
-  const readmeFile = await import(`../${'README.md'}`);
-  const readme = readmeFile.default;
-  const posts = await loadBlogPosts();
+  //const introduction = await loadMarkdownFile('introduction.md');
+  const posts = await loadBlogPosts()
 
   // comment out to turn off RSS generation during build step.
-  await generateRSS(posts);
+  await generateRSS(posts)
 
   const props = {
-    introduction: introduction.contents,
-    features: features.contents,
-    readme: readme,
+    introduction: 'empty for now :)',//introduction.contents,
     posts,
-  };
+  }
 
-  return { props };
-};
+  return { props }
+}
