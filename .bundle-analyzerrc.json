@@ -1,0 +1,14 @@
+{
+    "files": [
+        {
+          "test": "build/static/chunks/*.js",
+          "maxSize": "1250 kB",
+          "compression": "none"
+        },
+        {
+            "test": "out/*",
+            "maxSize": "1250 kB",
+            "compression": "none"
+        }
+      ]
+  }
