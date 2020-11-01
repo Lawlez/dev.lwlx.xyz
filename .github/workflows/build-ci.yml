@@ -33,5 +33,5 @@ jobs:
         key:   nodemodules
     
     - run: yarn install
-    - run: yarn build
+    - run: BUNDLE_ANALYZER_TOKEN=420398ca666ca9cb3e493fd6d55b9a224cdebe12 yarn build
     - run: yarn export
