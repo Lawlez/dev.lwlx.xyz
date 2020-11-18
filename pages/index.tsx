@@ -20,7 +20,15 @@ const Home = (props: { introduction: string; posts: PostData[] }) => {
       }}
     >
       <Head>
-        <title>dev.lwlx.xyz | Internet Freedom</title>
+        <title>dev.lwlx.xyz | Cybersecurity & Internet Freedom</title>
+        <meta
+          name="description"
+          content="dev.lwlx.xyz publishes articles and research about Cybersecurity, DevOps, Development or just general IT nonsense. "
+        />
+        <meta
+          property="og:image"
+          content={`https://dev.lwlx.xyz/lwlzcolors-lawlez-sm.jpg`}
+        />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
