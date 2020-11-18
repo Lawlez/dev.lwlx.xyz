@@ -169,7 +169,13 @@ const Home = props => {
     },
     children: [/*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsxs"])(next_head__WEBPACK_IMPORTED_MODULE_1___default.a, {
       children: [/*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("title", {
-        children: "dev.lwlx.xyz | Internet Freedom"
+        children: "dev.lwlx.xyz | Cybersecurity & Internet Freedom"
+      }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("meta", {
+        name: "description",
+        content: "dev.lwlx.xyz publishes articles and research about Cybersecurity, DevOps, Development or just general IT nonsense. "
+      }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("meta", {
+        property: "og:image",
+        content: `https://dev.lwlx.xyz/lwlzcolors-lawlez-sm.jpg`
       }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("link", {
         rel: "icon",
         href: "/favicon.ico"
@@ -686,7 +692,7 @@ module.exports = require("fs");
 let globals;
 
 (function (_globals) {
-  const version = _globals.version = "0.4.1";
+  const version = _globals.version = "0.4.2";
   const yourName = _globals.yourName = "lwlx.";
   const siteName = _globals.siteName = `dev.lwlx.xyz`;
   const siteDescription = _globals.siteDescription = "Dev / Sec / Ops | Cybersecurity blog";

@@ -449,7 +449,7 @@ const Meta = props => {
       content: `${meta.link}`
     }), /*#__PURE__*/Object(jsx_runtime_["jsx"])("meta", {
       name: "twitter:card",
-      content: "summary"
+      content: "summary_large_image"
     }), /*#__PURE__*/Object(jsx_runtime_["jsx"])("meta", {
       name: "twitter:title",
       content: meta.title
@@ -828,7 +828,7 @@ module.exports = require("react");
 let globals;
 
 (function (_globals) {
-  const version = _globals.version = "0.4.1";
+  const version = _globals.version = "0.4.2";
   const yourName = _globals.yourName = "lwlx.";
   const siteName = _globals.siteName = `dev.lwlx.xyz`;
   const siteDescription = _globals.siteDescription = "Dev / Sec / Ops | Cybersecurity blog";
