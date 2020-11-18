@@ -1,6 +1,6 @@
-import React from 'react';
-import NextHead from 'next/head';
-import { globals } from '../globals';
+import React from "react";
+import NextHead from "next/head";
+import { globals } from "../globals";
 
 export const Meta: React.FC<{
   meta: {
@@ -14,7 +14,7 @@ export const Meta: React.FC<{
   return (
     <NextHead>
       <title>{meta.title}</title>
-      <meta name="copyright" content="Dominik Feger" />
+      <meta name="copyright" content="lwlx. 2020" />
       {meta.link && <link rel="canonical" href={meta.link} />}
       {meta.desc && <meta name="description" content={meta.desc} />}
       <meta property="og:type" content="website" />
@@ -33,8 +33,18 @@ export const Meta: React.FC<{
       {meta.desc && <meta name="twitter:description" content={meta.desc} />}
       <meta name="twitter:site" content={globals.twitterHandle} />
       <meta name="twitter:creator" content={globals.twitterHandle} />
-      {meta.image && <meta name="twitter:image" content={'https://dev.lwlx.xyz'+meta.image} />}
-      {meta.image && <meta property="og:image" content={`https://dev.lwlx.xyz${meta.image}`} />}
+      {meta.image && (
+        <meta
+          name="twitter:image"
+          content={"https://dev.lwlx.xyz" + meta.image}
+        />
+      )}
+      {meta.image && (
+        <meta
+          property="og:image"
+          content={`https://dev.lwlx.xyz${meta.image}`}
+        />
+      )}
     </NextHead>
   );
 };
