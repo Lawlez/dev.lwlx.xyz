@@ -1,7 +1,7 @@
 ---
 title: "MitM using WPAD Proxy Protocol: Getting a reverse shell on windows client"
 published: true
-datePublished: 1603967203286
+datePublished: 1605702028862
 author: lwlx
 authorTwitter: "0x0000005"
 authorPhoto: /profile.jpg
