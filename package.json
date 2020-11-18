@@ -1,7 +1,7 @@
 {
   "name": "dev.lwlx.xyz",
-  "version": "0.1.0",
-  "description": "A Medium inspired dev blog with Next.js",
+  "version": "0.4.1",
+  "description": "A Fast AF dev blog with Next.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/Lawlez/dev.lwlx.xyz"
@@ -12,6 +12,12 @@
     "url": "https://github.com/Lawlez/dev.lwlx.xyz/issues"
   },
   "homepage": "https://github.com/Lawlez/dev.lwlx.xyz",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "export": "next export"
+  },
   "tags": [
     "blog template",
     "react",
@@ -26,12 +32,6 @@
     "syntax highlighting",
     "static generation"
   ],
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "export": "next export"
-  },
   "dependencies": {
     "fecha": "^4.2.0",
     "glob": "^7.1.6",

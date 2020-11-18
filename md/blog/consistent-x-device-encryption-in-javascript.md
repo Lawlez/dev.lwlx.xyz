@@ -1,16 +1,17 @@
 ---
 title: Getting consistent Encryption in Node / PHP / Browser and openSSL
+description: Cryptography is hard, and because it's already hard enough, here is a nice guide on the AES Cipher in different environments.
 published: true
 datePublished: 1603967203286
 author: lwlx
-authorTwitter: '0x0000005'
+authorTwitter: "0x0000005"
 authorPhoto: /profile.jpg
 tags:
- - encryption
- - decryption
- - openssl
- - nodejs
- - php
+  - encryption
+  - decryption
+  - openssl
+  - nodejs
+  - php
 thumbnailPhoto: /crypto_thumb.jpg
 bannerPhoto: /crypto.jpg
 canonicalUrl:
@@ -25,7 +26,8 @@ Given the lack of a decent out-of-the-box solution, I worry that many developers
 > Clone the repo here to get started with this setup: <a href="https://gist.github.com/Lawlez/88e04e3541cc0608c953a118b86bfc1a">https://gist.github.com/Lawlez/88e04e3541cc0608c953a118b86bfc1a</a>
 
 Okay, so lets assume we use following input data to test each implementation:
-- **`key`** = '5035ae3567f2e69320b083d59a7364cf8d4b14e77d7b798051241ce546b327d9'  ` //must be 256 bits`
+
+- **`key`** = '5035ae3567f2e69320b083d59a7364cf8d4b14e77d7b798051241ce546b327d9' ` //must be 256 bits`
 - **`iv`** = '1d6ef201e0e7a9019ddf8414034325e2' ` //must be 128 bits`
 - **`inputData`** = `{"TestData":"w17h Spé^cIäl chàær§¢tèrs", "OK":"://seems/fine?x=lol"}`
 
@@ -33,7 +35,8 @@ Let's quickly run through and test each implementation:
 
 ## Using Node JS Crypto module
 
-Node Provides a nice `crypto`  implementation. It's documentation is rather sparse, but this is what most resources suggest by using:
+Node Provides a nice `crypto` implementation. It's documentation is rather sparse, but this is what most resources suggest by using:
+
 - `crypto.randomBytes()`
 - `crypto.createCipheriv()`
 - `crypto.createDecipheriv()`
@@ -79,12 +82,13 @@ const encryption = (data = 'TestString {} Héllöüä') => {
 
 We notice that we need to trim the key to 32bytes and the IV to 16 bytes. This is likely because of the conversion from hex to string after the creation of the key.
 
-- **`key`** = '5035ae3567f2e69320b083d59a7364cf'  ` //is now 32 bytes string`
+- **`key`** = '5035ae3567f2e69320b083d59a7364cf' ` //is now 32 bytes string`
 - **`iv`** = '1d6ef201e0e7a901' ` //is now 16 bytes string`
 
 This will probably lead to an issue later on since other implementations actually want the longer strings. Maybe we can find a workaround by base64 encoding instead of stringifying the key and iv.
 
 a quick test reveals, yes, we actually can:
+
 ```
 const IV = crypto.randomBytes(16)
 
@@ -97,7 +101,9 @@ console.log(IV.toString('base64'))
 console.log(Buffer.from(IV.toString('base64'), 'base64'))
 //<Buffer c1 1e 98 84 54 eb 85 f6 b3 d0 51 87 d2 62 80 a7>
 ```
+
 now we could also just create a buffer again from the string to make it 16/32 bytes (ready for usage):
+
 ```
 Buffer.from('5035ae3567f2e69320b083d59a7364cf8d4b14e77d7b798051241ce546b327d9', 'hex')
 //<Buffer 50 35 ae 35 67 f2 e6 93 20 b0 83 d5 9a 73 64 cf 8d 4b 14 e7 7d 7b 79 80 51 24 1c e5 46 b3 27 d9>
@@ -116,6 +122,7 @@ const IV = crypto.randomBytes(16)
 const configKey = crypto.pbkdf2Sync(secretPhrase, salt, 100000, 32, 'sha256')
 
 ```
+
 This key and IV pair can be consumed directly by our ciphers, but we would need to convert it to a hex string first to save and forward them.
 
 ### So what is the output of this function?
@@ -130,17 +137,16 @@ so using the codes below, we can switch between these three outputs as we like
 
 ```javascript
 //output Buffer
-encrypted = Buffer.concat([encrypted, Cipher.final()])
+encrypted = Buffer.concat([encrypted, Cipher.final()]);
 
 //output String
-encrypted = Buffer.concat([encrypted, Cipher.final()]).toString('hex')
-
+encrypted = Buffer.concat([encrypted, Cipher.final()]).toString("hex");
 
 //output Base64
-encrypted = Buffer.concat([encrypted, Cipher.final()]).toString('base64')
+encrypted = Buffer.concat([encrypted, Cipher.final()]).toString("base64");
 
 //revert conversion to base64
-Buffer.from(encrypted.toString('base64') , 'base64')
+Buffer.from(encrypted.toString("base64"), "base64");
 ```
 
 From what we have learned here, I guess the best option is to use the base64 output method since we can easily convert it to a buffer
@@ -150,42 +156,45 @@ From what we have learned here, I guess the best option is to use the base64 out
 Inside the browser, we cannot use Nodes.js built-in modules. Using `browserify-aes` we can use a node-like crypto implementation, which uses the same syntax as the node implementation. In my use case, I only need to decipher in the browser, this means I don’t have to worry about a truly random key generation or ciphering.
 
 ```js
-import crypto from 'browserify-aes'
+import crypto from "browserify-aes";
 
 /**********************************************************************
-*
-*        DECRYPTION MODULE FOR USE IN BROWSER DURING RUNTIME          *
-*
-***********************************************************************/
-const decrypt = Base64Hash => {
-   //we use the base64 hash generated by openssl cli as an input
-   const Base64Hash = 'Z8QIo6YuR7DZqmHHV4WqqorUnUZ2n88gMFADMCt2FKUn/ZeYUj1DEBNS2NthignUNR0hw+OOFU7qACKPZbxx8k0Pe0McXNDrOnUtl3dIwdg='
-   const Key = '5035ae3567f2e69320b083d59a7364cf8d4b14e77d7b798051241ce546b327d9'
-   const IV = '1d6ef201e0e7a9019ddf8414034325e2'
-   const hexToBin = (hex)=>{
-       //converts hex strings to binary arr
-       for (var bytes = [], c = 0; c < hex.length; c += 2){
-           bytes.push(parseInt(hex.substr(c, 2), 16))
-       }
-   return bytes
-   }
-   //ein neuer cipher wird vorbereitet, mittels aes256, unserem 256 bit KEY und dem config IV
-   const decipher = crypto.createDecipheriv(
-       'aes256',
-       hexToBin(Key),
-       hexToBin(IV),
-   )
+ *
+ *        DECRYPTION MODULE FOR USE IN BROWSER DURING RUNTIME          *
+ *
+ ***********************************************************************/
+const decrypt = (Base64Hash) => {
+  //we use the base64 hash generated by openssl cli as an input
+  const Base64Hash =
+    "Z8QIo6YuR7DZqmHHV4WqqorUnUZ2n88gMFADMCt2FKUn/ZeYUj1DEBNS2NthignUNR0hw+OOFU7qACKPZbxx8k0Pe0McXNDrOnUtl3dIwdg=";
+  const Key =
+    "5035ae3567f2e69320b083d59a7364cf8d4b14e77d7b798051241ce546b327d9";
+  const IV = "1d6ef201e0e7a9019ddf8414034325e2";
+  const hexToBin = (hex) => {
+    //converts hex strings to binary arr
+    for (var bytes = [], c = 0; c < hex.length; c += 2) {
+      bytes.push(parseInt(hex.substr(c, 2), 16));
+    }
+    return bytes;
+  };
+  //ein neuer cipher wird vorbereitet, mittels aes256, unserem 256 bit KEY und dem config IV
+  const decipher = crypto.createDecipheriv(
+    "aes256",
+    hexToBin(Key),
+    hexToBin(IV)
+  );
 
-   //der hash wird nun decrypted mittels dem zuvor erstellten cipher
-   const decrypted = Buffer.concat([decipher.update(
-        Buffer.from(Base64Hash, 'base64'),
-    ), decipher.final()]).toString('utf8')
+  //der hash wird nun decrypted mittels dem zuvor erstellten cipher
+  const decrypted = Buffer.concat([
+    decipher.update(Buffer.from(Base64Hash, "base64")),
+    decipher.final(),
+  ]).toString("utf8");
 
-  return JSON.parse(decrypted)
-}
+  return JSON.parse(decrypted);
+};
 ```
-- **`OUTPUT`** = {TestData: "w17h Spé^cIäl chàær§¢tèrs", OK: "://seems/fine?x=lol"} ` //yes, thats our original input! :D`
 
+- **`OUTPUT`** = {TestData: "w17h Spé^cIäl chàær§¢tèrs", OK: "://seems/fine?x=lol"} ` //yes, thats our original input! :D`
 
 ## ENCRYPTION & DECRYPTION MODULE FOR PHP7+ USING OPENSSL
 
@@ -242,6 +251,7 @@ class AESEncryption {
    }
 }
 ```
+
 > while desperately searching for a solution I looked into doing the encryption in PHP instead of openssl, since I scrapped this idea I cannot explain any further. I still keep this PHP 7 example here because its hard to find examples online that don’t use mcrypt.
 
 ## Using OpenSSL for use in CLI
@@ -263,19 +273,25 @@ cat config.json | openssl aes-256-cbc -iv $(cat iv)  -K $(cat key) -A -nosalt -b
 #decrypt with key IV and base64
 echo "encryptedString" | openssl aes-256-cbc -d -iv $(cat iv)  -K $(cat key) -base64 -A
 ```
+
 ### testing the implementation
 
 I created a json file called `test.json` containing the inputData. so when we run the following command ...
+
 ```bash
 cat test.json | openssl aes-256-cbc -iv "1d6ef201e0e7a9019ddf8414034325e2"  -K "5035ae3567f2e69320b083d59a7364cf8d4b14e77d7b798051241ce546b327d9" -A -nosalt
 ```
+
 We get no warnings and an output like this:
+
 - **`OUTPUT`** = g??.G?٪a?W????ԝFv?? 0P0+v?'???R=CR??a? ?5!??N?"?e?q?M{C\??:u-?wH?? ` //weird looking binary data`
 
 as you can see this is not very usefull so we apply the base64 encoding after encryption
+
 ```bash
 cat test.json | openssl aes-256-cbc -iv "1d6ef201e0e7a9019ddf8414034325e2"  -K "5035ae3567f2e69320b083d59a7364cf8d4b14e77d7b798051241ce546b327d9" -A -nosalt -base64
 ```
+
 - **`OUTPUT_base64`** = Z8QIo6YuR7DZqmHHV4WqqorUnUZ2n88gMFADMCt2FKUn/ZeYUj1DEBNS2NthignUNR0hw+OOFU7qACKPZbxx8k0Pe0McXNDrOnUtl3dIwdg= ` //now this looks nice`
 
 now we can also decrypt the just created data like so
@@ -283,72 +299,84 @@ now we can also decrypt the just created data like so
 ```bash
 echo $encryptedData | openssl aes-256-cbc -d -iv "1d6ef201e0e7a9019ddf8414034325e2" -K "5035ae3567f2e69320b083d59a7364cf8d4b14e77d7b798051241ce546b327d9" -A -base64
 ```
-This yields us this output
-- **`OUTPUT`** = {"TestData":"w17h Spé^cIäl chàær§¢tèrs", "OK":"://seems/fine?x=lol"} ` //yes, thats our original input! :)`
 
+This yields us this output
+
+- **`OUTPUT`** = {"TestData":"w17h Spé^cIäl chàær§¢tèrs", "OK":"://seems/fine?x=lol"} ` //yes, thats our original input! :)`
 
 # final solution
 
 ## Using NodeJS during initial build
 
 While building our app this code is responsible for:
+
 - creating a unique `key` on every build
 - creating a unique `iv` for every object to be encrypted
 - outputting an encrypted base64 encoded string of data
 
 the output needs to be consumed by either:
+
 - the application during runtime (browserify implementation)
 - openssl in case of deployment
 
 ```javascript
-const crypto = require('crypto')
+const crypto = require("crypto");
 
 /**********************************************************************
-*
-*        DECRYPTION MODULE FOR USE INSIDE NODE.JS                     *
-*
-***********************************************************************/
+ *
+ *        DECRYPTION MODULE FOR USE INSIDE NODE.JS                     *
+ *
+ ***********************************************************************/
 
-const encryption = (data = {"TestData":"w17h Spé^cIäl chàær§¢tèrs", "OK":"://seems/fine?x=lol"}) => {
+const encryption = (
+  data = { TestData: "w17h Spé^cIäl chàær§¢tèrs", OK: "://seems/fine?x=lol" }
+) => {
+  const secretPhrase = crypto.randomBytes(16).toString("hex");
+  const salt = crypto.randomBytes(128 / 8).toString("hex");
+  //here we generate the key and give it back as a string, we use 100k iterations
+  //as suggested in best practices
+  //We can use the key multiple times to encrypt multiple things(-30GB), we just cant use
+  //the same initialization vector twice
+  //the key for aes-256 needs to be 256 bits which equals 32 bytes or 32 characters it is currently of type Buffer
+  const configKey = crypto.pbkdf2Sync(secretPhrase, salt, 100000, 32, "sha256");
+  //create unique IV for each encryption, the key can be reused. IV needs to always be 16 bytes. it is currently of type buffer
+  const IV = crypto.randomBytes(16);
 
-   const secretPhrase = crypto.randomBytes(16).toString('hex')
-   const salt = crypto.randomBytes(128 / 8).toString('hex')
-   //here we generate the key and give it back as a string, we use 100k iterations
-   //as suggested in best practices
-   //We can use the key multiple times to encrypt multiple things(-30GB), we just cant use
-   //the same initialization vector twice
-   //the key for aes-256 needs to be 256 bits which equals 32 bytes or 32 characters it is currently of type Buffer
-   const configKey = crypto.pbkdf2Sync(secretPhrase, salt, 100000, 32, 'sha256')
-   //create unique IV for each encryption, the key can be reused. IV needs to always be 16 bytes. it is currently of type buffer
-   const IV = crypto.randomBytes(16)
+  //create ciphers for each encryption using the shared key and the unuique IV
+  const projectConfigCipher = crypto.createCipheriv(
+    "aes-256-cbc",
+    configKey,
+    IV
+  );
+  //when using hex strings as IV/keys you can convert it into a buffer to make it work:
+  //Buffer.from('1d6ef201e0e7a9019ddf8414034325e2','hex')
 
-   //create ciphers for each encryption using the shared key and the unuique IV
-   const projectConfigCipher = crypto.createCipheriv('aes-256-cbc', configKey, IV)
-   //when using hex strings as IV/keys you can convert it into a buffer to make it work:
-   //Buffer.from('1d6ef201e0e7a9019ddf8414034325e2','hex')
+  //encrypting the storage location using the prepared cipher
+  // our input is an object, so we first stringify it and set the input encoding to utf8, for our output we need base64 encoding
+  let encrypted = projectConfigCipher.update(
+    JSON.stringify(data),
+    "utf8",
+    "base64"
+  );
+  // finalize the encryption also with base64 output encoding
+  encrypted += projectConfigCipher.final("base64");
 
-   //encrypting the storage location using the prepared cipher
-   // our input is an object, so we first stringify it and set the input encoding to utf8, for our output we need base64 encoding
-   let encrypted = projectConfigCipher.update(
-       JSON.stringify(data), 'utf8', 'base64')
-   // finalize the encryption also with base64 output encoding
-   encrypted += projectConfigCipher.final('base64')
+  /***************************************************************
+   * To be able to decrypt later, we need to save the IV and key somewhere.
+   * it is recommended to store the iv together with the encrypted
+   * data, but you should store the key separately. we save those values
+   *  as hex-encoded strings - so the can later be converted into binary again
+   ****************************************************************/
+  const saveKey = key.toString("hex");
+  const saveIV = IV.toString("hex");
+  // the above strings can be directly interpreted by openssl
+  // the above key can be converted to a buffer in node: Buffer.from(saveKey, 'hex')
+  // the above key can be converted to binary using hexToBin() in the browser
 
-   /***************************************************************
-    * To be able to decrypt later, we need to save the IV and key somewhere.
-    * it is recommended to store the iv together with the encrypted
-    * data, but you should store the key separately. we save those values
-    *  as hex-encoded strings - so the can later be converted into binary again
-    ****************************************************************/
-   const saveKey = key.toString('hex')
-   const saveIV = IV.toString('hex')
-   // the above strings can be directly interpreted by openssl
-   // the above key can be converted to a buffer in node: Buffer.from(saveKey, 'hex')
-   // the above key can be converted to binary using hexToBin() in the browser
-
-   return encrypted
-}
+  return encrypted;
+};
 ```
+
 - **`OUTPUT_DATA`** = Z8QIo6YuR7DZqmHHV4WqqorUnUZ2n88gMFADMCt2FKUSgCV12rE4RpgPdjXMJJB2vNJZ+00LvE9nkn77fW0pf8c/tzW5MxQpzqV3A+HvniM= ` //look what a nice base64 string`
 - **`OUTPUT_KEY`** = '5035ae3567f2e69320b083d59a7364cf8d4b14e77d7b798051241ce546b327d9'
 - **`OUTPUT_IV`** = '1d6ef201e0e7a9019ddf8414034325e2'
@@ -357,10 +385,11 @@ Our output data looks good, so lets test what openssl can do with it!
 
 ## Using Node.crypto's output as input in openssl
 
-from node, we get the data shown above as files named *key* and *iv*
+from node, we get the data shown above as files named _key_ and _iv_
 In my use case we only need the `key` and `IV` to encrypt a new config. I still did include a decryption example as well here.
 
 Things to keep in mind:
+
 - output encoding must be base64
 - `-nosalt` option needs to be enabled
 - `-A` option needs to be enabled
@@ -383,7 +412,7 @@ echo "Z8QIo6YuR7DZqmHHV4WqqorUnUZ2n88gMFADMCt2FKUSgCV12rE4RpgPdjXMJJB2vNJZ+00LvE
 
 ### Encryption output:
 
-- **`OUTPUT_encrypt`** = Z8QIo6YuR7DZqmHHV4WqqorUnUZ2n88gMFADMCt2FKUn/ZeYUj1DEBNS2NthignUNR0hw+OOFU7qACKPZbxx8k0Pe0McXNDrOnUtl3dIwdg= ` //looking good.. `
+- **`OUTPUT_encrypt`** = Z8QIo6YuR7DZqmHHV4WqqorUnUZ2n88gMFADMCt2FKUn/ZeYUj1DEBNS2NthignUNR0hw+OOFU7qACKPZbxx8k0Pe0McXNDrOnUtl3dIwdg= `//looking good..`
 
 ### Decryption output:
 
@@ -394,6 +423,7 @@ Since our Output looks good and even the decryption worked fine, lets test what 
 ## Using browserify to decrypt node or openssl input
 
 This code expects the following input:
+
 - base64 encoded string to decrypt
 - iv in the form of a hex-encoded string
 - key in the form of a hex-encoded string
@@ -405,44 +435,45 @@ This code needs to be able to produce consistent output when receiving input fro
 We had to create a custom function `hexToBin()` to convert a hex string into a binary array to be consumed by our cipher.
 
 ```js
-import crypto from 'browserify-aes'
+import crypto from "browserify-aes";
 
 /**********************************************************************
-*
-*        DECRYPTION MODULE FOR USE IN BROWSER DURING RUNTIME          *
-*
-***********************************************************************/
-const decrypt = Base64Hash => {
-   const Key = process.env.APP_KEY //hex encoded string
-   const IV = process.env.APP_IV //hex encoded string
+ *
+ *        DECRYPTION MODULE FOR USE IN BROWSER DURING RUNTIME          *
+ *
+ ***********************************************************************/
+const decrypt = (Base64Hash) => {
+  const Key = process.env.APP_KEY; //hex encoded string
+  const IV = process.env.APP_IV; //hex encoded string
 
-   const hexToBin = (hex)=>{
-       //converts hex strings to binary arr
-       for (var bytes = [], c = 0; c < hex.length; c += 2){
-           bytes.push(parseInt(hex.substr(c, 2), 16))
-       }
-   return bytes
-   }
+  const hexToBin = (hex) => {
+    //converts hex strings to binary arr
+    for (var bytes = [], c = 0; c < hex.length; c += 2) {
+      bytes.push(parseInt(hex.substr(c, 2), 16));
+    }
+    return bytes;
+  };
 
-   //ein neuer cipher wird vorbereitet, mittels aes256, unserem 256 bit KEY und dem config IV
-   const decipher = crypto.createDecipheriv(
-       'aes256',
-       hexToBin(Key),
-       hexToBin(IV),
-   )
+  //ein neuer cipher wird vorbereitet, mittels aes256, unserem 256 bit KEY und dem config IV
+  const decipher = crypto.createDecipheriv(
+    "aes256",
+    hexToBin(Key),
+    hexToBin(IV)
+  );
 
-   //der hash wird nun decrypted mittels dem zuvor erstellten cipher
-   const decrypted = Buffer.concat([decipher.update(
-        Buffer.from(Base64Hash, 'base64'),
-    ), decipher.final()]).toString('utf8')
+  //der hash wird nun decrypted mittels dem zuvor erstellten cipher
+  const decrypted = Buffer.concat([
+    decipher.update(Buffer.from(Base64Hash, "base64")),
+    decipher.final(),
+  ]).toString("utf8");
 
-  return JSON.parse(decrypted)
-}
+  return JSON.parse(decrypted);
+};
 ```
+
 - **`OUTPUT_openssl`** = {TestData: "w17h Spé^cIäl chàær§¢tèrs", OK: "://seems/fine?x=lol"} ` //yes, thats our original input! :D`
 - **`OUTPUT_nodejs`** = {TestData: "w17h Spé^cIäl chàær§¢tèrs", OK: "://seems/fine?x=lol"} ` //and we even handled the node version! sick!`
 
-
 That's it! We did it yay!
 
->Feel free to comment and discuss on my gist: <a href="https://gist.github.com/Lawlez/88e04e3541cc0608c953a118b86bfc1a">This project on gist</a>
+> Feel free to comment and discuss on my gist: <a href="https://gist.github.com/Lawlez/88e04e3541cc0608c953a118b86bfc1a">This project on gist</a>

@@ -1,65 +1,86 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[dev.lwlx.xyz]]></title><description><![CDATA[Dev / Sec / Ops ]]></description><link>https://dev.lwlx.xyz</link><image><url>https://dev.lwlx.xyz/icon.png</url><title>dev.lwlx.xyz</title><link>https://dev.lwlx.xyz</link></image><generator>RSS for Node</generator><lastBuildDate>Wed, 18 Nov 2020 14:39:55 GMT</lastBuildDate><atom:link href="https://dev.lwlx.xyz/rss.xml" rel="self" type="application/rss+xml"/><pubDate>Tue, 27 Oct 2020 04:00:00 GMT</pubDate><copyright><![CDATA[2020 Dominik (lwlx) Feger]]></copyright><language><![CDATA[en]]></language><managingEditor><![CDATA[lwlx@lwlx.xyz]]></managingEditor><webMaster><![CDATA[lwlx@lwlx.xyz]]></webMaster><ttl>60</ttl><item><title><![CDATA[MitM using WPAD Proxy Protocol: Getting a reverse shell on windows client]]></title><description><![CDATA[<h3 id="requirements">Requirements</h3>
-<h2 id="whatiswpad">What is WPAD?</h2>
-<p>At some point in the very early days of the Internet - prior to 1996 - engineers at Netscape decided that JavaScript was a good language to write configuration files in. The result was Proxy Auto-Config (PAC) - a configuration file format that works as follows: The browser connects to a pre-configured server, downloads the PAC file, and executes a particular Javascript function to determine proper proxy configuration. Why not? It certainly is more expressive and less verbose than (let’s say) XML, and seems a reasonable way to provide configurations to many clients.</p>
-<p>PAC itself is coupled with a protocol called Web Proxy Auto-Discovery (WPAD) - a protocol that makes it unnecessary for the browser to have a pre-configured server to connect to. Instead, WPAD allows the computer to query the local network to determine the server from which to load the PAC file.</p>
-<h3 id="wpadalwaysfollowsthisschema">WPAD always follows this schema:</h3>
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[dev.lwlx.xyz]]></title><description><![CDATA[Dev / Sec / Ops | Cybersecurity blog]]></description><link>https://dev.lwlx.xyz</link><image><url>https://dev.lwlx.xyz/icon.png</url><title>dev.lwlx.xyz</title><link>https://dev.lwlx.xyz</link></image><generator>RSS for Node</generator><lastBuildDate>Wed, 18 Nov 2020 21:22:02 GMT</lastBuildDate><atom:link href="https://dev.lwlx.xyz/rss.xml" rel="self" type="application/rss+xml"/><pubDate>Wed, 21 Oct 2020 04:00:00 GMT</pubDate><copyright><![CDATA[2020 lwlx.]]></copyright><language><![CDATA[en]]></language><managingEditor><![CDATA[lwlx@lwlx.xyz]]></managingEditor><webMaster><![CDATA[lwlx@lwlx.xyz]]></webMaster><ttl>60</ttl><item><title><![CDATA[MitM using WPAD Proxy Protocol:]]></title><description><![CDATA[<h4 id="thisarticleismarkedasaworkinprogresswip">this article is marked as a work in progress <code>[WIP]</code></h4>
+<h1 id="whatiswpad">What is WPAD?</h1>
+<p>Sometime in the early days of the Internet - the web 1.0 era - a couple of devs at Netscape decided that JavaScript was an acceptable language to write configuration files in. The result was Proxy Auto-Config (PAC) - a configuration file format that works as follows: The browser connects to a pre-configured server, downloads the PAC file, and executes a particular Javascript function to determine proper proxy configuration. Why not? It is more expressive and less tedious than XML and seems reasonable to provide configurations to many clients.</p>
+<p>PAC itself works with a protocol called Web Proxy Auto-Discovery (WPAD) WPAD removes the need for the browser or the user to have a pre-configured server to connect to. Instead, WPAD allows the computer to query the local network to discover the server to load the PAC file from.</p>
+<h2 id="wpadalwaysfollowsthisschema">WPAD always follows this schema:</h2>
 <ol>
-<li>Determine whether WPAD should be used, either by looking at browser settings or asking the host operating system if the browser is configured to match the OS setting.</li>
-<li>Ensure the network is ready.</li>
-<li>If WPAD is to be used, issue a DHCPINFORM query to ask for the URL of the PAC script to use.</li>
-<li>If the DHCPINFORM query fails to return a URL, perform a DNS lookup for the unqualified hostname wpad.</li>
-<li>If the DNS lookup succeeds, then the PAC URL shall be http://wpad/wpad.dat.</li>
-<li>Establish a HTTP(S) connection to discovered URL’s server and download the PAC script.</li>
-<li>If the PAC script downloads successfully, parse and optionally compile it.</li>
-<li>For each network request, call FindProxyForURL() in the PAC script and use the proxy settings returned from the function.</li>
+<li>Determine if the system should use WPAD, either by looking at browser settings or asking the host OS if the browser is set to match the OS setting.</li>
+<li>Ensure a network connection is available.</li>
+<li>If WPAD is to be used, issue a DHCPINFORM query to ask for the URL of the PAC script.</li>
+<li>If the DHCPINFORM query fails and does not return a URL, perform a DNS lookup for the hostname <code>wpad</code>.</li>
+<li>If the DNS lookup succeeds, then the PAC URL is <code>http://wpad/wpad.dat</code>.</li>
+<li>Establish an HTTP(S) connection to the discovered URL's server, thus downloading the PAC script.</li>
+<li>If the PAC script has downloaded successfully, parse it, and optionally compile it.</li>
+<li>For each network request, call the <code>FindProxyForURL()</code> function in the PAC script and use the proxy settings returned from this function.</li>
 </ol>
-<p>You can clearly see how this can be abused by a bad actor.</p>
-<p>Windows is certainly not the only piece of software that implements WPAD. Other operating systems (OS X, Linux) and applications do as well. For example Google Chrome also has a WPAD implementation, but in Chrome’s case, evaluating the JavaScript code from the PAC file happens inside a sandbox. Other operating systems that support WPAD don’t enable it by default. This is why Windows is currently the most interesting target for this sort of attack.</p>
-<h2 id="explotbasis">explot basis</h2>
-<p>When a machine has these protocols enabled, if the local network DNS is not able to resolve the name, the machine will ask to all hosts of the network. So, any host of the network, who knows its IP, can reply. Even if a host replies with an incorrect information, it will be still regarded as legitimate.</p>
-<h2 id="exploitablescenario">Exploitable scenario</h2>
+<p>You can clearly see how a bad actor can abuse this.</p>
+<p>Windows is certainly not the only piece of software that implements WPAD. Other operating systems (OS X, Linux) and applications do as well. For example, Google Chrome also has a WPAD implementation, but in Chrome's case, the JavaScript code from the PAC is evaluated inside of a sandbox. Other operating systems that support WPAD don't enable it by default anymore. That is why Windows is currently the most attractive target for this sort of attack.</p>
+<h2 id="exploitbasis">Exploit basis</h2>
+<p>When a device has these protocols enabled, if the local network DNS cannot resolve the name, the machine will ask the whole network to get a host. So, any host of the network, who knows its IP, can reply. Even if a host replies with incorrect information, it will still be regarded as a legitimate response.</p>
+<h1 id="exploitablescenario">Exploitable scenario</h1>
 <ol>
-<li>victim and host are in same network</li>
-<li>The victim will open the browser which is configured with the option “automatically detect settings” in “Local Area Network (LAN) Settings”.</li>
-<li>The name resolution, which will be performed with the steps we mentioned earlier, will be questioned on the victim’s computer first.</li>
-<li>In step 3, because of the DNS Server does not have a corresponding record, the name of the system is sent as LLMNR or NetBIOS-NS query.</li>
+<li>victim and host are in the same network</li>
+<li>The victim opens the browser, which is configured with the option <code>automatically detect settings</code> in <code>Local Area Network (LAN) Settings</code>.</li>
+<li>The name resolution, which is performed with the steps we mentioned earlier, will be questioned on the victim's computer first.</li>
+<li>In step 3, because the DNS Server does not have a corresponding record, the system's name is sent as LLMNR or NetBIOS-NS query.</li>
 <li>The attacker listens to network traffic, catches name resolution query. It tells to the victim that he has the wpad.dat the victim is look for.</li>
 </ol>
-<p>According to the sequence above, if an attacker wants to be sure that the attack is successful, he must do:</p>
+<p>According to the flow above, if an attacker wants to make sure that the attack will be successful, he must perform the following attacks:</p>
 <ul>
 <li>DHCP poisoning attack</li>
 <li>DNS poisoning attack</li>
 <li>WPAD poisoning attack</li>
 </ul>
-<h2 id="proofofconcept">proof of concept</h2>
-<p>configure config:</p>
-<p>start analyzing first:</p>
-<p>using the <code>-A</code> option enables analyze only mode
-<strong>macOS:</strong></p>
+<!--
+# proof of concept
+
+## install Responder
+
+## configure config
+
+## start analyzing first
+
+using the `-A` option enables analyze only mode
+**macOS:**
 <pre><code class="shell language-shell">./Responder.py -i &lt;your ip address&gt; -A
 </code></pre>
-<p><strong>Linux:</strong></p>
+
+**Linux:**
 <pre><code class="shell language-shell">./Responder.py -I &lt;your net interface&gt; -A
 </code></pre>
-<p>run the attack:</p>
+
+## create payload adn custom FindProxyForURL()
+
+## run the attack:
+
+- `-w`: starts WPAD service
+- `-f`: fingerprints victims
+- `-v`: verbose output
+- `-F`: force auth to WPAD service
+<pre><code class="shell language-shell"> ./Responder.py -i 192.168.1.215 -w -f -v -F
+</code></pre>
+
+force basic auth to try and gain user & pass
+
+- `-b`: force Basic HTTP authentication
+<pre><code class="shell language-shell"> ./Responder.py -i 192.168.1.215 -w -f -v -b -F
+</code></pre>
+-->
+<p><img src="/wpad-responder-exploit/responder-intercepted.png" alt="Succsessfull WPAD attack" title="Succsessfull WPAD attack, planting a reverse shell on the victim." /></p>
+<h1 id="mitigation">Mitigation</h1>
 <ul>
-<li><code>-w</code>: starts WPAD service</li>
-<li><code>-f</code>: fingerprints victims</li>
-<li><code>-v</code>: verbose output</li>
-<li><code>-F</code>: force auth to WPAD service</li>
+<li>Create a DNS entry called "WPAD" that points to the real proxy server.</li>
+<li>Disabling automatic proxy discovery in browsers and operating systems.</li>
+<li>Configure firewalls and proxies to block and log outbound requests for wpad.dat files.</li>
 </ul>
-<p>sh-3.2# ./Responder.py -i 192.168.1.215 -w -f -v -F</p>
-<p>force basic auth to try and gain user &amp; pass</p>
-<ul>
-<li><code>-b</code>: force Basic HTTP authentication</li>
-</ul>
-<p>sh-3.2# ./Responder.py -i 192.168.1.215 -w -f -v -b -F</p>
-<h2 id="mitigation">Mitigation</h2>
-<ul>
-<li>create DNS entry with “WPAD” that points to the corporate proxy server. So the attacker won’t be able to manipulate the traffic.</li>
-<li>Consider disabling automatic proxy discovery/configuration in browsers and operating systems.</li>
-<li>Configure firewalls and proxies to log and block outbound requests for wpad.dat files.</li>
-</ul>]]></description><link>https://dev.lwlx.xyz/blog/blog/abuse-WPAD-protocol-to-MitM-any-network</link><guid isPermaLink="true">https://dev.lwlx.xyz/blog/blog/abuse-WPAD-protocol-to-MitM-any-network</guid><category><![CDATA[encryption]]></category><category><![CDATA[decryption]]></category><category><![CDATA[openssl]]></category><category><![CDATA[nodejs]]></category><category><![CDATA[php]]></category><dc:creator><![CDATA[lwlx]]></dc:creator><pubDate>Thu, 29 Oct 2020 10:26:43 GMT</pubDate></item><item><title><![CDATA[Getting consistent Encryption in Node / PHP / Browser and openSSL]]></title><description><![CDATA[<p>I recently was tasked to find a solution for encrypting data in different places and to being able to decrypt them all in a browser during runtime.</p>
+<blockquote>
+  <h2 id="wipthisarticleisaworkinprogressandwillbeupdatedwithaproofofconceptsoon"><code>[WIP]</code> This article is a work in progress and will be updated with a proof of concept soon.</h2>
+</blockquote>
+<!--
+## Read more about this topic:
+
+[https://googleprojectzero.blogspot.com/2017/12/apacolypse-now-exploiting-windows-10-in_18.html](https://googleprojectzero.blogspot.com/2017/12/apacolypse-now-exploiting-windows-10-in_18.html)
+-->]]></description><link>https://dev.lwlx.xyz/blog/blog/abuse-WPAD-protocol-to-MitM-any-network</link><guid isPermaLink="true">https://dev.lwlx.xyz/blog/blog/abuse-WPAD-protocol-to-MitM-any-network</guid><category><![CDATA[MitM]]></category><category><![CDATA[WPAD]]></category><category><![CDATA[aPAColypse]]></category><category><![CDATA[PAC]]></category><category><![CDATA[exploit]]></category><category><![CDATA[security]]></category><dc:creator><![CDATA[lwlx]]></dc:creator><pubDate>Wed, 18 Nov 2020 12:20:28 GMT</pubDate></item><item><title><![CDATA[Getting consistent Encryption in Node / PHP / Browser and openSSL]]></title><description><![CDATA[<p>I recently was tasked to find a solution for encrypting data in different places and to being able to decrypt them all in a browser during runtime.</p>
 <p>Surprisingly, it was much more challenging than expected since there was so little documentation around this online. What was available were a few code-only examples, so I was forced to do R &amp; D and try all implementations and compare the in- &amp; outputs.</p>
 <p>Given the lack of a decent out-of-the-box solution, I worry that many developers are settling for easy to use, insecure solutions that limit your project’s security and flexibility. Security should be easy to use and accessible.</p>
 <blockquote>

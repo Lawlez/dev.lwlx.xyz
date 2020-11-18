@@ -1,6 +1,7 @@
 ---
 title: "MitM using WPAD Proxy Protocol:"
 subtitle: Getting a reverse shell on windows client
+description: When a decision made 25+ years ago makes your computer vulnerable to the stupidest attack you've heard of.
 published: true
 datePublished: 1605702028862
 author: lwlx
@@ -12,6 +13,7 @@ tags:
   - aPAColypse
   - PAC
   - exploit
+  - security
 thumbnailPhoto: /wpad-responder-exploit/wpad_thumb.jpg
 bannerPhoto: /wpad-responder-exploit/wpad_post_img.jpg
 ---
@@ -34,6 +36,8 @@ PAC itself works with a protocol called Web Proxy Auto-Discovery (WPAD) WPAD rem
 6. Establish an HTTP(S) connection to the discovered URL's server, thus downloading the PAC script.
 7. If the PAC script has downloaded successfully, parse it, and optionally compile it.
 8. For each network request, call the `FindProxyForURL()` function in the PAC script and use the proxy settings returned from this function.
+
+> WPAD is practically asking the network "Hey there! would you like to send me a **payload** i can **execute**?"
 
 You can clearly see how a bad actor can abuse this.
 
@@ -100,6 +104,8 @@ force basic auth to try and gain user & pass
  ./Responder.py -i 192.168.1.215 -w -f -v -b -F
 ```
 -->
+
+![Succsessfull WPAD attack](/wpad-responder-exploit/responder-intercepted.png "Succsessfull WPAD attack, planting a reverse shell on the victim.")
 
 # Mitigation
 
