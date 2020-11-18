@@ -1,0 +1,1 @@
+{"ast":null,"code":"import { jsx as _jsx } from \"react/jsx-runtime\";\nimport React from 'react';\nimport { BlogPost } from '../../components/BlogPost';\n\nfunction Post(props) {\n  var post = props.post;\n  return /*#__PURE__*/_jsx(BlogPost, {\n    post: post\n  });\n}\n\nexport var __N_SSG = true;\nexport default Post;","map":null,"metadata":{},"sourceType":"module"}

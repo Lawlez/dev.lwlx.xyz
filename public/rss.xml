@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[dev.lwlx.xyz]]></title><description><![CDATA[Dev / Sec / Ops | Cybersecurity blog]]></description><link>https://dev.lwlx.xyz</link><image><url>https://dev.lwlx.xyz/icon.png</url><title>dev.lwlx.xyz</title><link>https://dev.lwlx.xyz</link></image><generator>RSS for Node</generator><lastBuildDate>Wed, 18 Nov 2020 21:22:02 GMT</lastBuildDate><atom:link href="https://dev.lwlx.xyz/rss.xml" rel="self" type="application/rss+xml"/><pubDate>Wed, 21 Oct 2020 04:00:00 GMT</pubDate><copyright><![CDATA[2020 lwlx.]]></copyright><language><![CDATA[en]]></language><managingEditor><![CDATA[lwlx@lwlx.xyz]]></managingEditor><webMaster><![CDATA[lwlx@lwlx.xyz]]></webMaster><ttl>60</ttl><item><title><![CDATA[MitM using WPAD Proxy Protocol:]]></title><description><![CDATA[<h4 id="thisarticleismarkedasaworkinprogresswip">this article is marked as a work in progress <code>[WIP]</code></h4>
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[dev.lwlx.xyz]]></title><description><![CDATA[Dev / Sec / Ops | Cybersecurity blog]]></description><link>https://dev.lwlx.xyz</link><image><url>https://dev.lwlx.xyz/icon.png</url><title>dev.lwlx.xyz</title><link>https://dev.lwlx.xyz</link></image><generator>RSS for Node</generator><lastBuildDate>Wed, 18 Nov 2020 21:34:23 GMT</lastBuildDate><atom:link href="https://dev.lwlx.xyz/rss.xml" rel="self" type="application/rss+xml"/><pubDate>Wed, 21 Oct 2020 04:00:00 GMT</pubDate><copyright><![CDATA[2020 lwlx.]]></copyright><language><![CDATA[en]]></language><managingEditor><![CDATA[lwlx@lwlx.xyz]]></managingEditor><webMaster><![CDATA[lwlx@lwlx.xyz]]></webMaster><ttl>60</ttl><item><title><![CDATA[MitM using WPAD Proxy Protocol:]]></title><description><![CDATA[<h4 id="thisarticleismarkedasaworkinprogresswip">this article is marked as a work in progress <code>[WIP]</code></h4>
 <h1 id="whatiswpad">What is WPAD?</h1>
 <p>Sometime in the early days of the Internet - the web 1.0 era - a couple of devs at Netscape decided that JavaScript was an acceptable language to write configuration files in. The result was Proxy Auto-Config (PAC) - a configuration file format that works as follows: The browser connects to a pre-configured server, downloads the PAC file, and executes a particular Javascript function to determine proper proxy configuration. Why not? It is more expressive and less tedious than XML and seems reasonable to provide configurations to many clients.</p>
 <p>PAC itself works with a protocol called Web Proxy Auto-Discovery (WPAD) WPAD removes the need for the browser or the user to have a pre-configured server to connect to. Instead, WPAD allows the computer to query the local network to discover the server to load the PAC file from.</p>
@@ -13,6 +13,9 @@
 <li>If the PAC script has downloaded successfully, parse it, and optionally compile it.</li>
 <li>For each network request, call the <code>FindProxyForURL()</code> function in the PAC script and use the proxy settings returned from this function.</li>
 </ol>
+<blockquote>
+  <p>WPAD is practically asking the network "Hey there! would you like to send me a <strong>payload</strong> i can <strong>execute</strong>?"</p>
+</blockquote>
 <p>You can clearly see how a bad actor can abuse this.</p>
 <p>Windows is certainly not the only piece of software that implements WPAD. Other operating systems (OS X, Linux) and applications do as well. For example, Google Chrome also has a WPAD implementation, but in Chrome's case, the JavaScript code from the PAC is evaluated inside of a sandbox. Other operating systems that support WPAD don't enable it by default anymore. That is why Windows is currently the most attractive target for this sort of attack.</p>
 <h2 id="exploitbasis">Exploit basis</h2>
@@ -88,13 +91,13 @@ force basic auth to try and gain user & pass
 </blockquote>
 <p>Okay, so lets assume we use following input data to test each implementation:</p>
 <ul>
-<li><strong><code>key</code></strong> = '5035ae3567f2e69320b083d59a7364cf8d4b14e77d7b798051241ce546b327d9'  <code>//must be 256 bits</code></li>
+<li><strong><code>key</code></strong> = '5035ae3567f2e69320b083d59a7364cf8d4b14e77d7b798051241ce546b327d9' <code>//must be 256 bits</code></li>
 <li><strong><code>iv</code></strong> = '1d6ef201e0e7a9019ddf8414034325e2' <code>//must be 128 bits</code></li>
 <li><strong><code>inputData</code></strong> = <code>{"TestData":"w17h Spé^cIäl chàær§¢tèrs", "OK":"://seems/fine?x=lol"}</code></li>
 </ul>
 <p>Let's quickly run through and test each implementation:</p>
 <h2 id="usingnodejscryptomodule">Using Node JS Crypto module</h2>
-<p>Node Provides a nice <code>crypto</code>  implementation. It's documentation is rather sparse, but this is what most resources suggest by using:</p>
+<p>Node Provides a nice <code>crypto</code> implementation. It's documentation is rather sparse, but this is what most resources suggest by using:</p>
 <ul>
 <li><code>crypto.randomBytes()</code></li>
 <li><code>crypto.createCipheriv()</code></li>
@@ -139,7 +142,7 @@ const encryption = (data = 'TestString {} Héllöüä') =&gt; {
 <h3 id="testingtheimplementation">Testing the implementation</h3>
 <p>We notice that we need to trim the key to 32bytes and the IV to 16 bytes. This is likely because of the conversion from hex to string after the creation of the key.</p>
 <ul>
-<li><strong><code>key</code></strong> = '5035ae3567f2e69320b083d59a7364cf'  <code>//is now 32 bytes string</code></li>
+<li><strong><code>key</code></strong> = '5035ae3567f2e69320b083d59a7364cf' <code>//is now 32 bytes string</code></li>
 <li><strong><code>iv</code></strong> = '1d6ef201e0e7a901' <code>//is now 16 bytes string</code></li>
 </ul>
 <p>This will probably lead to an issue later on since other implementations actually want the longer strings. Maybe we can find a workaround by base64 encoding instead of stringifying the key and iv.</p>
@@ -179,54 +182,56 @@ const configKey = crypto.pbkdf2Sync(secretPhrase, salt, 100000, 32, 'sha256')
 </ul>
 <p>so using the codes below, we can switch between these three outputs as we like</p>
 <pre><code class="javascript language-javascript">//output Buffer
-encrypted = Buffer.concat([encrypted, Cipher.final()])
+encrypted = Buffer.concat([encrypted, Cipher.final()]);
 
 //output String
-encrypted = Buffer.concat([encrypted, Cipher.final()]).toString('hex')
-
+encrypted = Buffer.concat([encrypted, Cipher.final()]).toString("hex");
 
 //output Base64
-encrypted = Buffer.concat([encrypted, Cipher.final()]).toString('base64')
+encrypted = Buffer.concat([encrypted, Cipher.final()]).toString("base64");
 
 //revert conversion to base64
-Buffer.from(encrypted.toString('base64') , 'base64')
+Buffer.from(encrypted.toString("base64"), "base64");
 </code></pre>
 <p>From what we have learned here, I guess the best option is to use the base64 output method since we can easily convert it to a buffer</p>
 <h2 id="usingbrowserifyaessnodecryptolikeimplementationinsidethebrowser">Using browserify-aes's node crypto-like implementation inside the Browser</h2>
 <p>Inside the browser, we cannot use Nodes.js built-in modules. Using <code>browserify-aes</code> we can use a node-like crypto implementation, which uses the same syntax as the node implementation. In my use case, I only need to decipher in the browser, this means I don’t have to worry about a truly random key generation or ciphering.</p>
-<pre><code class="js language-js">import crypto from 'browserify-aes'
+<pre><code class="js language-js">import crypto from "browserify-aes";
 
 /**********************************************************************
-*
-*        DECRYPTION MODULE FOR USE IN BROWSER DURING RUNTIME          *
-*
-***********************************************************************/
-const decrypt = Base64Hash =&gt; {
-   //we use the base64 hash generated by openssl cli as an input
-   const Base64Hash = 'Z8QIo6YuR7DZqmHHV4WqqorUnUZ2n88gMFADMCt2FKUn/ZeYUj1DEBNS2NthignUNR0hw+OOFU7qACKPZbxx8k0Pe0McXNDrOnUtl3dIwdg='
-   const Key = '5035ae3567f2e69320b083d59a7364cf8d4b14e77d7b798051241ce546b327d9'
-   const IV = '1d6ef201e0e7a9019ddf8414034325e2'
-   const hexToBin = (hex)=&gt;{
-       //converts hex strings to binary arr
-       for (var bytes = [], c = 0; c &lt; hex.length; c += 2){
-           bytes.push(parseInt(hex.substr(c, 2), 16))
-       }
-   return bytes
-   }
-   //ein neuer cipher wird vorbereitet, mittels aes256, unserem 256 bit KEY und dem config IV
-   const decipher = crypto.createDecipheriv(
-       'aes256',
-       hexToBin(Key),
-       hexToBin(IV),
-   )
+ *
+ *        DECRYPTION MODULE FOR USE IN BROWSER DURING RUNTIME          *
+ *
+ ***********************************************************************/
+const decrypt = (Base64Hash) =&gt; {
+  //we use the base64 hash generated by openssl cli as an input
+  const Base64Hash =
+    "Z8QIo6YuR7DZqmHHV4WqqorUnUZ2n88gMFADMCt2FKUn/ZeYUj1DEBNS2NthignUNR0hw+OOFU7qACKPZbxx8k0Pe0McXNDrOnUtl3dIwdg=";
+  const Key =
+    "5035ae3567f2e69320b083d59a7364cf8d4b14e77d7b798051241ce546b327d9";
+  const IV = "1d6ef201e0e7a9019ddf8414034325e2";
+  const hexToBin = (hex) =&gt; {
+    //converts hex strings to binary arr
+    for (var bytes = [], c = 0; c &lt; hex.length; c += 2) {
+      bytes.push(parseInt(hex.substr(c, 2), 16));
+    }
+    return bytes;
+  };
+  //ein neuer cipher wird vorbereitet, mittels aes256, unserem 256 bit KEY und dem config IV
+  const decipher = crypto.createDecipheriv(
+    "aes256",
+    hexToBin(Key),
+    hexToBin(IV)
+  );
 
-   //der hash wird nun decrypted mittels dem zuvor erstellten cipher
-   const decrypted = Buffer.concat([decipher.update(
-        Buffer.from(Base64Hash, 'base64'),
-    ), decipher.final()]).toString('utf8')
+  //der hash wird nun decrypted mittels dem zuvor erstellten cipher
+  const decrypted = Buffer.concat([
+    decipher.update(Buffer.from(Base64Hash, "base64")),
+    decipher.final(),
+  ]).toString("utf8");
 
-  return JSON.parse(decrypted)
-}
+  return JSON.parse(decrypted);
+};
 </code></pre>
 <ul>
 <li><strong><code>OUTPUT</code></strong> = {TestData: "w17h Spé^cIäl chàær§¢tèrs", OK: "://seems/fine?x=lol"} <code>//yes, thats our original input! :D</code></li>
@@ -335,53 +340,61 @@ echo "encryptedString" | openssl aes-256-cbc -d -iv $(cat iv)  -K $(cat key) -ba
 <li>the application during runtime (browserify implementation)</li>
 <li>openssl in case of deployment</li>
 </ul>
-<pre><code class="javascript language-javascript">const crypto = require('crypto')
+<pre><code class="javascript language-javascript">const crypto = require("crypto");
 
 /**********************************************************************
-*
-*        DECRYPTION MODULE FOR USE INSIDE NODE.JS                     *
-*
-***********************************************************************/
+ *
+ *        DECRYPTION MODULE FOR USE INSIDE NODE.JS                     *
+ *
+ ***********************************************************************/
 
-const encryption = (data = {"TestData":"w17h Spé^cIäl chàær§¢tèrs", "OK":"://seems/fine?x=lol"}) =&gt; {
+const encryption = (
+  data = { TestData: "w17h Spé^cIäl chàær§¢tèrs", OK: "://seems/fine?x=lol" }
+) =&gt; {
+  const secretPhrase = crypto.randomBytes(16).toString("hex");
+  const salt = crypto.randomBytes(128 / 8).toString("hex");
+  //here we generate the key and give it back as a string, we use 100k iterations
+  //as suggested in best practices
+  //We can use the key multiple times to encrypt multiple things(-30GB), we just cant use
+  //the same initialization vector twice
+  //the key for aes-256 needs to be 256 bits which equals 32 bytes or 32 characters it is currently of type Buffer
+  const configKey = crypto.pbkdf2Sync(secretPhrase, salt, 100000, 32, "sha256");
+  //create unique IV for each encryption, the key can be reused. IV needs to always be 16 bytes. it is currently of type buffer
+  const IV = crypto.randomBytes(16);
 
-   const secretPhrase = crypto.randomBytes(16).toString('hex')
-   const salt = crypto.randomBytes(128 / 8).toString('hex')
-   //here we generate the key and give it back as a string, we use 100k iterations
-   //as suggested in best practices
-   //We can use the key multiple times to encrypt multiple things(-30GB), we just cant use
-   //the same initialization vector twice
-   //the key for aes-256 needs to be 256 bits which equals 32 bytes or 32 characters it is currently of type Buffer
-   const configKey = crypto.pbkdf2Sync(secretPhrase, salt, 100000, 32, 'sha256')
-   //create unique IV for each encryption, the key can be reused. IV needs to always be 16 bytes. it is currently of type buffer
-   const IV = crypto.randomBytes(16)
+  //create ciphers for each encryption using the shared key and the unuique IV
+  const projectConfigCipher = crypto.createCipheriv(
+    "aes-256-cbc",
+    configKey,
+    IV
+  );
+  //when using hex strings as IV/keys you can convert it into a buffer to make it work:
+  //Buffer.from('1d6ef201e0e7a9019ddf8414034325e2','hex')
 
-   //create ciphers for each encryption using the shared key and the unuique IV
-   const projectConfigCipher = crypto.createCipheriv('aes-256-cbc', configKey, IV)
-   //when using hex strings as IV/keys you can convert it into a buffer to make it work:
-   //Buffer.from('1d6ef201e0e7a9019ddf8414034325e2','hex')
+  //encrypting the storage location using the prepared cipher
+  // our input is an object, so we first stringify it and set the input encoding to utf8, for our output we need base64 encoding
+  let encrypted = projectConfigCipher.update(
+    JSON.stringify(data),
+    "utf8",
+    "base64"
+  );
+  // finalize the encryption also with base64 output encoding
+  encrypted += projectConfigCipher.final("base64");
 
-   //encrypting the storage location using the prepared cipher
-   // our input is an object, so we first stringify it and set the input encoding to utf8, for our output we need base64 encoding
-   let encrypted = projectConfigCipher.update(
-       JSON.stringify(data), 'utf8', 'base64')
-   // finalize the encryption also with base64 output encoding
-   encrypted += projectConfigCipher.final('base64')
+  /***************************************************************
+   * To be able to decrypt later, we need to save the IV and key somewhere.
+   * it is recommended to store the iv together with the encrypted
+   * data, but you should store the key separately. we save those values
+   *  as hex-encoded strings - so the can later be converted into binary again
+   ****************************************************************/
+  const saveKey = key.toString("hex");
+  const saveIV = IV.toString("hex");
+  // the above strings can be directly interpreted by openssl
+  // the above key can be converted to a buffer in node: Buffer.from(saveKey, 'hex')
+  // the above key can be converted to binary using hexToBin() in the browser
 
-   /***************************************************************
-    * To be able to decrypt later, we need to save the IV and key somewhere.
-    * it is recommended to store the iv together with the encrypted
-    * data, but you should store the key separately. we save those values
-    *  as hex-encoded strings - so the can later be converted into binary again
-    ****************************************************************/
-   const saveKey = key.toString('hex')
-   const saveIV = IV.toString('hex')
-   // the above strings can be directly interpreted by openssl
-   // the above key can be converted to a buffer in node: Buffer.from(saveKey, 'hex')
-   // the above key can be converted to binary using hexToBin() in the browser
-
-   return encrypted
-}
+  return encrypted;
+};
 </code></pre>
 <ul>
 <li><strong><code>OUTPUT_DATA</code></strong> = Z8QIo6YuR7DZqmHHV4WqqorUnUZ2n88gMFADMCt2FKUSgCV12rE4RpgPdjXMJJB2vNJZ+00LvE9nkn77fW0pf8c/tzW5MxQpzqV3A+HvniM= <code>//look what a nice base64 string</code></li>
@@ -431,39 +444,40 @@ echo "Z8QIo6YuR7DZqmHHV4WqqorUnUZ2n88gMFADMCt2FKUSgCV12rE4RpgPdjXMJJB2vNJZ+00LvE
 <p>I get the keys from process.env in this example. You could also receive them via input or even a file.</p>
 <p>This code needs to be able to produce consistent output when receiving input from either node or openssl.</p>
 <p>We had to create a custom function <code>hexToBin()</code> to convert a hex string into a binary array to be consumed by our cipher.</p>
-<pre><code class="js language-js">import crypto from 'browserify-aes'
+<pre><code class="js language-js">import crypto from "browserify-aes";
 
 /**********************************************************************
-*
-*        DECRYPTION MODULE FOR USE IN BROWSER DURING RUNTIME          *
-*
-***********************************************************************/
-const decrypt = Base64Hash =&gt; {
-   const Key = process.env.APP_KEY //hex encoded string
-   const IV = process.env.APP_IV //hex encoded string
+ *
+ *        DECRYPTION MODULE FOR USE IN BROWSER DURING RUNTIME          *
+ *
+ ***********************************************************************/
+const decrypt = (Base64Hash) =&gt; {
+  const Key = process.env.APP_KEY; //hex encoded string
+  const IV = process.env.APP_IV; //hex encoded string
 
-   const hexToBin = (hex)=&gt;{
-       //converts hex strings to binary arr
-       for (var bytes = [], c = 0; c &lt; hex.length; c += 2){
-           bytes.push(parseInt(hex.substr(c, 2), 16))
-       }
-   return bytes
-   }
+  const hexToBin = (hex) =&gt; {
+    //converts hex strings to binary arr
+    for (var bytes = [], c = 0; c &lt; hex.length; c += 2) {
+      bytes.push(parseInt(hex.substr(c, 2), 16));
+    }
+    return bytes;
+  };
 
-   //ein neuer cipher wird vorbereitet, mittels aes256, unserem 256 bit KEY und dem config IV
-   const decipher = crypto.createDecipheriv(
-       'aes256',
-       hexToBin(Key),
-       hexToBin(IV),
-   )
+  //ein neuer cipher wird vorbereitet, mittels aes256, unserem 256 bit KEY und dem config IV
+  const decipher = crypto.createDecipheriv(
+    "aes256",
+    hexToBin(Key),
+    hexToBin(IV)
+  );
 
-   //der hash wird nun decrypted mittels dem zuvor erstellten cipher
-   const decrypted = Buffer.concat([decipher.update(
-        Buffer.from(Base64Hash, 'base64'),
-    ), decipher.final()]).toString('utf8')
+  //der hash wird nun decrypted mittels dem zuvor erstellten cipher
+  const decrypted = Buffer.concat([
+    decipher.update(Buffer.from(Base64Hash, "base64")),
+    decipher.final(),
+  ]).toString("utf8");
 
-  return JSON.parse(decrypted)
-}
+  return JSON.parse(decrypted);
+};
 </code></pre>
 <ul>
 <li><strong><code>OUTPUT_openssl</code></strong> = {TestData: "w17h Spé^cIäl chàær§¢tèrs", OK: "://seems/fine?x=lol"} <code>//yes, thats our original input! :D</code></li>
@@ -477,9 +491,9 @@ const decrypt = Base64Hash =&gt; {
 <hr />
 <h2 id="appsectools">AppSec Tools</h2>
 <ul>
-<li>[x] <a href="https://github.com/CISOfy/lynis">lynis</a> |  <code>active</code> |: Security auditing tool for Linux, macOS, and UNIX-based systems</li>
+<li>[x] <a href="https://github.com/CISOfy/lynis">lynis</a> | <code>active</code> |: Security auditing tool for Linux, macOS, and UNIX-based systems</li>
 <li>[ ] <a href="https://github.com/nomasters/killcord">killcord</a> | <strong><code>new</code></strong> |: a censorship resistant deadman's switch</li>
-<li>[x] <a href="https://github.com/zaproxy/zaproxy">OWASP ZAP</a> |  <code>active</code> |: autodetect security vulnerabilities in your web applications while developing and testing your applications</li>
+<li>[x] <a href="https://github.com/zaproxy/zaproxy">OWASP ZAP</a> | <code>active</code> |: autodetect security vulnerabilities in your web applications while developing and testing your applications</li>
 <li>[ ] <a href="https://github.com/Cisco-Talos/clamav-faq">ClamAV</a> | <strong><code>new</code></strong> |: open source antivirus engine for detecting trojans, viruses, malware &amp; other malicious threats.</li>
 <li>[ ] <a href="https://github.com/skeeto/endlessh">endlessh</a> | <strong><code>new</code></strong> |: Endlessh is an SSH tarpit (honeypot) that very slowly sends an endless, random SSH banner</li>
 </ul>
@@ -491,8 +505,8 @@ const decrypt = Base64Hash =&gt; {
 <hr />
 <h2 id="developertools">developer Tools</h2>
 <ul>
-<li>[x] <a href="https://github.com/ipfs/js-ipfs">(js-) IPFS</a> |  <code>active</code> |: A peer-to-peer hypermedia protocol
-designed to make the web faster, safer, and more open.</li>
+<li>[x] <a href="https://github.com/ipfs/js-ipfs">(js-) IPFS</a> | <code>active</code> |: A peer-to-peer hypermedia protocol
+  designed to make the web faster, safer, and more open.</li>
 <li>[ ] <a href="https://github.com/ml5js/ml5-library">ML5.js</a> | <em>tested</em> |: Friendly &amp; easy to use machine learning for the web!</li>
 <li>[ ] <a href="https://github.com/tensorflow">TensorFlow</a> | <strong><code>new</code></strong> |: Open Source Machine Learning Framework (With extensive docs and big community)</li>
 <li>[ ] <a href="https://github.com/denoland/deno">deno</a> | <em>testing</em> |: Deno aims to provide a productive and secure scripting environment for the modern programmer. It is built on top of V8, Rust, and TypeScript.</li>
@@ -505,8 +519,8 @@ designed to make the web faster, safer, and more open.</li>
 <ul>
 <li>[x] <a href="https://thehackerblog.com/galvanizer/">Chrome Galvanizer</a> | <em>tested</em> |: Harden your Chrome browser via enterprise policy.</li>
 <li>[ ] <a href="https://github.com/mandatoryprogrammer/CursedChrome">Cursed Chrome</a> | <strong><code>new</code></strong> |: Chrome-extension implant that turns victim Chrome browsers into fully-functional HTTP proxies, allowing you to browse sites as your victims.</li>
-<li>[x] <a href="https://github.com/nmap/nmap">NMAP</a> |  <code>active</code> |: The #1 network scanner &amp; mapper</li>
-<li>[x] <a href="https://github.com/vulnersCom/nmap-vulners">nmap-vulners</a> |  <code>active</code> |: extension to NMAP that chekcs for more known vulns</li>
+<li>[x] <a href="https://github.com/nmap/nmap">NMAP</a> | <code>active</code> |: The #1 network scanner &amp; mapper</li>
+<li>[x] <a href="https://github.com/vulnersCom/nmap-vulners">nmap-vulners</a> | <code>active</code> |: extension to NMAP that chekcs for more known vulns</li>
 <li>[ ] <a href="https://github.com/lesspass/lesspass">lesspass</a> | <strong><code>new</code></strong> |: stateless open source password manager</li>
 <li>[ ] <a href="https://grantproxy.com/">GrantProxy</a> | <strong><code>new</code></strong> |: Turn your web browser into a magic proxy server in one click.</li>
 <li>[ ] <a href="https://github.com/ohmyzsh/ohmyzsh">ohmyzsh</a> | <strong><code>new</code></strong> |: A delightful community-driven framework for managing your zsh configuration. Includes 200+ plugins</li>
@@ -516,15 +530,15 @@ designed to make the web faster, safer, and more open.</li>
 <p>a collection of useful guides or tutorials to stay safe.</p>
 <h2 id="securityguides">Security Guides</h2>
 <ul>
-<li>[x] <a href="https://cheatsheetseries.owasp.org/">OWASP Cheat Sheets</a> |  <code>active</code> |: These cheat sheets were created by various application security professionals who have expertise in specific topics.</li>
-<li>[ ] <a href="https://portswigger.net/web-security/cross-site-scripting/cheat-sheet">PortSwigger XSS CheatSheet</a> |  <code>active</code> |: An extensive list of known XSS vulns, sortable and searchable</li>
+<li>[x] <a href="https://cheatsheetseries.owasp.org/">OWASP Cheat Sheets</a> | <code>active</code> |: These cheat sheets were created by various application security professionals who have expertise in specific topics.</li>
+<li>[ ] <a href="https://portswigger.net/web-security/cross-site-scripting/cheat-sheet">PortSwigger XSS CheatSheet</a> | <code>active</code> |: An extensive list of known XSS vulns, sortable and searchable</li>
 </ul>
 <hr />
 <h2 id="devguides">Dev Guides</h2>
 <ul>
 <li>[ ] <a href="https://htmlhead.dev/">HTMLHEAD.dev</a> : A free guide to HTML5 <head> elements</li>
-<li>[ ] <a href="https://css-tricks.com/snippets/css/a-guide-to-flexbox/">CSS FlexBox Cheatsheet</a> |  <code>active</code> |: the only CSS flexbox cheatsheet you'll need</li>
-<li>[x] <a href="https://devdocs.io/">DevDocs.io</a> |  <code>active</code> |: Huge, fast, searchable reporsitory for dev documentation, from java to docker, from rust to WordPress.</li>
+<li>[ ] <a href="https://css-tricks.com/snippets/css/a-guide-to-flexbox/">CSS FlexBox Cheatsheet</a> | <code>active</code> |: the only CSS flexbox cheatsheet you'll need</li>
+<li>[x] <a href="https://devdocs.io/">DevDocs.io</a> | <code>active</code> |: Huge, fast, searchable reporsitory for dev documentation, from java to docker, from rust to WordPress.</li>
 <li>[ ] <a href="https://blog.bitsrc.io/how-to-set-up-a-private-npm-registry-locally-1065e6790796">Set Up a Private NPM Registry Locally</a> | <em>tested</em> |: using verdaccio to setup local NPM registry.</li>
 <li>[ ] <a href="https://www.codegrepper.com/index.php">Grepper</a> | <strong><code>new</code></strong> |: Accrue code answers to common coding problems, find code answers without thinking - using Greppers “code problem” search engine.</li>
 </ul>
