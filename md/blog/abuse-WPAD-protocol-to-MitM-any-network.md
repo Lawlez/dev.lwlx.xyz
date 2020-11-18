@@ -11,8 +11,8 @@ tags:
   - aPAColypse
   - PAC
   - exploit
-thumbnailPhoto: /crypto_thumb.jpg
-bannerPhoto: /crypto.jpg
+thumbnailPhoto: /wpad-responder-exploit/wpad_thumb.jpg
+bannerPhoto: /wpad-responder-exploit/wpad_post_img.jpg
 canonicalUrl: https://dev.lwlx.xyz/
 ---
 
@@ -88,7 +88,7 @@ using the `-A` option enables analyze only mode
 - `-F`: force auth to WPAD service
 
 ```shell
-sh-3.2# ./Responder.py -i 192.168.1.215 -w -f -v -F
+ ./Responder.py -i 192.168.1.215 -w -f -v -F
 ```
 
 force basic auth to try and gain user & pass
@@ -96,7 +96,7 @@ force basic auth to try and gain user & pass
 - `-b`: force Basic HTTP authentication
 
 ```shell
-sh-3.2# ./Responder.py -i 192.168.1.215 -w -f -v -b -F
+ ./Responder.py -i 192.168.1.215 -w -f -v -b -F
 ```
 
 # Mitigation
