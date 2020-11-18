@@ -1,5 +1,3 @@
-//const BundleAnalyzerPlugin = require('@bundle-analyzer/webpack-plugin')
-
 module.exports = {
   trailingSlash: true,
   poweredByHeader: false,
@@ -16,11 +14,6 @@ module.exports = {
       ...config.resolve.alias,
       "~": __dirname,
     };
-
-    config.plugins
-      .push
-      //new BundleAnalyzerPlugin({ token: process.env.BUNDLE_ANALYZER_TOKEN })
-      ();
 
     return config;
   },
