@@ -1,6 +1,7 @@
 import React from 'react';
 import { globals } from '../globals';
 
+const date = new Date().getFullYear()
 export const Footer: React.FC = () => (
   <div
     style={{
@@ -17,7 +18,7 @@ export const Footer: React.FC = () => (
       fontSize: '12pt',
     }}
   >
-    <p>{`© ${globals.yourName} ${new Date().getFullYear()}`}</p>
+    <p>{`© lwlx. ${date}`}</p>
     <a href="/rss.xml">
       <img src="/rss-white.svg" alt="RSS Feed" height="24" width="24" />
     </a>

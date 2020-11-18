@@ -1,11 +1,11 @@
-import React from 'react';
-import ReactMarkdown from 'react-markdown/with-html';
-import Code from './Code';
-import { globals } from '../globals';
+import React from "react";
+import ReactMarkdown from "react-markdown/with-html";
+import Code from "./Code";
+import { globals } from "../globals";
 
 export const Markdown: React.FC<{ source: string }> = (props) => {
   return (
-    <div style={{ width: '100%' }} className="devii-markdown">
+    <div style={{ width: "100%" }} className="devii-markdown">
       <ReactMarkdown
         key="content"
         source={props.source}
@@ -17,7 +17,8 @@ export const Markdown: React.FC<{ source: string }> = (props) => {
       <style jsx global>{`
         .devii-markdown p,
         .devii-markdown li {
-          line-height: 1.7;
+          line-height: 32px;
+          font-size: 21px;
           color: #333;
           overflow-wrap: break-word;
         }
@@ -39,7 +40,7 @@ export const Markdown: React.FC<{ source: string }> = (props) => {
         .devii-markdown h5 > a,
         .devii-markdown h6 > a {
           text-decoration: underline;
-          color: #F07693;
+          color: #f07693;
         }
 
         .devii-markdown hr {
@@ -48,6 +49,8 @@ export const Markdown: React.FC<{ source: string }> = (props) => {
         }
 
         .devii-markdown h1 {
+          font-size: 46px;
+          line-height: 56px;
           padding-top: 30px;
           padding-bottom: 10px;
           margin-top: 30px;
@@ -105,7 +108,7 @@ export const Markdown: React.FC<{ source: string }> = (props) => {
         }
 
         .devii-markdown code {
-          background-color: #F0769320;
+          background-color: #f0769320;
           padding: 3px 3px;
           border-radius: 2px;
           font-size: 1em;
@@ -127,18 +130,18 @@ export const Markdown: React.FC<{ source: string }> = (props) => {
         }
 
         a {
-            text-decoration: underline;
-            color: #F07693;
-          }
+          text-decoration: underline;
+          color: #f07693;
+        }
 
-          @media only screen and (min-width: 768px) {
-            .devii-markdown code {
-                background-color: #F0769320;
-                padding: 3px 3px;
-                border-radius: 2px;
-                font-size: 16px;
-              }
+        @media only screen and (min-width: 768px) {
+          .devii-markdown code {
+            background-color: #f0769320;
+            padding: 3px 3px;
+            border-radius: 2px;
+            font-size: 16px;
           }
+        }
       `}</style>
     </div>
   );

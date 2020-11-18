@@ -1,9 +1,9 @@
-import React from 'react';
-import { Markdown } from './Markdown';
-import { PostData } from '../loader';
-import { PostMeta } from './PostMeta';
-import { Author } from './Author';
-import {globals} from '../globals'
+import React from "react";
+import { Markdown } from "./Markdown";
+import { PostData } from "../loader";
+import { PostMeta } from "./PostMeta";
+import { Author } from "./Author";
+import { globals } from "../globals";
 
 export const BlogPost: React.FunctionComponent<{ post: PostData }> = ({
   post,
@@ -12,38 +12,39 @@ export const BlogPost: React.FunctionComponent<{ post: PostData }> = ({
   return (
     <div
       style={{
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'center',
-        width: '100%',
-        padding: '0px 0px 100px 0px',
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "center",
+        width: "100%",
+        padding: "0px 0px 100px 0px",
       }}
     >
-        <style jsx global>{`
-        .blog-post{
+      <style jsx global>{`
+        .blog-post {
           width: 100%;
           max-width: 1080px;
         }
-        ` }</style>
+      `}</style>
       <PostMeta post={post} />
       <div className="blog-post">
         {post.bannerPhoto && (
           <img
             style={{
-              width: '100%',
-              maxWidth: '100%',
-              margin: '0px',
+              width: "100%",
+              maxWidth: "100%",
+              margin: "0px",
             }}
             src={post.bannerPhoto}
           />
         )}
-        <div style={{ padding: '50px 3vw 50px 3vw' }}>
+        <div style={{ padding: "50px 3vw 50px 3vw" }}>
           {title && (
             <h1
               style={{
-                margin: '10px 0px 10px 0px',
+                margin: "10px 0px 10px 0px",
                 padding: 0,
-                border: 'none',
+                border: "none",
+                fontSize: 46,
               }}
             >
               {title}
@@ -52,11 +53,11 @@ export const BlogPost: React.FunctionComponent<{ post: PostData }> = ({
           {subtitle && (
             <h2
               style={{
-                margin: '10px 0px',
+                margin: "10px 0px",
                 padding: 0,
-                border: 'none',
+                border: "none",
                 fontWeight: 400,
-                opacity: '0.6',
+                opacity: "0.6",
               }}
             >
               {subtitle}
@@ -64,17 +65,17 @@ export const BlogPost: React.FunctionComponent<{ post: PostData }> = ({
           )}
           <hr
             style={{
-              height: '2px',
+              height: "2px",
               background: globals.primaryColor,
-              margin: '25px 0px',
-              border: 'none',
-              borderRadius: 1
+              margin: "25px 0px",
+              border: "none",
+              borderRadius: 1,
             }}
           />
           <Author post={post} />
         </div>
 
-        <div style={{ width: '100%', padding: '0px 3vw' }}>
+        <div style={{ width: "100%", padding: "0px 3vw" }}>
           <Markdown source={post.content} />
         </div>
       </div>
