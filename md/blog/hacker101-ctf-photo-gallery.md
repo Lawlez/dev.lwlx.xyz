@@ -11,8 +11,9 @@ tags:
   - writeup
   - hackerone
   - hacker101
-thumbnailPhoto: /crypto_thumb.jpg
-bannerPhoto: /crypto_thumb.jpg
+  - security
+thumbnailPhoto: /hackerone/hackerone.png
+bannerPhoto: /hackerone/hackerone.png
 canonicalUrl:
 ---
 
