@@ -3,7 +3,7 @@ title: "MitM using WPAD Proxy Protocol:"
 subtitle: Getting a reverse shell on windows client
 description: When a decision made 25+ years ago makes your computer vulnerable to the stupidest attack you've heard of.
 published: true
-datePublished: 1605702028862
+datePublished: 1605702028864
 author: lwlx
 authorTwitter: "0x0000005"
 authorPhoto: /profile.jpg
@@ -67,6 +67,7 @@ According to the flow above, if an attacker wants to make sure that the attack w
 ## install Responder
 
 ## configure config
+-->
 
 ## start analyzing first
 
@@ -103,7 +104,6 @@ force basic auth to try and gain user & pass
 ```shell
  ./Responder.py -i 192.168.1.215 -w -f -v -b -F
 ```
--->
 
 ![Succsessfull WPAD attack](/wpad-responder-exploit/responder-intercepted.png "Succsessfull WPAD attack, planting a reverse shell on the victim.")
 

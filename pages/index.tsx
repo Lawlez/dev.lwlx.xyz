@@ -193,36 +193,6 @@ const Home = (props: { introduction: string; posts: PostData[] }) => {
           </button>
         </a>
       </div>
-
-      <div style={sectionStyle}>
-        <h2
-          style={{
-            margin: "4px 0px",
-            fontSize: "22pt",
-            paddingBottom: "30px",
-          }}
-        >
-          this is still a work in progress . . .
-        </h2>
-        <a
-          href="https://github.com/Lawlez/dev.lwlx.xyz"
-          style={{ cursor: "pointer" }}
-        >
-          <button
-            style={{
-              padding: "10px 30px",
-              backgroundColor: globals.primaryColor,
-              color: "white",
-              fontSize: "14pt",
-              border: "none",
-              borderRadius: "8px",
-              cursor: "pointer",
-            }}
-          >
-            check dev.lwlx.xyz on GitHub
-          </button>
-        </a>
-      </div>
     </div>
   );
 };
