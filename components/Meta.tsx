@@ -14,7 +14,7 @@ export const Meta: React.FC<{
   return (
     <NextHead>
       <title>{meta.title}</title>
-      <meta name="copyright" content="lwlx. 2020" />
+      <meta name="copyright" content="lwlx. 2021" />
       {meta.link && <link rel="canonical" href={meta.link} />}
       {meta.desc && <meta name="description" content={meta.desc} />}
       <meta property="og:type" content="website" />
