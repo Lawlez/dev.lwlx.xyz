@@ -1,7 +1,9 @@
 {
+  "/OSINT": "pages/OSINT.js",
   "/_app": "pages/_app.js",
+  "/blog/[blog]": "pages/blog/[blog].js",
+  "/": "pages/index.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/": "pages/index.js",
-  "/blog/[blog]": "pages/blog/[blog].js"
+  "/404": "pages/404.html"
 }
