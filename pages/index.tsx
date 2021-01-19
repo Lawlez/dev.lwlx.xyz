@@ -13,6 +13,7 @@ const sectionStyle = {
 } as const;
 
 const Home = (props: { introduction: string; posts: PostData[] }) => {
+  console.log(props.posts)
   return (
     <div
       style={{
@@ -52,18 +53,12 @@ const Home = (props: { introduction: string; posts: PostData[] }) => {
           }}
         >
           {props.posts.map((post, key) => {
-            let isTagged = false;
             if (post && post.tags) {
-              post.tags.forEach((tag) => {
-                if (tag) {
-                  isTagged = true;
-                }
-              });
               if (
-                (isTagged && key === props.posts.length - 1) ||
-                (isTagged && key === props.posts.length - 2) ||
-                (isTagged && key === props.posts.length - 3) ||
-                (isTagged && key === props.posts.length - 4)
+                (key === 0) ||
+                (key === 1) ||
+                (key === 2) ||
+                (key === 3)
               ) {
                 return <PostCard key={key} post={post} />;
               }
@@ -122,7 +117,7 @@ const Home = (props: { introduction: string; posts: PostData[] }) => {
             fontSize: "34pt",
           }}
         >
-          Devtools and Js Resources
+          All Posts
         </h2>
         <div
           style={{
@@ -135,24 +130,9 @@ const Home = (props: { introduction: string; posts: PostData[] }) => {
           }}
         >
           {props.posts.map((post, key) => {
-            let isDevPost = false;
-            if (post && post.tags) {
-              post.tags.forEach((tag) => {
-                if (
-                  tag === "javascript" ||
-                  tag === "devtools" ||
-                  tag === "nodejs"
-                ) {
-                  isDevPost = true;
-                }
-              });
-              if (isDevPost) {
-                return <PostCard key={key} post={post} />;
-              }
-              return;
-            }
-            return `the post ${post.title} has no tags defined`;
-          })}
+            return <PostCard key={key} post={post} />;
+          }
+        )}
         </div>
       </div>
 

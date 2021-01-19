@@ -288,7 +288,7 @@ const App = ({
 let globals;
 
 (function (_globals) {
-  const version = _globals.version = "0.4.4";
+  const version = _globals.version = "0.4.5";
   const yourName = _globals.yourName = "lwlx.";
   const siteName = _globals.siteName = `dev.lwlx.xyz`;
   const siteDescription = _globals.siteDescription = "Dev / Sec / Ops | Cybersecurity blog";

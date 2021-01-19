@@ -49,7 +49,7 @@ module.exports =
 /******/
 /******/ 		// "0" is the signal for "already loaded"
 /******/ 		if(installedChunks[chunkId] !== 0) {
-/******/ 			var chunk = require("../" + ({}[chunkId]||chunkId) + "." + {"8":"6830199ea394f720e55f","9":"a2ba811ba4f163f6cd10","10":"8c509b6c25151f45ae19","11":"851cf822fe384aaea016","12":"a4ff1531a7b36b8af57e","13":"43c26397fc1a92022420","14":"b9a0ff5563709c1c1ea1","15":"82bd8cd93affb927b614","16":"1fc071efb219ef4b11a1"}[chunkId] + ".js");
+/******/ 			var chunk = require("../" + ({}[chunkId]||chunkId) + "." + {"8":"6830199ea394f720e55f","9":"a2ba811ba4f163f6cd10","10":"8c509b6c25151f45ae19","11":"851cf822fe384aaea016","12":"a4ff1531a7b36b8af57e","13":"43c26397fc1a92022420","14":"b9a0ff5563709c1c1ea1","15":"82bd8cd93affb927b614","16":"1fc071efb219ef4b11a1","17":"f778e08c1b0b9691579a"}[chunkId] + ".js");
 /******/ 			var moreModules = chunk.modules, chunkIds = chunk.ids;
 /******/ 			for(var moduleId in moreModules) {
 /******/ 				modules[moduleId] = moreModules[moduleId];
@@ -163,6 +163,7 @@ const sectionStyle = {
 };
 
 const Home = props => {
+  console.log(props.posts);
   return /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsxs"])("div", {
     style: {
       width: "100%"
@@ -198,16 +199,8 @@ const Home = props => {
           padding: "0px 7vw"
         },
         children: props.posts.map((post, key) => {
-          let isTagged = false;
-
           if (post && post.tags) {
-            post.tags.forEach(tag => {
-              if (tag) {
-                isTagged = true;
-              }
-            });
-
-            if (isTagged && key === props.posts.length - 1 || isTagged && key === props.posts.length - 2 || isTagged && key === props.posts.length - 3 || isTagged && key === props.posts.length - 4) {
+            if (key === 0 || key === 1 || key === 2 || key === 3) {
               return /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_PostCard__WEBPACK_IMPORTED_MODULE_3__[/* PostCard */ "a"], {
                 post: post
               }, key);
@@ -265,7 +258,7 @@ const Home = props => {
           margin: "4px 0px",
           fontSize: "34pt"
         },
-        children: "Devtools and Js Resources"
+        children: "All Posts"
       }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("div", {
         style: {
           display: "grid",
@@ -276,25 +269,9 @@ const Home = props => {
           padding: "0px 7vw"
         },
         children: props.posts.map((post, key) => {
-          let isDevPost = false;
-
-          if (post && post.tags) {
-            post.tags.forEach(tag => {
-              if (tag === "javascript" || tag === "devtools" || tag === "nodejs") {
-                isDevPost = true;
-              }
-            });
-
-            if (isDevPost) {
-              return /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_PostCard__WEBPACK_IMPORTED_MODULE_3__[/* PostCard */ "a"], {
-                post: post
-              }, key);
-            }
-
-            return;
-          }
-
-          return `the post ${post.title} has no tags defined`;
+          return /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_PostCard__WEBPACK_IMPORTED_MODULE_3__[/* PostCard */ "a"], {
+            post: post
+          }, key);
         })
       })]
     }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsxs"])("div", {
@@ -665,7 +642,7 @@ module.exports = require("fs");
 let globals;
 
 (function (_globals) {
-  const version = _globals.version = "0.4.4";
+  const version = _globals.version = "0.4.5";
   const yourName = _globals.yourName = "lwlx.";
   const siteName = _globals.siteName = `dev.lwlx.xyz`;
   const siteDescription = _globals.siteDescription = "Dev / Sec / Ops | Cybersecurity blog";
@@ -728,6 +705,10 @@ var map = {
 	"./blog/hacker101-ctf-photo-gallery.md": [
 		"NpAA",
 		16
+	],
+	"./blog/hacker101-ctf-tempimage.md": [
+		"cq2r",
+		17
 	]
 };
 function webpackAsyncContext(req) {
