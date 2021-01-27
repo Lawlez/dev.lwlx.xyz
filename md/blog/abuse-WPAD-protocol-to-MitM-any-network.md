@@ -18,9 +18,7 @@ thumbnailPhoto: /wpad-responder-exploit/wpad_thumb.jpg
 bannerPhoto: /wpad-responder-exploit/wpad_post_img.jpg
 ---
 
-#### this article is marked as a work in progress `[WIP]`
-
-# What is WPAD?
+# What is WPAD? `[WIP]`
 
 Sometime in the early days of the Internet - the web 1.0 era - a couple of devs at Netscape decided that JavaScript was an acceptable language to write configuration files in. The result was Proxy Auto-Config (PAC) - a configuration file format that works as follows: The browser connects to a pre-configured server, downloads the PAC file, and executes a particular Javascript function to determine proper proxy configuration. Why not? It is more expressive and less tedious than XML and seems reasonable to provide configurations to many clients.
 

