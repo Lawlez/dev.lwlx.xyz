@@ -33,18 +33,20 @@ export const BlogPost: React.FunctionComponent<{ post: PostData }> = ({
               width: "100%",
               maxWidth: "100%",
               margin: "0px",
+              maxHeight: 490,
             }}
             src={post.bannerPhoto}
           />
         )}
-        <div style={{ padding: "50px 3vw 50px 3vw" }}>
+        <div style={{ padding: "48px 3vw 48px 3vw" }}>
           {title && (
             <h1
               style={{
-                margin: "10px 0px 10px 0px",
+                margin: "8px 0px 8px 0px",
                 padding: 0,
                 border: "none",
                 fontSize: 46,
+                fontFamily: "Fira Code",
               }}
             >
               {title}
@@ -53,11 +55,12 @@ export const BlogPost: React.FunctionComponent<{ post: PostData }> = ({
           {subtitle && (
             <h2
               style={{
-                margin: "10px 0px",
+                margin: "8px 0px",
                 padding: 0,
                 border: "none",
                 fontWeight: 400,
                 opacity: "0.6",
+                fontFamily: "Fira Code",
               }}
             >
               {subtitle}
@@ -67,7 +70,7 @@ export const BlogPost: React.FunctionComponent<{ post: PostData }> = ({
             style={{
               height: "2px",
               background: globals.primaryColor,
-              margin: "25px 0px",
+              margin: "24px 0px",
               border: "none",
               borderRadius: 1,
             }}

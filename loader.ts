@@ -1,6 +1,6 @@
-import matter from 'gray-matter';
-import glob from 'glob';
-import { globals } from './globals';
+import matter from "gray-matter";
+import glob from "glob";
+import { globals } from "./globals";
 
 export type PostData = {
   path: string;
@@ -28,7 +28,7 @@ export const loadMarkdownFile = async (path: string): Promise<RawFile> => {
 
 export const mdToPost = (file: RawFile): PostData => {
   const metadata = matter(file.contents);
-  const path = file.path.replace('.md', '');
+  const path = file.path.replace(".md", "");
   const post = {
     path,
     title: metadata.data.title,
@@ -46,11 +46,9 @@ export const mdToPost = (file: RawFile): PostData => {
     content: metadata.content,
   };
 
-  if (!post.title)
-    throw new Error(`Missing required field: title.`);
+  if (!post.title) throw new Error(`Missing required field: title.`);
 
-  if (!post.content)
-    throw new Error(`Missing required field: content.`);
+  if (!post.content) throw new Error(`Missing required field: content.`);
 
   if (!post.datePublished)
     throw new Error(`Missing required field: datePublished.`);
@@ -75,8 +73,10 @@ export const loadPost = async (path: string): Promise<PostData> => {
 };
 
 export const loadBlogPosts = async (): Promise<PostData[]> => {
-  return await loadMarkdownFiles(`blog/*.md`)
-  .then( md => md.map(mdToPost)
-    .filter((p) => p.published)
-    .sort((a, b) => (b.datePublished || 0) - (a.datePublished || 0)) )
+  return await loadMarkdownFiles(`blog/*.md`).then((md) =>
+    md
+      .map(mdToPost)
+      .filter((p) => p.published)
+      .sort((a, b) => (b.datePublished || 0) - (a.datePublished || 0))
+  );
 };

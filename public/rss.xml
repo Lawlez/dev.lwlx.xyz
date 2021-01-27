@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[dev.lwlx.xyz]]></title><description><![CDATA[Dev / Sec / Ops | Cybersecurity blog]]></description><link>https://dev.lwlx.xyz</link><image><url>https://dev.lwlx.xyz/icon.png</url><title>dev.lwlx.xyz</title><link>https://dev.lwlx.xyz</link></image><generator>RSS for Node</generator><lastBuildDate>Wed, 27 Jan 2021 14:57:26 GMT</lastBuildDate><atom:link href="https://dev.lwlx.xyz/rss.xml" rel="self" type="application/rss+xml"/><pubDate>Wed, 21 Oct 2020 04:00:00 GMT</pubDate><copyright><![CDATA[2021 lwlx.]]></copyright><language><![CDATA[en]]></language><managingEditor><![CDATA[lwlx@lwlx.xyz]]></managingEditor><webMaster><![CDATA[lwlx@lwlx.xyz]]></webMaster><ttl>60</ttl><item><title><![CDATA[HTB write up for the Black Hole[EASY] challenge]]></title><description><![CDATA[<h1 id="blackhole_easy_">Black Hole <em>[EASY]</em></h1>
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[dev.lwlx.xyz]]></title><description><![CDATA[Dev / Sec / Ops | Cybersecurity blog]]></description><link>https://dev.lwlx.xyz</link><image><url>https://dev.lwlx.xyz/icon.png</url><title>dev.lwlx.xyz</title><link>https://dev.lwlx.xyz</link></image><generator>RSS for Node</generator><lastBuildDate>Wed, 27 Jan 2021 17:03:16 GMT</lastBuildDate><atom:link href="https://dev.lwlx.xyz/rss.xml" rel="self" type="application/rss+xml"/><pubDate>Wed, 21 Oct 2020 04:00:00 GMT</pubDate><copyright><![CDATA[2021 lwlx.]]></copyright><language><![CDATA[en]]></language><managingEditor><![CDATA[lwlx@lwlx.xyz]]></managingEditor><webMaster><![CDATA[lwlx@lwlx.xyz]]></webMaster><ttl>60</ttl><item><title><![CDATA[HTB write up for the Black Hole[EASY] challenge]]></title><description><![CDATA[<h1 id="blackhole_easy_">Black Hole <em>[EASY]</em></h1>
 <p>This is my Write Up for the "Black Hole" challenge from Hack The Box.</p>
 <p>Like so often we are given a zip file called Blackhole.zip, naturraly we unzip it using cli:</p>
 <pre><code class="shell language-shell">unzip Blackhole.zip
@@ -30,21 +30,24 @@ TFN{Z3hqD_x3F_fT3_n4eFmDp5_S3f_K0g_p0iZ}
 <p>similiarities are striking! why? well cuz its a caesar cipher.. how do we know? only the letters are affected, 'TFN' is 'HTB' shifted by 14, so they must be using ROT14. Give it a try on cyberchef:</p>
 <p><img src="/cipherROT14.png" alt="solved ciphertext" title="solved ciphertext" /></p>
 <p>Thats it! we got our flag 😄</p>
-<p>have a look at <a href="https://github.com/Lawlez/myOSWE/tree/master/htb/challanges/misc/Black%20Hole">this challenge on my GitHub</a></p>]]></description><link>https://dev.lwlx.xyz/blog/blog/htb-black-hole-challenge-writeup</link><guid isPermaLink="true">https://dev.lwlx.xyz/blog/blog/htb-black-hole-challenge-writeup</guid><category><![CDATA[ctf]]></category><category><![CDATA[writeup]]></category><category><![CDATA[hackthebox]]></category><category><![CDATA[BlackHole]]></category><category><![CDATA[htb]]></category><category><![CDATA[security]]></category><dc:creator><![CDATA[lwlx]]></dc:creator><pubDate>Wed, 27 Jan 2021 14:29:18 GMT</pubDate></item><item><title><![CDATA[Hacker101 CTF TempImage]]></title><description><![CDATA[<h1 id="tempimage_moderate_wip">TempImage <em>[moderate]</em> <code>WIP</code></h1>
+<p>have a look at <a href="https://github.com/Lawlez/myOSWE/tree/master/htb/challanges/misc/Black%20Hole">this challenge on my GitHub</a></p>]]></description><link>https://dev.lwlx.xyz/blog/blog/htb-black-hole-challenge-writeup</link><guid isPermaLink="true">https://dev.lwlx.xyz/blog/blog/htb-black-hole-challenge-writeup</guid><category><![CDATA[ctf]]></category><category><![CDATA[writeup]]></category><category><![CDATA[hackthebox]]></category><category><![CDATA[BlackHole]]></category><category><![CDATA[htb]]></category><category><![CDATA[security]]></category><dc:creator><![CDATA[lwlx]]></dc:creator><pubDate>Wed, 27 Jan 2021 14:29:18 GMT</pubDate></item><item><title><![CDATA[Hacker101 CTF TempImage[moderate] Write-Up]]></title><description><![CDATA[<h1 id="tempimage_moderate_wip">TempImage <em>[moderate]</em> <code>WIP</code></h1>
 <p>This is my Write Up for the "TempImage" challenge of HackerOne's CTF.</p>
 <p>As usual we get a link to webpage, it seems to some sort of cloud storage application, on the main Page we get a really simple page:</p>
-<pre><code class="jsx language-jsx">https://ctf.hacker101.com/ctf/launch/12
+<pre><code class="jsx language-jsx">&lt;!-- https://ctf.hacker101.com/ctf/launch/12 --&gt;
 
-&gt;
 &lt;html&gt;
-    &lt;head&gt;
-        &lt;title&gt;TempImage &amp;mdash; Trial&lt;/title&gt;
-    &lt;/head&gt;
-    &lt;body&gt;
-        &lt;h1&gt;TempImage&lt;/h1&gt;
-        &lt;p&gt;&lt;b&gt;UNREGISTERED&lt;/b&gt;&lt;/p&gt;
-        &lt;p&gt;&lt;a href="upload.php"&gt;Upload image&lt;/a&gt;&lt;/p&gt;
-    &lt;/body&gt;
+  &lt;head&gt;
+    &lt;title&gt;TempImage &amp;mdash; Trial&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;TempImage&lt;/h1&gt;
+    &lt;p&gt;
+      &lt;b&gt;UNREGISTERED&lt;/b&gt;
+    &lt;/p&gt;
+    &lt;p&gt;
+      &lt;a href="upload.php"&gt;Upload image&lt;/a&gt;
+    &lt;/p&gt;
+  &lt;/body&gt;
 &lt;/html&gt;
 </code></pre>
 <p>It signifies that its an UNEGISTERED version of the app, thus working in trial mode.</p>
@@ -108,7 +111,7 @@ Connection: close
 <p><img src="/hackerone/tempimage/tempimage-hackerone101-burpSuite_fileupload.png" alt="image upload Request" title="image upload Request" /></p>
 <blockquote>
   <p>This Post is marked as <code>WIP</code> and will be updated continously.</p>
-</blockquote>]]></description><link>https://dev.lwlx.xyz/blog/blog/hacker101-ctf-tempimage</link><guid isPermaLink="true">https://dev.lwlx.xyz/blog/blog/hacker101-ctf-tempimage</guid><category><![CDATA[ctf]]></category><category><![CDATA[writeup]]></category><category><![CDATA[hackerone]]></category><category><![CDATA[hacker101]]></category><category><![CDATA[TempImage]]></category><category><![CDATA[security]]></category><dc:creator><![CDATA[lwlx]]></dc:creator><pubDate>Fri, 22 Jan 2021 23:22:38 GMT</pubDate></item><item><title><![CDATA[HTB write up for the oBfsC4t10n[HARD] challenge]]></title><description><![CDATA[<h1 id="obfsc4t10n_hard_wip">oBfsC4t10n <em>[HARD]</em> <code>(WIP)</code></h1>
+</blockquote>]]></description><link>https://dev.lwlx.xyz/blog/blog/hacker101-ctf-tempimage</link><guid isPermaLink="true">https://dev.lwlx.xyz/blog/blog/hacker101-ctf-tempimage</guid><category><![CDATA[ctf]]></category><category><![CDATA[writeup]]></category><category><![CDATA[hackerone]]></category><category><![CDATA[TempImage]]></category><category><![CDATA[security]]></category><dc:creator><![CDATA[lwlx]]></dc:creator><pubDate>Fri, 22 Jan 2021 23:22:38 GMT</pubDate></item><item><title><![CDATA[HTB write up for the oBfsC4t10n[HARD] challenge]]></title><description><![CDATA[<h1 id="obfsc4t10n_hard_wip">oBfsC4t10n <em>[HARD]</em> <code>(WIP)</code></h1>
 <p>This is my Write Up for the "oBfsC4t10n" challenge from Hack The Box.</p>
 <p>We are given a <em>zip file</em>. after extraction we are presented with an <strong>html</strong> file telling us to download an <strong>excel file</strong>.
 The excel file has been included in the html as a <strong>base64 encoded</strong> string, lets just save that info for later <code>base64.txt</code> in case we need it.</p>
@@ -268,7 +271,7 @@ End Sub
 <p>@ me on twitter <a href="https://twitter.com/0x0000005">@0x0000005</a></p>
 <blockquote>
   <p>This Post is marked as <code>WIP</code> and will be updated continously.</p>
-</blockquote>]]></description><link>https://dev.lwlx.xyz/blog/blog/htb-obfsc4t10n-challenge-writeup</link><guid isPermaLink="true">https://dev.lwlx.xyz/blog/blog/htb-obfsc4t10n-challenge-writeup</guid><category><![CDATA[ctf]]></category><category><![CDATA[writeup]]></category><category><![CDATA[hackthebox]]></category><category><![CDATA[oBfsC4t10n]]></category><category><![CDATA[htb]]></category><category><![CDATA[security]]></category><dc:creator><![CDATA[lwlx]]></dc:creator><pubDate>Fri, 22 Jan 2021 11:53:52 GMT</pubDate></item><item><title><![CDATA[Hacker101 CTF Photo Gallery writeup]]></title><description><![CDATA[<h1 id="photogallery_moderate_">Photo Gallery <em>[moderate]</em></h1>
+</blockquote>]]></description><link>https://dev.lwlx.xyz/blog/blog/htb-obfsc4t10n-challenge-writeup</link><guid isPermaLink="true">https://dev.lwlx.xyz/blog/blog/htb-obfsc4t10n-challenge-writeup</guid><category><![CDATA[ctf]]></category><category><![CDATA[writeup]]></category><category><![CDATA[hackthebox]]></category><category><![CDATA[oBfsC4t10n]]></category><category><![CDATA[htb]]></category><category><![CDATA[security]]></category><dc:creator><![CDATA[lwlx]]></dc:creator><pubDate>Fri, 22 Jan 2021 11:53:52 GMT</pubDate></item><item><title><![CDATA[Hacker101 CTF Photo Gallery [moderate] writeup]]></title><description><![CDATA[<h1 id="photogallery_moderate_">Photo Gallery <em>[moderate]</em></h1>
 <p>This is my Write Up for the "Photo Gallery" challenge of HackerOne's CTF.</p>
 <p>As usual we get a link to webpage, it seems to be an image gallery, but one of the images is broken.
 The missing one is called <code>Invisible</code>, so lets look into that.</p>

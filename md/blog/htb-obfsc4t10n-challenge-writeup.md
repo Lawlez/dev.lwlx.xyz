@@ -1,5 +1,6 @@
 ---
 title: HTB write up for the oBfsC4t10n[HARD] challenge
+subtitle: security through obscurity?
 description: write up for the oBfsC4t10n[HARD] challenge
 published: true
 datePublished: 1611316432536
@@ -13,8 +14,8 @@ tags:
   - oBfsC4t10n
   - htb
   - security
-thumbnailPhoto: /default.png
-bannerPhoto: /default.png
+thumbnailPhoto: /htb/htb-obfuscation.jpg
+bannerPhoto: /htb/htb-obfuscation.jpg
 canonicalUrl:
 ---
 

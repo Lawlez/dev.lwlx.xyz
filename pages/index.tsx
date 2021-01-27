@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { PostData, loadBlogPosts } from "../loader";
 import { PostCard } from "../components/PostCard";
-import { generateRSS } from "../rssUtil";
+//import { generateRSS } from "../rssUtil";
 import { globals } from "../globals";
 
 const sectionStyle = {
@@ -13,7 +13,6 @@ const sectionStyle = {
 } as const;
 
 const Home = (props: { introduction: string; posts: PostData[] }) => {
-  console.log(props.posts)
   return (
     <div
       style={{
@@ -54,12 +53,7 @@ const Home = (props: { introduction: string; posts: PostData[] }) => {
         >
           {props.posts.map((post, key) => {
             if (post && post.tags) {
-              if (
-                (key === 0) ||
-                (key === 1) ||
-                (key === 2) ||
-                (key === 3)
-              ) {
+              if (key === 0 || key === 1 || key === 2 || key === 3) {
                 return <PostCard key={key} post={post} />;
               }
               return;
@@ -131,8 +125,7 @@ const Home = (props: { introduction: string; posts: PostData[] }) => {
         >
           {props.posts.map((post, key) => {
             return <PostCard key={key} post={post} />;
-          }
-        )}
+          })}
         </div>
       </div>
 
@@ -184,7 +177,7 @@ export const getStaticProps = async () => {
   const posts = await loadBlogPosts();
 
   // comment out to turn off RSS generation during build step.
-  await generateRSS(posts);
+  //await generateRSS(posts);
 
   const props = {
     introduction: "empty for now :)", //introduction.contents,

@@ -1,6 +1,7 @@
 ---
-title: Hacker101 CTF TempImage
-description: A write up for the TempImage [moderae] challenge
+title: Hacker101 CTF TempImage[moderate] Write-Up
+subtitle: a work in progress
+description: A write up for the TempImage [moderate] challenge
 published: true
 datePublished: 1611357758022
 author: lwlx
@@ -10,11 +11,10 @@ tags:
   - ctf
   - writeup
   - hackerone
-  - hacker101
   - TempImage
   - security
-thumbnailPhoto: /hackerone/hackerone.png
-bannerPhoto: /hackerone/hackerone.png
+thumbnailPhoto: /hackerone/tempimage/tempimage-hackerone.jpg
+bannerPhoto: /hackerone/tempimage/tempimage-hackerone.jpg
 canonicalUrl:
 ---
 
@@ -25,18 +25,21 @@ This is my Write Up for the "TempImage" challenge of HackerOne's CTF.
 As usual we get a link to webpage, it seems to some sort of cloud storage application, on the main Page we get a really simple page:
 
 ```jsx
-https://ctf.hacker101.com/ctf/launch/12
+<!-- https://ctf.hacker101.com/ctf/launch/12 -->
 
->
 <html>
-	<head>
-		<title>TempImage &mdash; Trial</title>
-	</head>
-	<body>
-		<h1>TempImage</h1>
-		<p><b>UNREGISTERED</b></p>
-		<p><a href="upload.php">Upload image</a></p>
-	</body>
+  <head>
+    <title>TempImage &mdash; Trial</title>
+  </head>
+  <body>
+    <h1>TempImage</h1>
+    <p>
+      <b>UNREGISTERED</b>
+    </p>
+    <p>
+      <a href="upload.php">Upload image</a>
+    </p>
+  </body>
 </html>
 ```
 

@@ -1,5 +1,6 @@
 ---
 title: HTB write up for the Black Hole[EASY] challenge
+subtitle: getting started with forensics
 description: A write up for the Black Hole[EASY] challenge
 published: true
 datePublished: 1611757758022
@@ -13,8 +14,8 @@ tags:
   - BlackHole
   - htb
   - security
-thumbnailPhoto: /default.png
-bannerPhoto: /default.png
+thumbnailPhoto: /htb/htb-black-hole.jpg
+bannerPhoto: /htb/htb-black-hole.jpg
 canonicalUrl:
 ---
 

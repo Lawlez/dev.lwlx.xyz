@@ -1,14 +1,14 @@
-export const sitemap = '';
-import glob from 'glob';
-import { getStaticPaths as getBlogPaths } from './pages/blog/[blog]';
+export const sitemap = "";
+import glob from "glob";
+import { getStaticPaths as getBlogPaths } from "./pages/blog/[blog]";
 
 export const generateSitemap = async () => {
-  const pagesDir = './pages/**/*.*';
+  const pagesDir = "./pages/**/*.*";
   const posts = await glob.sync(pagesDir);
 
   const pagePaths = posts
-    .filter((path) => !path.includes('['))
-    .filter((path) => !path.includes('/_'))
+    .filter((path) => !path.includes("["))
+    .filter((path) => !path.includes("/_"))
     .map((path) => path.slice(1));
 
   const blogPaths = await getBlogPaths().paths;
@@ -18,7 +18,7 @@ export const generateSitemap = async () => {
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
       <loc>https://dev.lwlx.xyz</loc>
-      <lastmod>2020-06-01</lastmod>
+      <lastmod>2021-01-27</lastmod>
   </url>
 ${[...pagePaths, ...blogPaths].map((path) => {
   const item = [`<url>`];
@@ -28,20 +28,8 @@ ${[...pagePaths, ...blogPaths].map((path) => {
 })}
 
     <url>
-        <loc>https://dev.lwlx.xyz/essay/zod</loc>
-        <lastmod>2020-03-28</lastmod>
-    </url>
-    <url>
-        <loc>https://dev.lwlx.xyz/essay/devii</loc>
-        <lastmod>2020-05-28</lastmod>
-    </url>
-    <url>
-        <loc>https://dev.lwlx.xyz/essay/say-no-to-emotion-core</loc>
-        <lastmod>2020-06-05</lastmod>
-    </url>
-    <url>
-        <loc>https://dev.lwlx.xyz/essay/css-in-js-is-inevitable</loc>
-        <lastmod>2020-06-07</lastmod>
+        <loc>https://dev.lwlx.xyz/blog/htb-black-hole-challenge-writeup/</loc>
+        <lastmod>2021-01-27</lastmod>
     </url>
 </urlset>`;
 

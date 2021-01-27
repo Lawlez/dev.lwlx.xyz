@@ -1,5 +1,6 @@
 ---
-title: Hacker101 CTF Photo Gallery writeup
+title: Hacker101 CTF Photo Gallery [moderate] writeup
+subtitle: a write up for this web challenge
 description: A write up for the Photo Gallery [moderae] challenge
 published: true
 datePublished: 1609676431536
