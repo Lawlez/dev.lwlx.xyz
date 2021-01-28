@@ -38,11 +38,15 @@ Instead of trying to open or analyze the file on our own machine, lets go ahead 
 
 After Testing the file with **ANY.RUN** we were able to see how the exploit would work and what would be done. So we tested on a **Windows 7** Machine, after opening the file, the exploit imediately startet to run:
 
+![excel-file-report](/htb/obfuscation/file-report.png)
+
 > 1. At first a temp file was created under `C:\Users\admin\AppData\Local\Temp\CVR40EB.tmp.cvr`
 > 2. Then a what seems to be `visual basic script` executer was added here: `C:\Users\admin\AppData\Local\Temp\VBE\MSForms.exd`
 > 3. followed by a `.hta` file with a funny name..: `C:\Users\admin\AppData\Local\Temp\LwTHLrGh.hta` <-- lemme guess thats the one.
 > 4. it then makes use of `mshta.exe` to try and execute the `LwTHLrGh.hta` file.
 > 5. then ANY.RUN stops executing the file.
+
+![important files](/htb/obfuscation/file-modifications.png)
 
 I went ahead and _downloaded_ the `MSForms.exd` as well as the `LwTHLrGh.hta` file so we can analyze them further.
 
