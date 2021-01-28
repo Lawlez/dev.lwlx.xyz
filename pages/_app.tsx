@@ -16,6 +16,11 @@ const App: React.FC = ({ Component, pageProps }: any) => {
       }}
     >
       <Head>
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap"
+          rel="stylesheet"
+        />
         {globals.googleAnalyticsId && (
           <script
             async
