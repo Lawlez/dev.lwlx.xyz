@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[dev.lwlx.xyz]]></title><description><![CDATA[Dev / Sec / Ops | Cybersecurity blog]]></description><link>https://dev.lwlx.xyz</link><image><url>https://dev.lwlx.xyz/icon.png</url><title>dev.lwlx.xyz</title><link>https://dev.lwlx.xyz</link></image><generator>RSS for Node</generator><lastBuildDate>Wed, 27 Jan 2021 17:09:13 GMT</lastBuildDate><atom:link href="https://dev.lwlx.xyz/rss.xml" rel="self" type="application/rss+xml"/><pubDate>Wed, 21 Oct 2020 04:00:00 GMT</pubDate><copyright><![CDATA[2021 lwlx.]]></copyright><language><![CDATA[en]]></language><managingEditor><![CDATA[lwlx@lwlx.xyz]]></managingEditor><webMaster><![CDATA[lwlx@lwlx.xyz]]></webMaster><ttl>60</ttl><item><title><![CDATA[HTB write up for the Black Hole[EASY] challenge]]></title><description><![CDATA[<h1 id="blackhole_easy_">Black Hole <em>[EASY]</em></h1>
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[dev.lwlx.xyz]]></title><description><![CDATA[Dev / Sec / Ops | Cybersecurity blog]]></description><link>https://dev.lwlx.xyz</link><image><url>https://dev.lwlx.xyz/icon.png</url><title>dev.lwlx.xyz</title><link>https://dev.lwlx.xyz</link></image><generator>RSS for Node</generator><lastBuildDate>Thu, 28 Jan 2021 18:07:53 GMT</lastBuildDate><atom:link href="https://dev.lwlx.xyz/rss.xml" rel="self" type="application/rss+xml"/><pubDate>Wed, 21 Oct 2020 04:00:00 GMT</pubDate><copyright><![CDATA[2021 lwlx.]]></copyright><language><![CDATA[en]]></language><managingEditor><![CDATA[lwlx@lwlx.xyz]]></managingEditor><webMaster><![CDATA[lwlx@lwlx.xyz]]></webMaster><ttl>60</ttl><item><title><![CDATA[HTB write up for the Black Hole[EASY] challenge]]></title><description><![CDATA[<h1 id="blackhole_easy_">Black Hole <em>[EASY]</em></h1>
 <p>This is my Write Up for the "Black Hole" challenge from Hack The Box.</p>
 <p>Like so often we are given a zip file called Blackhole.zip, naturraly we unzip it using cli:</p>
 <pre><code class="shell language-shell">unzip Blackhole.zip
@@ -125,6 +125,7 @@ The excel file has been included in the html as a <strong>base64 encoded</strong
   <p><a href="https://ANY.RUN">https://ANY.RUN</a> is a <strong>online Sandbox</strong> service that allows you to open various suspicious files or programms to fully analyze what would happen, without the danger.</p>
 </blockquote>
 <p>After Testing the file with <strong>ANY.RUN</strong> we were able to see how the exploit would work and what would be done. So we tested on a <strong>Windows 7</strong> Machine, after opening the file, the exploit imediately startet to run:</p>
+<p><img src="/htb/obfuscation/file-report.png" alt="excel-file-report" /></p>
 <blockquote>
   <ol>
   <li>At first a temp file was created under <code>C:\Users\admin\AppData\Local\Temp\CVR40EB.tmp.cvr</code></li>
@@ -134,6 +135,7 @@ The excel file has been included in the html as a <strong>base64 encoded</strong
   <li>then ANY.RUN stops executing the file.</li>
   </ol>
 </blockquote>
+<p><img src="/htb/obfuscation/file-modifications.png" alt="important files" /></p>
 <p>I went ahead and <em>downloaded</em> the <code>MSForms.exd</code> as well as the <code>LwTHLrGh.hta</code> file so we can analyze them further.</p>
 <h2 id="analyzinglwthlrghhta">Analyzing <code>LwTHLrGh.hta</code></h2>
 <blockquote>

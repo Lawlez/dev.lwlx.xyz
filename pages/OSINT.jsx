@@ -1,7 +1,5 @@
 import Head from "next/head";
-import { PostData, loadBlogPosts } from "../loader";
 import { PostCard } from "../components/PostCard";
-//import { generateRSS } from "../rssUtil";
 import { globals } from "../globals";
 
 const sectionStyle = {
@@ -10,9 +8,9 @@ const sectionStyle = {
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
-} as const;
+};
 
-const Home = (props: { introduction: string; posts: PostData[] }) => {
+const OSINT = ({ posts = [] }) => {
   return (
     <div
       style={{
@@ -20,15 +18,7 @@ const Home = (props: { introduction: string; posts: PostData[] }) => {
       }}
     >
       <Head>
-        <title>dev.lwlx.xyz | Cybersecurity & Developer blog</title>
-        <meta
-          name="description"
-          content="dev.lwlx.xyz publishes articles and research about Cybersecurity, DevOps, Development or just general IT nonsense. "
-        />
-        <meta
-          property="og:image"
-          content={`https://dev.lwlx.xyz/lwlzcolors-lawlez-sm.jpg`}
-        />
+        <title>Introducing dev.lwlx.xyz</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -36,10 +26,10 @@ const Home = (props: { introduction: string; posts: PostData[] }) => {
         <h2
           style={{
             margin: "4px 0px",
-            fontSize: "32pt",
+            fontSize: "34pt",
           }}
         >
-          newest posts
+          CyberSecurity and Information Security posts
         </h2>
         <div
           style={{
@@ -51,9 +41,19 @@ const Home = (props: { introduction: string; posts: PostData[] }) => {
             padding: "0px 7vw",
           }}
         >
-          {props.posts.map((post, key) => {
+          {posts.map((post, key) => {
+            let isCyberSecPost = false;
             if (post && post.tags) {
-              if (key === 0 || key === 1 || key === 2 || key === 3) {
+              post.tags.forEach((tag) => {
+                if (
+                  tag === "security" ||
+                  tag === "cybersecurity" ||
+                  tag === "appsec"
+                ) {
+                  isCyberSecPost = true;
+                }
+              });
+              if (isCyberSecPost) {
                 return <PostCard key={key} post={post} />;
               }
               return;
@@ -67,10 +67,10 @@ const Home = (props: { introduction: string; posts: PostData[] }) => {
         <h2
           style={{
             margin: "4px 0px",
-            fontSize: "32pt",
+            fontSize: "34pt",
           }}
         >
-          All Posts
+          OSINT
         </h2>
         <div
           style={{
@@ -82,8 +82,20 @@ const Home = (props: { introduction: string; posts: PostData[] }) => {
             padding: "0px 7vw",
           }}
         >
-          {props.posts.map((post, key) => {
-            return <PostCard key={key} post={post} />;
+          {posts.map((post, key) => {
+            let isDevPost = false;
+            if (post && post.tags) {
+              post.tags.forEach((tag) => {
+                if (tag === "osint" || tag === "socialengineering") {
+                  isDevPost = true;
+                }
+              });
+              if (isDevPost) {
+                return <PostCard key={key} post={post} />;
+              }
+              return;
+            }
+            return `the post ${post.title} has no tags defined`;
           })}
         </div>
       </div>
@@ -109,6 +121,22 @@ const Home = (props: { introduction: string; posts: PostData[] }) => {
           code project.
         </p>
         <br />
+        <a href="https://github.com/Lawlez/" style={{ cursor: "pointer" }}>
+          <button
+            style={{
+              padding: "10px 30px",
+              backgroundColor: globals.primaryColor,
+              color: "white",
+              fontSize: "14pt",
+              border: "none",
+              borderRadius: "8px",
+              cursor: "pointer",
+            }}
+          >
+            @Lawlez on GitHub
+          </button>
+        </a>
+        <br />
         <a href="https://twitter.com/0x0000005" style={{ cursor: "pointer" }}>
           <button
             style={{
@@ -129,19 +157,4 @@ const Home = (props: { introduction: string; posts: PostData[] }) => {
   );
 };
 
-export default Home;
-
-export const getStaticProps = async () => {
-  //const introduction = await loadMarkdownFile('introduction.md');
-  const posts = await loadBlogPosts();
-
-  // comment out to turn off RSS generation during build step.
-  //await generateRSS(posts);
-
-  const props = {
-    introduction: "empty for now :)", //introduction.contents,
-    posts,
-  };
-
-  return { props };
-};
+export default OSINT;
