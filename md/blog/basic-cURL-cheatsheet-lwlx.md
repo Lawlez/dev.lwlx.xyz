@@ -11,8 +11,8 @@ tags:
   - commandline
   - curl
   - security
-thumbnailPhoto: /default.png
-bannerPhoto: /default.png
+thumbnailPhoto: /default-thumb.jpg
+bannerPhoto: /default.jpg
 canonicalUrl:
 ---
 

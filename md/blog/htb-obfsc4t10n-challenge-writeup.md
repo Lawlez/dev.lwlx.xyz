@@ -14,7 +14,7 @@ tags:
   - oBfsC4t10n
   - htb
   - security
-thumbnailPhoto: /htb/htb-obfuscation.jpg
+thumbnailPhoto: /htb/htb-obfuscation-thumb.jpg
 bannerPhoto: /htb/htb-obfuscation.jpg
 canonicalUrl:
 ---

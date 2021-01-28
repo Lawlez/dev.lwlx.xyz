@@ -12,7 +12,7 @@ tags:
   - security
   - javascript
   - devops
-thumbnailPhoto: /sicktools-sec-devops.jpg
+thumbnailPhoto: /sicktools-sec-devops-thumb.jpg
 bannerPhoto: /sicktools-sec-devops.jpg
 canonicalUrl:
 ---

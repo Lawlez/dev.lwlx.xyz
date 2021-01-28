@@ -108,6 +108,7 @@ export const Markdown: React.FC<{ source: string }> = (props) => {
         }
 
         .lwlx-markdown code {
+          font-family: "Fira Code", monospace;
           background-color: #f0769320;
           padding: 3px 3px;
           border-radius: 2px;

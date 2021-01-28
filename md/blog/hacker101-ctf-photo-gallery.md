@@ -13,8 +13,8 @@ tags:
   - hackerone
   - hacker101
   - security
-thumbnailPhoto: /hackerone/hackerone.png
-bannerPhoto: /hackerone/hackerone.png
+thumbnailPhoto: /hackerone/hackerone-photogallery-thumb.jpg
+bannerPhoto: /hackerone/hackerone-photogallery.jpg
 canonicalUrl:
 ---
 

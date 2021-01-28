@@ -14,7 +14,7 @@ tags:
   - BlackHole
   - htb
   - security
-thumbnailPhoto: /htb/htb-black-hole.jpg
+thumbnailPhoto: /htb/htb-black-hole-thumb.jpg
 bannerPhoto: /htb/htb-black-hole.jpg
 canonicalUrl:
 ---

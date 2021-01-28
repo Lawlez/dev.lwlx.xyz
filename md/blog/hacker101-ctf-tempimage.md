@@ -1,8 +1,8 @@
 ---
-title: Hacker101 CTF TempImage[moderate] Write-Up
+title: Hacker101 CTF TempImage [moderate] Write-Up
 subtitle: a work in progress
 description: A write up for the TempImage [moderate] challenge
-published: true
+published: false
 datePublished: 1611357758022
 author: lwlx
 authorTwitter: "0x0000005"
@@ -13,7 +13,7 @@ tags:
   - hackerone
   - TempImage
   - security
-thumbnailPhoto: /hackerone/tempimage/tempimage-hackerone.jpg
+thumbnailPhoto: /hackerone/tempimage/tempimage-hackerone-thumb.jpg
 bannerPhoto: /hackerone/tempimage/tempimage-hackerone.jpg
 canonicalUrl:
 ---
