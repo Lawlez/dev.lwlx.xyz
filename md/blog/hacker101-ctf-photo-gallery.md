@@ -6,7 +6,7 @@ published: true
 datePublished: 1609676431536
 author: lwlx
 authorTwitter: "0x0000005"
-authorPhoto: /profile.jpg
+authorPhoto: /profile
 tags:
   - ctf
   - writeup
@@ -14,7 +14,7 @@ tags:
   - hacker101
   - security
 thumbnailPhoto: /hackerone/hackerone-photogallery-thumb.jpg
-bannerPhoto: /hackerone/hackerone-photogallery.jpg
+bannerPhoto: /hackerone/hackerone
 canonicalUrl:
 ---
 

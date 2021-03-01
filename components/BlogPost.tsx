@@ -2,6 +2,7 @@ import React from "react";
 import { Markdown } from "./Markdown";
 import { PostData } from "../loader";
 import { PostMeta } from "./PostMeta";
+import Image from "./Image";
 import { Author } from "./Author";
 import { globals } from "../globals";
 
@@ -28,14 +29,14 @@ export const BlogPost: React.FunctionComponent<{ post: PostData }> = ({
       <PostMeta post={post} />
       <div className="blog-post">
         {post.bannerPhoto && (
-          <img
+          <Image
+            src={post.bannerPhoto}
             style={{
               width: "100%",
               maxWidth: "100%",
               margin: "0px",
               maxHeight: 490,
             }}
-            src={post.bannerPhoto}
           />
         )}
         <div style={{ padding: "48px 3vw 48px 3vw" }}>
@@ -78,7 +79,7 @@ export const BlogPost: React.FunctionComponent<{ post: PostData }> = ({
           <Author post={post} />
         </div>
 
-        <div style={{ width: "100%", padding: "0px 3vw" }}>
+        <div style={{ width: "100%", padding: "0px 2vw" }}>
           <Markdown source={post.content} />
         </div>
       </div>

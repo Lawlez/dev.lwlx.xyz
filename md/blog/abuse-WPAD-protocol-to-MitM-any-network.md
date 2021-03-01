@@ -6,7 +6,7 @@ published: true
 datePublished: 1605702028864
 author: lwlx
 authorTwitter: "0x0000005"
-authorPhoto: /profile.jpg
+authorPhoto: /profile
 tags:
   - MitM
   - WPAD
@@ -15,7 +15,7 @@ tags:
   - exploit
   - security
 thumbnailPhoto: /wpad-responder-exploit/wpad_thumb.jpg
-bannerPhoto: /wpad-responder-exploit/wpad_post_img.jpg
+bannerPhoto: /wpad-responder-exploit/wpad_post_img
 ---
 
 # What is WPAD? `[WIP]`

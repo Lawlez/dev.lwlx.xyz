@@ -110,8 +110,8 @@ author: Ben Benson
 tags:
   - dev.lwlx.xyz
   - Blogs
-authorPhoto: /profile.jpg
-bannerPhoto: /book.jpg
+authorPhoto: /profile
+bannerPhoto: /book
 thumbnailPhoto: /book.jpg
 ---
 ```

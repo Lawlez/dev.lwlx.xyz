@@ -5,7 +5,7 @@ published: true
 datePublished: 1600786088187
 author: lwlx
 authorTwitter: "0x0000005"
-authorPhoto: /profile.jpg
+authorPhoto: /profile
 tags:
   - tools
   - devtools

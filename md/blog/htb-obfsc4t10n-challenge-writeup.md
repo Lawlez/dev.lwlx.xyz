@@ -6,7 +6,7 @@ published: true
 datePublished: 1611316432536
 author: lwlx
 authorTwitter: "0x0000005"
-authorPhoto: /profile.jpg
+authorPhoto: /profile
 tags:
   - ctf
   - writeup
@@ -15,7 +15,7 @@ tags:
   - htb
   - security
 thumbnailPhoto: /htb/htb-obfuscation-thumb.jpg
-bannerPhoto: /htb/htb-obfuscation.jpg
+bannerPhoto: /htb/htb-obfuscation
 canonicalUrl:
 ---
 

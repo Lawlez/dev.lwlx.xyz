@@ -6,7 +6,7 @@ published: false
 datePublished: 1611357758022
 author: lwlx
 authorTwitter: "0x0000005"
-authorPhoto: /profile.jpg
+authorPhoto: /profile
 tags:
   - ctf
   - writeup

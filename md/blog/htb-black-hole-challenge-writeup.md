@@ -6,7 +6,7 @@ published: true
 datePublished: 1611757758022
 author: lwlx
 authorTwitter: "0x0000005"
-authorPhoto: /profile.jpg
+authorPhoto: /profile
 tags:
   - ctf
   - writeup
@@ -15,7 +15,7 @@ tags:
   - htb
   - security
 thumbnailPhoto: /htb/htb-black-hole-thumb.jpg
-bannerPhoto: /htb/htb-black-hole.jpg
+bannerPhoto: /htb/htb-black-hole
 canonicalUrl:
 ---
 

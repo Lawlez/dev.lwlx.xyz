@@ -5,7 +5,7 @@ published: true
 datePublished: 1603967203286
 author: lwlx
 authorTwitter: "0x0000005"
-authorPhoto: /profile.jpg
+authorPhoto: /profile
 tags:
   - encryption
   - decryption
@@ -13,7 +13,7 @@ tags:
   - nodejs
   - php
 thumbnailPhoto: /crypto_thumb.jpg
-bannerPhoto: /crypto.jpg
+bannerPhoto: /crypto
 canonicalUrl:
 ---
 

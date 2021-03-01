@@ -2,6 +2,7 @@ import React from "react";
 import { format } from "fecha";
 import { PostData } from "../loader";
 import { globals } from "../globals";
+import Image from "./Image";
 
 export const FollowButton = () => {
   return (
@@ -42,7 +43,7 @@ export const Author: React.FC<{ post: PostData }> = (props) => {
         }}
       >
         {props.post.authorPhoto && (
-          <img
+          <Image
             src={props.post.authorPhoto}
             style={{
               width: "64px",

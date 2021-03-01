@@ -5,7 +5,7 @@ published: false
 datePublished: 1609416432536
 author: lwlx
 authorTwitter: "0x0000005"
-authorPhoto: /profile.jpg
+authorPhoto: /profile
 tags:
   - cheatsheet
   - commandline

@@ -2,19 +2,16 @@
 title: Choosing a tech stack for my personal dev blog in 2020
 published: false
 datePublished: 1590463136775
-author: Colin McDonnell
-authorTwitter: vriad
-authorPhoto: /profile.jpg
+authorPhoto: /profile
 tags:
   - Static Site Generators
   - React
   - Next.js
 thumbnailPhoto: /pancakes_thumb.jpeg
 bannerPhoto: /pancakes.jpeg
-canonicalUrl: https://dev.lwlx.xyz/essays/devii
 ---
 
-> Originally published at [https://dev.lwlx.xyz/essays/devii](https://dev.lwlx.xyz/essays/devii). Check out the HN <del>roast</del> discussion <a href="https://news.ycombinator.com/item?id=23309002">here</a>! 🤗
+🤗
 
 I recently set out to build my personal website — the one you're reading now, as it happens!
 
@@ -32,7 +29,7 @@ I want to build the site with React and TypeScript. I love them both wholehearte
 
 I don't want limitations on what my personal website can be/become. Sure, at present my site consists of two simple, static blog posts. But down the road, I may want to build a page that contains an interactive visualization, a filterable table, or a demo of a React component I'm open-sourcing. Even something simple (like the email newsletter signup form at the bottom of this page) was much more pleasant to implement in React; how did we use to build forms again?
 
-Plus: I want access to the npm ecosystem and all my favorite UI, animation, and styling libraries. I sincerely hope I never write another line of raw CSS ever again; CSS-in-JS 4 lyfe baby. If you want to start a Twitter feud with me about this, by all means [at me](https://twitter.com/vriad).
+Plus: I want access to the npm ecosystem and all my favorite UI, animation, and styling libraries. I sincerely hope I never write another line of raw CSS ever again; CSS-in-JS 4 life baby. If you want to start a Twitter feud with me about this, by all means [at me](https://twitter.com/0x0000005).
 
 ### Good authoring experience
 
@@ -55,8 +52,6 @@ I describe my final architecture design below, along with my rationale for each 
 ### Next.js
 
 I chose to build my site with Next.js. This won't be a surprising decision to anyone who's played with statically-rendered or server-side rendered React in recent years. Next.js is quickly eating everyone else's lunch in this market, especially Gatsby's (sorry Gatsby fans).
-
-Next.js is by far the most elegant way (for now) to do any static generation or server-side rendering with React. They just released their next-generation (pun intended) static site generator in the [9.3 release](https://nextjs.org/blog/next-9-3) back in March. So in the spirit of using technologies [in the spring of their life](https://www.youtube.com/watch?v=eBAX8MbRYFA), Next.js is a no-brainer.
 
 Here's a quick breakdown of the project structure. No need to understand every piece of it; but it may be useful to refer to throughout the rest of this post.
 
