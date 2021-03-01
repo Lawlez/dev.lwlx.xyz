@@ -1,8 +1,9 @@
 import React from 'react'
 
-const Image : React.FC<{ src: string, type?: string }> = ({
+const Image : React.FC<{ src: string, type?: string , style?: Object}> = ({
   src,
   type = 'image/webp',
+  style,
   ...restProps
 }) => {
   return (
