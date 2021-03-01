@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Image = ({
+const Image : React.FC<{ src: string, type?: string }> = ({
   src,
   type = 'image/webp',
   ...restProps
@@ -14,7 +14,6 @@ const Image = ({
       />
       <img
         src={src + '.jpg'}
-        alt={restProps.alt}
         {...restProps}
       />
     </picture>
