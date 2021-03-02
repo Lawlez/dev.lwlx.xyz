@@ -20,7 +20,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import { format } from "fecha";
 import { PostData } from "../loader";
 import { Tag } from "./Tag";
-import { LinkedCamera } from "@material-ui/icons";
 
 const MaterialPostCard: React.FC<{ post: PostData }> = ({ post }) => {
   const classes = useStyles();
@@ -36,6 +35,10 @@ const MaterialPostCard: React.FC<{ post: PostData }> = ({ post }) => {
     if (typeof window !== "undefined") {
       console.log("not yet implemented");
     }
+  };
+
+  const likePost = async (postId) => {
+    setLiked(state =>({...state, [postId]: true}))
   };
 
   return (
@@ -72,8 +75,8 @@ const MaterialPostCard: React.FC<{ post: PostData }> = ({ post }) => {
         </CardContent>
       </CardActionArea>
       <CardActions className={classes.cardActions}>
-        <IconButton aria-label="add to favorites" size="small" onClick={()=> setLiked(state => { ...state, [key]: true})}>
-          <FavoriteIcon color={Liked.[key] ? 'error' : 'inherit'} />
+        <IconButton aria-label="add to favorites" size="small" onClick={()=> likePost(post.title)}>
+          <FavoriteIcon color={Liked.[post.title] ? 'error' : 'inherit'} />
         </IconButton>
         <IconButton
           aria-label="share"
