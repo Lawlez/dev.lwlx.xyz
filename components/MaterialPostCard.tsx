@@ -25,19 +25,19 @@ const MaterialPostCard: React.FC<{ post: PostData }> = ({ post }) => {
   const classes = useStyles();
   const [PaperElevation, setPaperElevation] = React.useState(2);
   const [expanded, setExpanded] = React.useState(false);
-  const [Liked, setLiked] = React.useState({});
+  const [Liked, setLiked] = React.useState({[post.path]:false});
 
   const handleExpandClick = () => setExpanded(!expanded);
   const elevateUp = () => setPaperElevation(12);
   const resetEvelation = () => setPaperElevation(2);
 
-  const sharePost = async (post) => {
+  const sharePost = (post: PostData) => {
     if (typeof window !== "undefined") {
-      console.log("not yet implemented");
+      console.log("not yet implemented" + post);
     }
   };
 
-  const likePost = async (postId) => {
+  const likePost = (postId: string) => {
     setLiked(state =>({...state, [postId]: true}))
   };
 
@@ -75,8 +75,8 @@ const MaterialPostCard: React.FC<{ post: PostData }> = ({ post }) => {
         </CardContent>
       </CardActionArea>
       <CardActions className={classes.cardActions}>
-        <IconButton aria-label="add to favorites" size="small" onClick={()=> likePost(post.title)}>
-          <FavoriteIcon color={Liked.[post.title] ? 'error' : 'inherit'} />
+        <IconButton aria-label="add to favorites" size="small" onClick={()=> likePost(post.path)}>
+          <FavoriteIcon color={Liked[post.path] ? 'error' : 'inherit'} />
         </IconButton>
         <IconButton
           aria-label="share"
