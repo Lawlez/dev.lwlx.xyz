@@ -39,14 +39,14 @@ export const BlogPost: React.FunctionComponent<{ post: PostData }> = ({
             }}
           />
         )}
-        <div style={{ padding: "48px 3vw 48px 3vw" }}>
+        <div style={{ padding: "32px 2vw 8px 2vw" }}>
           {title && (
             <h1
               style={{
                 margin: "8px 0px 8px 0px",
                 padding: 0,
                 border: "none",
-                fontSize: 46,
+                fontSize: '2.6em',
                 fontFamily: "Fira Code",
               }}
             >

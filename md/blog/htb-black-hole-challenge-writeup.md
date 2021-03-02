@@ -19,8 +19,6 @@ bannerPhoto: /htb/htb-black-hole
 canonicalUrl:
 ---
 
-# Black Hole _[EASY]_
-
 This is my Write Up for the "Black Hole" challenge from Hack The Box.
 
 Like so often we are given a zip file called Blackhole.zip, naturraly we unzip it using cli:

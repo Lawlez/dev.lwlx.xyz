@@ -19,7 +19,7 @@ bannerPhoto: /htb/htb-obfuscation
 canonicalUrl:
 ---
 
-# oBfsC4t10n _[HARD]_ `(WIP)`
+### `(WIP)`
 
 This is my Write Up for the "oBfsC4t10n" challenge from Hack The Box.
 

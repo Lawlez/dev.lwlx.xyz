@@ -17,12 +17,6 @@ bannerPhoto: /sicktools-sec-devops.jpg
 canonicalUrl:
 ---
 
-# sickTools
-
-a collection of useful, special, or just cool tools to use and try to get more done in less time.
-
----
-
 ## AppSec Tools
 
 - [x] [lynis](https://github.com/CISOfy/lynis) | `active` |: Security auditing tool for Linux, macOS, and UNIX-based systems

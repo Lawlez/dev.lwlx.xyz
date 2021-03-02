@@ -3,7 +3,7 @@ title: "MitM using WPAD Proxy Protocol:"
 subtitle: Getting a reverse shell on windows client
 description: When a decision made 25+ years ago makes your computer vulnerable to the stupidest attack you've heard of.
 published: true
-datePublished: 1605702028864
+datePublished: 1605802028864
 author: lwlx
 authorTwitter: "0x0000005"
 authorPhoto: /profile
@@ -18,7 +18,7 @@ thumbnailPhoto: /wpad-responder-exploit/wpad_thumb.jpg
 bannerPhoto: /wpad-responder-exploit/wpad_post_img
 ---
 
-# What is WPAD? `[WIP]`
+## What is WPAD? `[WIP]`
 
 Sometime in the early days of the Internet - the web 1.0 era - a couple of devs at Netscape decided that JavaScript was an acceptable language to write configuration files in. The result was Proxy Auto-Config (PAC) - a configuration file format that works as follows: The browser connects to a pre-configured server, downloads the PAC file, and executes a particular Javascript function to determine proper proxy configuration. Why not? It is more expressive and less tedious than XML and seems reasonable to provide configurations to many clients.
 

@@ -16,7 +16,7 @@ bannerPhoto: /default
 canonicalUrl:
 ---
 
-# cURL What is it?
+## cURL What is it?
 
 cURL describes itself as:
 
@@ -24,7 +24,7 @@ cURL describes itself as:
 
 cURL is a multipurpose networking tool which has lots of useful usecases.
 
-# cheat sheet
+## cheat sheet
 
 <table>
 <thead>

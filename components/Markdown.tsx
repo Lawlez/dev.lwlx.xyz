@@ -49,7 +49,7 @@ export const Markdown: React.FC<{ source: string }> = (props) => {
         }
 
         .lwlx-markdown h1 {
-          font-size: 46px;
+          font-size: 1.5em;
           line-height: 56px;
           padding-top: 30px;
           padding-bottom: 10px;
@@ -58,6 +58,7 @@ export const Markdown: React.FC<{ source: string }> = (props) => {
         }
 
         .lwlx-markdown h2 {
+          font-size: 1.3em;
           padding-top: 25px;
           padding-bottom: 10px;
           margin-top: 25px;
@@ -65,6 +66,7 @@ export const Markdown: React.FC<{ source: string }> = (props) => {
         }
 
         .lwlx-markdown h3 {
+          font-size: 1.2em;
           padding-top: 20px;
           padding-bottom: 10px;
           margin-top: 20px;
@@ -72,6 +74,7 @@ export const Markdown: React.FC<{ source: string }> = (props) => {
         }
 
         .lwlx-markdown h4 {
+          font-size: 1em;
           padding-top: 15px;
           padding-bottom: 10px;
           margin-top: 15px;
@@ -110,13 +113,13 @@ export const Markdown: React.FC<{ source: string }> = (props) => {
         .lwlx-markdown code {
           font-family: "Fira Code", monospace;
           background-color: #f0769320;
-          padding: 3px 3px;
+          padding: 2px 2px;
           border-radius: 2px;
-          font-size: 1em;
+          font-size: 13px;
         }
 
         .lwlx-markdown pre {
-          margin: 20px 0px !important;
+          margin: 12px 0px !important;
         }
 
         .lwlx-markdown ol pre,
@@ -136,10 +139,10 @@ export const Markdown: React.FC<{ source: string }> = (props) => {
         }
         .lwlx-markdown table code {
           background-color: #f0769320;
-          padding: 1px 1px;
-          border-radius: 2px;
+          padding: 2px 2px;
+          border-radius: 4px;
           font-size: 1em;
-          line-height: 1em;
+          line-height: 1.8em;
         }
         .lwlx-markdown tbody td {
           padding: 12px;
@@ -158,11 +161,61 @@ export const Markdown: React.FC<{ source: string }> = (props) => {
         }
 
         @media only screen and (min-width: 768px) {
+// Desktop font settings
           .lwlx-markdown code {
             background-color: #f0769320;
             padding: 3px 3px;
             border-radius: 2px;
             font-size: 16px;
+          }
+
+          .lwlx-markdown h1 {
+            font-size: 46px;
+            line-height: 56px;
+            padding-top: 30px;
+            padding-bottom: 10px;
+            margin-top: 30px;
+            margin-bottom: 30px;
+          }
+
+          .lwlx-markdown h2 {
+            padding-top: 25px;
+            padding-bottom: 10px;
+            margin-top: 25px;
+            margin-bottom: 25px;
+          }
+
+          .lwlx-markdown h3 {
+            padding-top: 20px;
+            padding-bottom: 10px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+          }
+
+          .lwlx-markdown h4 {
+            padding-top: 15px;
+            padding-bottom: 10px;
+            margin-top: 15px;
+            margin-bottom: 15px;
+          }
+
+          .lwlx-markdown h5 {
+            padding-top: 10px;
+            padding-bottom: 10px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+          }
+
+          .lwlx-markdown h6 {
+            padding-top: 5px;
+            padding-bottom: 10px;
+            margin-top: 5px;
+            margin-bottom: 5px;
+          }
+
+          .lwlx-markdown p {
+            padding: 10px 0px;
+            margin: 10px 0px;
           }
         }
       `}</style>

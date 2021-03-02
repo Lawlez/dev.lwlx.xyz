@@ -18,8 +18,6 @@ bannerPhoto: /hackerone/hackerone
 canonicalUrl:
 ---
 
-# Photo Gallery _[moderate]_
-
 This is my Write Up for the "Photo Gallery" challenge of HackerOne's CTF.
 
 As usual we get a link to webpage, it seems to be an image gallery, but one of the images is broken.
