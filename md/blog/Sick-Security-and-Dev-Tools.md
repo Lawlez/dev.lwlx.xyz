@@ -13,7 +13,7 @@ tags:
   - javascript
   - devops
 thumbnailPhoto: /sicktools-sec-devops-thumb.jpg
-bannerPhoto: /sicktools-sec-devops.jpg
+bannerPhoto: /sicktools-sec-devops
 canonicalUrl:
 ---
 
