@@ -50,7 +50,7 @@ It signifies that its an UNEGISTERED version of the app, thus working in trial m
 So lets start to explore the app and what it can do. We start by clicking the "Upload image" Button.
 This leads us to a new page **/upload.php**, here we can select a file from our computer, and have a submit button to send the form.
 
-The form will be sent to a **doUpload.php** file. Upon closer inspection we alos see that there is a hidden field "filename", which gets filled in by aJS snippet.
+The form will be sent to a **doUpload.php** file. Upon closer inspection we alos see that there is a hidden field "filename", which gets filled in by a JS snippet.
 
 ```jsx
    <h1>Upload</h1>
