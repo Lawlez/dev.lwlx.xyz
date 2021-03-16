@@ -1,8 +1,10 @@
 import Head from "next/head";
+import dynamic from "next/dynamic";
 import { PostData, loadBlogPosts } from "../loader";
-import MaterialPostCard from "../components/MaterialPostCard"
 //import { generateRSS } from "../rssUtil";
 import { globals } from "../globals";
+
+const MaterialPostCard = dynamic(import("@components/MaterialPostCard"));
 
 const sectionStyle = {
   width: "100%",

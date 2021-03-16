@@ -52,7 +52,7 @@ const MaterialPostCard: React.FC<{ post: PostData }> = ({ post }) => {
         {post.thumbnailPhoto && (
           <CardMedia
             className={classes.cardMedia}
-            image={"." + post.thumbnailPhoto}
+            image={post.thumbnailPhoto}
             title={post.title}
           />
         )}

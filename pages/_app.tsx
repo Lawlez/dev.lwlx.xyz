@@ -18,6 +18,17 @@ const App: React.FC = ({ Component, pageProps }: any) => {
       <Head>
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link
+          rel="preconnect"
+          href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap"
+        />
+        <link
+          href="https://fonts.gstatic.com/s/firacode/v10/uU9eCBsR6Z2vfE9aq3bL0fxyUs4tcw4W_D1sJVD7MOzlojwUKQ.woff"
+          rel="preload"
+          crossOrigin={"crossorigin"}
+          type="font/woff2"
+          as="font"
+        />
+        <link
           href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap"
           rel="stylesheet"
         />
@@ -55,9 +66,9 @@ const App: React.FC = ({ Component, pageProps }: any) => {
           padding: 0;
           margin: 0;
           background: #e6e6e6;
-          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-            Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
-            sans-serif;
+          font-family: Fira Code, -apple-system, BlinkMacSystemFont, Segoe UI,
+            Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
+            Helvetica Neue, sans-serif;
         }
         pre {
           border-radius: 8px;
