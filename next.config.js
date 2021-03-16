@@ -10,11 +10,6 @@ module.exports = {
       use: "raw-loader",
     });
 
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      "~": __dirname,
-    };
-
     return config;
   },
 };
