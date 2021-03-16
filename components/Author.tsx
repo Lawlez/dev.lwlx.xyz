@@ -1,29 +1,8 @@
 import React from "react";
 import { format } from "fecha";
-import { PostData } from "../loader";
-import { globals } from "../globals";
-import Image from "./Image";
-
-export const FollowButton = () => {
-  return (
-    <a href="/newsletter">
-      <div
-        style={{
-          display: "inline-block",
-          border: `1px solid ${globals.accentColor}`,
-          borderRadius: "4px",
-          padding: "2px 10px",
-          color: globals.accentColor,
-          fontSize: "10pt",
-          marginBottom: "2px",
-          marginLeft: "4px",
-        }}
-      >
-        Follow
-      </div>
-    </a>
-  );
-};
+import { PostData } from "loader";
+import { globals } from "globals";
+import Image from "@atoms/Image";
 
 export const Author: React.FC<{ post: PostData }> = (props) => {
   return (

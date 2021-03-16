@@ -25,7 +25,7 @@ const MaterialPostCard: React.FC<{ post: PostData }> = ({ post }) => {
   const classes = useStyles();
   const [PaperElevation, setPaperElevation] = React.useState(2);
   const [expanded, setExpanded] = React.useState(false);
-  const [Liked, setLiked] = React.useState({[post.path]:false});
+  const [Liked, setLiked] = React.useState({ [post.path]: false });
 
   const handleExpandClick = () => setExpanded(!expanded);
   const elevateUp = () => setPaperElevation(12);
@@ -38,7 +38,7 @@ const MaterialPostCard: React.FC<{ post: PostData }> = ({ post }) => {
   };
 
   const likePost = (postId: string) => {
-    setLiked(state =>({...state, [postId]: true}))
+    setLiked((state) => ({ ...state, [postId]: true }));
   };
 
   return (
@@ -52,7 +52,7 @@ const MaterialPostCard: React.FC<{ post: PostData }> = ({ post }) => {
         {post.thumbnailPhoto && (
           <CardMedia
             className={classes.cardMedia}
-            image={post.thumbnailPhoto}
+            image={"." + post.thumbnailPhoto}
             title={post.title}
           />
         )}
@@ -75,8 +75,12 @@ const MaterialPostCard: React.FC<{ post: PostData }> = ({ post }) => {
         </CardContent>
       </CardActionArea>
       <CardActions className={classes.cardActions}>
-        <IconButton aria-label="add to favorites" size="small" onClick={()=> likePost(post.path)}>
-          <FavoriteIcon color={Liked[post.path] ? 'error' : 'inherit'} />
+        <IconButton
+          aria-label="add to favorites"
+          size="small"
+          onClick={() => likePost(post.path)}
+        >
+          <FavoriteIcon color={Liked[post.path] ? "error" : "inherit"} />
         </IconButton>
         <IconButton
           aria-label="share"

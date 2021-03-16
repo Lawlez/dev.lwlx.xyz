@@ -2,7 +2,7 @@ import React from "react";
 import { Markdown } from "./Markdown";
 import { PostData } from "../loader";
 import { PostMeta } from "./PostMeta";
-import Image from "./Image";
+import Image from "@atoms/Image";
 import { Author } from "./Author";
 import { globals } from "../globals";
 
@@ -46,7 +46,7 @@ export const BlogPost: React.FunctionComponent<{ post: PostData }> = ({
                 margin: "8px 0px 8px 0px",
                 padding: 0,
                 border: "none",
-                fontSize: '2.6em',
+                fontSize: "2.6em",
                 fontFamily: "Fira Code",
               }}
             >
