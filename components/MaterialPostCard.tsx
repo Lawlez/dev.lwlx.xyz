@@ -123,7 +123,7 @@ const MaterialPostCard: React.FC<{ post: PostData }> = ({ post }) => {
 
 const useStyles = makeStyles(theme => ({
   card: {
-    borderRadius: 18,
+    borderRadius: 16,
     marginBottom: 8,
     height: 'fit-content',
   },
