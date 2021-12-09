@@ -31,7 +31,10 @@ jobs:
         path: node_modules
       # An explicit key for restoring and saving the cache
         key:   nodemodules
-    
+    - run: sudo rm -rf /usr/share/dotnet
+    - run: sudo rm -rf /opt/ghc
+    - run: sudo rm -rf "/usr/local/share/boost"
+    - run: sudo rm -rf "$AGENT_TOOLSDIRECTORY"
     - run: yarn install --network-timeout 1000000000
     - run: BUNDLE_ANALYZER_TOKEN=420398ca666ca9cb3e493fd6d55b9a224cdebe12 yarn build
     - run: yarn export
