@@ -2,11 +2,12 @@ import React from "react";
 import { format } from "fecha";
 import { PostData } from "../loader";
 import { Tag } from "./Tag";
+import Box from '@mui/material/Box'
 
 export const PostCard: React.FC<{ post: PostData }> = (props) => {
   const post = props.post;
   return (
-    <a
+    <Box component="a"
       href={`/${post.path}`}
       style={{
         textDecoration: "inherit",
@@ -18,8 +19,8 @@ export const PostCard: React.FC<{ post: PostData }> = (props) => {
         height: "320px",
       }}
     >
-      <div
-        style={{
+      <Box
+        sx={{
           opacity: 1,
           boxShadow: "0px 2px 8px #00000040",
           width: "100%",
@@ -34,8 +35,8 @@ export const PostCard: React.FC<{ post: PostData }> = (props) => {
         }}
       >
         {post.thumbnailPhoto && (
-          <div
-            style={{
+          <Box
+            sx={{
               background: `url(${post.thumbnailPhoto}) no-repeat center center`,
               backgroundSize: "cover",
               width: "100%",
@@ -43,8 +44,8 @@ export const PostCard: React.FC<{ post: PostData }> = (props) => {
             }}
           />
         )}
-        <div
-          style={{
+        <Box
+          sx={{
             padding: "14px 8px",
             display: "flex",
             flexDirection: "column",
@@ -65,7 +66,7 @@ export const PostCard: React.FC<{ post: PostData }> = (props) => {
             </h2>
           )}
           {true && post.subtitle && (
-            <p
+            <Box component="p"
               style={{
                 margin: "0px 8px",
                 padding: "0px",
@@ -76,10 +77,10 @@ export const PostCard: React.FC<{ post: PostData }> = (props) => {
               }}
             >
               {post.subtitle}
-            </p>
+            </Box>
           )}
-          <div
-            style={{
+          <Box
+            sx={{
               width: "100%",
               height: 1,
               margin: "6px 0px",
@@ -87,19 +88,19 @@ export const PostCard: React.FC<{ post: PostData }> = (props) => {
               opacity: 0.23,
             }}
           />
-          <p style={{ opacity: 0.42, textAlign: "center", margin: "0px" }}>
+          <Box component="p" style={{ opacity: 0.42, textAlign: "center", margin: "0px" }}>
             published&nbsp;
             {props.post.datePublished
               ? format(new Date(props.post.datePublished), "MMMM Do, YYYY")
               : ""}
-          </p>
-          <div style={{ flex: 1 }}></div>
-          <div style={{ marginTop: "8px" }}>
+          </Box>
+          <Box sx={{ flex: 1 }}></Box>
+          <Box sx={{ marginTop: "8px"}}>
             {post.tags &&
               (post.tags || []).map((tag, key) => <Tag key={key} tag={tag} />)}
-          </div>
-        </div>
-      </div>
-    </a>
+          </Box>
+        </Box>
+      </Box>
+    </Box>
   );
 };

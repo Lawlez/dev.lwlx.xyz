@@ -1,13 +1,13 @@
-import React from "react";
-import ReactMarkdown from "react-markdown/with-html";
-import Code from "./Code";
-import { globals } from "../globals";
+import React from 'react'
+import ReactMarkdown from 'react-markdown/with-html'
+import Code from './Code'
+import { globals } from '../globals'
 
-export const Markdown: React.FC<{ source: string }> = (props) => {
+export const Markdown: React.FC<{ source: string }> = props => {
   return (
-    <div style={{ width: "100%" }} className="lwlx-markdown">
+    <div style={{ width: '100%' }} className='lwlx-markdown'>
       <ReactMarkdown
-        key="content"
+        key='content'
         source={props.source}
         renderers={{
           code: Code,
@@ -19,7 +19,7 @@ export const Markdown: React.FC<{ source: string }> = (props) => {
         .lwlx-markdown li {
           line-height: 32px;
           font-size: 21px;
-          color: #333;
+          color: #ccc;
           overflow-wrap: break-word;
         }
 
@@ -111,8 +111,9 @@ export const Markdown: React.FC<{ source: string }> = (props) => {
         }
 
         .lwlx-markdown code {
-          font-family: "Fira Code", monospace;
-          background-color: #f0769320;
+          font-family: 'Fira Code', monospace;
+          background-color: #f07693f0;
+          color: #222;
           padding: 2px 2px;
           border-radius: 2px;
           font-size: 13px;
@@ -138,7 +139,8 @@ export const Markdown: React.FC<{ source: string }> = (props) => {
           background: rgba(0, 0, 0, 0.02);
         }
         .lwlx-markdown table code {
-          background-color: #f0769320;
+          background-color: #f07693f0;
+          color: #222;
           padding: 2px 2px;
           border-radius: 4px;
           font-size: 1em;
@@ -161,9 +163,10 @@ export const Markdown: React.FC<{ source: string }> = (props) => {
         }
 
         @media only screen and (min-width: 768px) {
-// Desktop font settings
+          // Desktop font settings
           .lwlx-markdown code {
-            background-color: #f0769320;
+            background-color: #f07693f0;
+            color: #222;
             padding: 3px 3px;
             border-radius: 2px;
             font-size: 16px;
@@ -220,5 +223,5 @@ export const Markdown: React.FC<{ source: string }> = (props) => {
         }
       `}</style>
     </div>
-  );
-};
+  )
+}

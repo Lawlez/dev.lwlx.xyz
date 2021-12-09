@@ -11,26 +11,23 @@ import {
   Collapse,
   CardActions,
   IconButton,
-} from '@material-ui/core'
-import FavoriteIcon from '@material-ui/icons/Favorite'
-import ShareIcon from '@material-ui/icons/Share'
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-import { makeStyles } from '@material-ui/core/styles'
-
+} from '@mui/material'
+import FavoriteIcon from '@mui/icons-material/Favorite'
+import ShareIcon from '@mui/icons-material/Share'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import makeStyles from '@mui/styles/makeStyles'
+import { DefaultTheme } from '@mui/styles'
 import { format } from 'fecha'
 import { PostData } from '../loader'
 import { Tag } from './Tag'
 
 const MaterialPostCard: React.FC<{ post: PostData }> = ({ post }) => {
   const classes = useStyles()
-  const [PaperElevation, setPaperElevation] = React.useState(2)
   const [loaded, setIsLoaded] = React.useState(false)
   const [expanded, setExpanded] = React.useState(false)
   const [Liked, setLiked] = React.useState({ [post.path]: false })
 
   const handleExpandClick = () => setExpanded(!expanded)
-  const elevateUp = () => setPaperElevation(12)
-  const resetEvelation = () => setPaperElevation(2)
 
   const sharePost = (post: PostData) => {
     if (typeof window !== 'undefined') {
@@ -51,9 +48,6 @@ const MaterialPostCard: React.FC<{ post: PostData }> = ({ post }) => {
   return (
     <Card
       className={classes.card}
-      elevation={PaperElevation}
-      onMouseEnter={elevateUp}
-      onMouseLeave={resetEvelation}
     >
       <CardActionArea component='a' href={`/${post.path}`}>
         {post.thumbnailPhoto && (
@@ -91,7 +85,7 @@ const MaterialPostCard: React.FC<{ post: PostData }> = ({ post }) => {
           <ShareIcon />
         </IconButton>
         {post.description && (
-          <Hidden xsDown>
+          <Hidden mdDown>
             <IconButton
               className={clsx(classes.expand, {
                 [classes.expandOpen]: expanded,
@@ -107,7 +101,7 @@ const MaterialPostCard: React.FC<{ post: PostData }> = ({ post }) => {
         )}
       </CardActions>
       {post.description && (
-        <Hidden xsDown>
+        <Hidden mdDown>
           <Collapse in={expanded} timeout='auto' unmountOnExit>
             <CardContent>
               <Typography variant='subtitle2' paragraph color='textSecondary'>
@@ -125,7 +119,9 @@ const useStyles = makeStyles(theme => ({
   card: {
     borderRadius: 16,
     marginBottom: 8,
-    height: 'fit-content',
+    height: 'auto',
+    background: '#141414',
+    boxShadow: "9px 9px 16px rgb(4,4,4,0.6), -9px -9px 16px  rgba(58,58,58, 0.5)",
   },
   cardDetails: {
     flex: 1,
@@ -141,13 +137,27 @@ const useStyles = makeStyles(theme => ({
     alignSelf: 'flex-end',
     transform: 'rotate(0deg)',
     marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
+    transition: (theme as extendedTheme).transitions.create('transform', {
+      duration: (theme as extendedTheme).transitions.duration.shortest,
     }),
   },
   expandOpen: {
     transform: 'rotate(180deg)',
   },
 }))
+
+interface extendedTheme extends DefaultTheme {
+  transitions:{
+    create: (property:string, duration?:{
+      duration?:number,
+    })=>string
+    duration:{
+      enter:number,
+      exit:number,
+      short:number,
+      shortest:number,
+    }
+  }
+}
 
 export default MaterialPostCard
