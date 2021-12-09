@@ -16,7 +16,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite'
 import ShareIcon from '@mui/icons-material/Share'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import makeStyles from '@mui/styles/makeStyles'
-
+import { DefaultTheme } from '@mui/styles'
 import { format } from 'fecha'
 import { PostData } from '../loader'
 import { Tag } from './Tag'
@@ -137,13 +137,27 @@ const useStyles = makeStyles(theme => ({
     alignSelf: 'flex-end',
     transform: 'rotate(0deg)',
     marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
+    transition: (theme as extendedTheme).transitions.create('transform', {
+      duration: (theme as extendedTheme).transitions.duration.shortest,
     }),
   },
   expandOpen: {
     transform: 'rotate(180deg)',
   },
 }))
+
+interface extendedTheme extends DefaultTheme {
+  transitions:{
+    create: (property:string, duration?:{
+      duration?:number,
+    })=>string
+    duration:{
+      enter:number,
+      exit:number,
+      short:number,
+      shortest:number,
+    }
+  }
+}
 
 export default MaterialPostCard
