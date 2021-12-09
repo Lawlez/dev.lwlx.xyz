@@ -32,6 +32,6 @@ jobs:
       # An explicit key for restoring and saving the cache
         key:   nodemodules
     
-    - run: yarn install
+    - run: yarn install --network-timeout 1000000000
     - run: BUNDLE_ANALYZER_TOKEN=420398ca666ca9cb3e493fd6d55b9a224cdebe12 yarn build
     - run: yarn export
