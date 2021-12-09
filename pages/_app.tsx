@@ -58,7 +58,7 @@ const App: React.FC = ({ Component, pageProps }: any) => {
           )}
         </Head>
         <Header />
-        <Container>
+        <Container disableGutters>
         <Component {...pageProps} />
         </Container>
         <Box flex={1} />
@@ -71,11 +71,6 @@ const App: React.FC = ({ Component, pageProps }: any) => {
             min-height: 100%;
             font-family: Fira Code, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
               Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-          }
-          pre {
-            border-radius: 8px;
-            background: '#141414';
-            box-shadow: "9px 9px 12px rgb(4,4,4,0.6), -9px -9px 12px  rgba(58,58,58, 0.5)";
           }
           * {
             box-sizing: border-box;

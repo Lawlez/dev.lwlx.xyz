@@ -1,7 +1,5 @@
 import React from 'react'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
-import Box from '@mui/material/Box'
-import { AddBoxOutlined } from '@mui/icons-material'
 
 const converted = {
   'pre[class*="language-"], code[class*="language-"]': {

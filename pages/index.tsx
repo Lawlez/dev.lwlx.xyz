@@ -39,8 +39,8 @@ const Home = (props: { introduction: string; posts: PostData[] }) => {
         >
           newest posts
         </h2>
-        <Box sx={{ width: '100%' }}>
-          <Masonry columns={3} spacing={6}>
+        <Box sx={{ width: '100%', left: 24, position: 'relative', marginTop: 8 }}>
+          <Masonry columns={{xs:1, sm: 2, md:3, xl: 4}} spacing={6}>
             {props.posts.map((post, key) => {
               if (post && post.tags) {
                 if (key <= 10) {
@@ -68,8 +68,8 @@ const Home = (props: { introduction: string; posts: PostData[] }) => {
         >
           All Posts
         </h2>
-        <Box sx={{ width: '100%' }}>
-          <Masonry columns={3} spacing={6}>
+        <Box sx={{ width: '100%', left: 24, position: 'relative', marginTop: 8 }}>
+          <Masonry columns={{xs:1, sm: 2, md:3, xl: 4}} spacing={6}>
             {props.posts.map((post, key) => {
               return <MaterialPostCard key={key} post={post} />
             })}
@@ -79,7 +79,7 @@ const Home = (props: { introduction: string; posts: PostData[] }) => {
 
       <Box
         width='100%'
-        padding='100px 3vw'
+        padding='32px 3vw'
         display='flex'
         flexDirection='column'
         alignItems='center'
