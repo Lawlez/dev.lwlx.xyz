@@ -23,14 +23,11 @@ import { Tag } from './Tag'
 
 const MaterialPostCard: React.FC<{ post: PostData }> = ({ post }) => {
   const classes = useStyles()
-  const [PaperElevation, setPaperElevation] = React.useState(2)
   const [loaded, setIsLoaded] = React.useState(false)
   const [expanded, setExpanded] = React.useState(false)
   const [Liked, setLiked] = React.useState({ [post.path]: false })
 
   const handleExpandClick = () => setExpanded(!expanded)
-  const elevateUp = () => setPaperElevation(12)
-  const resetEvelation = () => setPaperElevation(2)
 
   const sharePost = (post: PostData) => {
     if (typeof window !== 'undefined') {
@@ -51,9 +48,6 @@ const MaterialPostCard: React.FC<{ post: PostData }> = ({ post }) => {
   return (
     <Card
       className={classes.card}
-      elevation={PaperElevation}
-      onMouseEnter={elevateUp}
-      onMouseLeave={resetEvelation}
     >
       <CardActionArea component='a' href={`/${post.path}`}>
         {post.thumbnailPhoto && (
@@ -126,6 +120,8 @@ const useStyles = makeStyles(theme => ({
     borderRadius: 16,
     marginBottom: 8,
     height: 'auto',
+    background: '#141414',
+    boxShadow: "9px 9px 16px rgb(4,4,4,0.6), -9px -9px 16px  rgba(58,58,58, 0.5)",
   },
   cardDetails: {
     flex: 1,

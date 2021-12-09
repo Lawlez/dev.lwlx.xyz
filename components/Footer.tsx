@@ -6,7 +6,9 @@ export const Footer: React.FC = () => (
   <div
     style={{
       top: 0,
-      width: '100%',
+      width: '90%',
+      borderRadius: '12px',
+      marginBottom: 12,
       height: '56px',
       display: 'flex',
       flexDirection: 'row',
@@ -16,6 +18,8 @@ export const Footer: React.FC = () => (
       color: globals.secondaryColor,
       padding: '24px',
       fontSize: '12pt',
+      background: '#141414',
+      boxShadow: "9px 9px 12px rgb(4,4,4,0.6), -9px -9px 12px  rgba(58,58,58, 0.5)",
     }}
   >
     <p>{`© lwlx. ${date}`}</p>

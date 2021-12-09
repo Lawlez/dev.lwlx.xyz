@@ -58,7 +58,7 @@ const App: React.FC = ({ Component, pageProps }: any) => {
           )}
         </Head>
         <Header />
-        <Container >
+        <Container>
         <Component {...pageProps} />
         </Container>
         <Box flex={1} />
@@ -74,7 +74,8 @@ const App: React.FC = ({ Component, pageProps }: any) => {
           }
           pre {
             border-radius: 8px;
-            box-shadow: 0px 4px 12px #00000060;
+            background: '#141414';
+            box-shadow: "9px 9px 12px rgb(4,4,4,0.6), -9px -9px 12px  rgba(58,58,58, 0.5)";
           }
           * {
             box-sizing: border-box;

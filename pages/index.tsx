@@ -40,7 +40,7 @@ const Home = (props: { introduction: string; posts: PostData[] }) => {
           newest posts
         </h2>
         <Box sx={{ width: '100%' }}>
-          <Masonry columns={3} spacing={4} >
+          <Masonry columns={3} spacing={6}>
             {props.posts.map((post, key) => {
               if (post && post.tags) {
                 if (key <= 10) {
@@ -68,19 +68,12 @@ const Home = (props: { introduction: string; posts: PostData[] }) => {
         >
           All Posts
         </h2>
-        <Box
-          style={{
-            display: 'grid',
-            gridTemplateColumns: `repeat(auto-fit, minmax(300px, 1fr))`,
-            gridRowGap: '8px',
-            gridColumnGap: '8px',
-            width: '100%',
-            padding: '0px 7vw',
-          }}
-        >
-          {props.posts.map((post, key) => {
-            return <MaterialPostCard key={key} post={post} />
-          })}
+        <Box sx={{ width: '100%' }}>
+          <Masonry columns={3} spacing={6}>
+            {props.posts.map((post, key) => {
+              return <MaterialPostCard key={key} post={post} />
+            })}
+          </Masonry>
         </Box>
       </Box>
 
@@ -113,13 +106,16 @@ const Home = (props: { introduction: string; posts: PostData[] }) => {
         <a href='https://twitter.com/0x0000005' style={{ cursor: 'pointer' }}>
           <button
             style={{
+              boxShadow:
+                '9px 9px 12px rgb(4,4,4,0.6), -9px -9px 12px  rgba(68,68,68, 0.5)',
               padding: '10px 30px',
-              backgroundColor: globals.secondaryColor,
-              color: 'white',
+              backgroundColor: '#141414',
+              color: globals.secondaryColor,
               fontSize: '14pt',
               border: 'none',
               borderRadius: '8px',
               cursor: 'pointer',
+              background: 'linear-gradient(135deg, rgb(12,12,12,0.6), rgba(28,28,28, 0.5))',
             }}
           >
             @0x0000005 on twitter

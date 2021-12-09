@@ -1,4 +1,4 @@
-import { createTheme } from '@mui/material/styles';
+import { createTheme } from '@mui/material/styles'
 
 const theme = createTheme({
   palette: {
@@ -15,10 +15,15 @@ const theme = createTheme({
       dark: '#ba000d',
       contrastText: '#000',
     },
-    background: {
-
+    background: {},
+  },
+  components: {
+    overrides: {
+      Container: {
+        background: '#141414',
+      },
     },
   },
-});
+})
 
-export default theme;
+export default theme

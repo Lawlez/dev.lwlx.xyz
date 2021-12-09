@@ -1,5 +1,7 @@
 import React from 'react'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
+import Box from '@mui/material/Box'
+import { AddBoxOutlined } from '@mui/icons-material'
 
 const converted = {
   'pre[class*="language-"], code[class*="language-"]': {
@@ -35,7 +37,10 @@ const converted = {
     padding: '1em',
     margin: '.5em 0',
     overflow: 'auto',
-    background: '#04060a',
+    //background: '#04060a',
+    borderRadius: 12,
+    background: '#121212',
+    boxShadow: '9px 9px 13px rgba(58,58,58, 0.5), -9px -9px 12px rgb(4,4,4,0.6)',
   },
   ':not(pre) > code[class*="language-"]': {
     padding: '.1em .3em',
