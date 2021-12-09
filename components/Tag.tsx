@@ -1,20 +1,21 @@
-import React from "react";
+import React from 'react'
+import Box from '@mui/material/Box'
 
-export const Tag: React.FC<{ tag: string }> = (props) => {
+export const Tag: React.FC<{ tag: string }> = props => {
   return (
-    <div
-      style={{
-        display: "inline-block",
-        padding: "1px 10px 2px",
+    <Box
+      sx={{
+        display: 'inline-block',
+        padding: '1px 10px 2px',
         borderRadius: 10,
-        backgroundColor: "#1177ABff",
-        color: "#fff",
-        marginRight: 8,
-        marginBottom: 4,
-        fontSize: "10pt",
+        backgroundColor: '#1177ABff',
+        color: '#fff',
+        marginRight: 1,
+        marginBottom: 1,
+        fontSize: '10pt',
       }}
     >
       {props.tag}
-    </div>
-  );
-};
+    </Box>
+  )
+}

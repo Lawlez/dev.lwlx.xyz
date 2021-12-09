@@ -6,10 +6,13 @@ import { globals } from '../globals'
 import theme from '../theme'
 import { ThemeProvider } from '@mui/material/styles'
 import { Box } from '@mui/system'
+import CssBaseline from '@mui/material/CssBaseline';
+import Container from '@mui/material/Container';
 
 const App: React.FC = ({ Component, pageProps }: any) => {
   return (
     <ThemeProvider theme={theme}>
+      <CssBaseline />
       <Box
         display='flex'
         flexDirection='column'
@@ -55,19 +58,17 @@ const App: React.FC = ({ Component, pageProps }: any) => {
           )}
         </Head>
         <Header />
+        <Container >
         <Component {...pageProps} />
+        </Container>
         <Box flex={1} />
         <Footer />
         <style jsx global>{`
           // reset.css
-
           html,
           body,
           #__next {
             min-height: 100%;
-            padding: 0;
-            margin: 0;
-            background: #e6e6e6;
             font-family: Fira Code, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
               Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
           }

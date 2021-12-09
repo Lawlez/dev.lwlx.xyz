@@ -4,6 +4,7 @@ import { PostData, loadBlogPosts } from '../loader'
 //import { generateRSS } from "../rssUtil";
 import { globals } from '../globals'
 import { Box } from '@mui/system'
+import Masonry from '@mui/lab/Masonry'
 
 const MaterialPostCard = dynamic(import('@components/MaterialPostCard'))
 
@@ -38,28 +39,20 @@ const Home = (props: { introduction: string; posts: PostData[] }) => {
         >
           newest posts
         </h2>
-        <Box
-          style={{
-            display: 'grid',
-            gridTemplateColumns: `repeat(auto-fit, minmax(300px, 1fr))`,
-            gridRowGap: '8px',
-            gridColumnGap: '8px',
-            width: '100%',
-            padding: '0px 7vw',
-          }}
-        >
-          {props.posts.map((post, key) => {
-            if (post && post.tags) {
-              if (key === 0 || key === 1 || key === 2 || key === 3) {
-                return <MaterialPostCard key={key} post={post} />
+        <Box sx={{ width: '100%' }}>
+          <Masonry columns={3} spacing={4} >
+            {props.posts.map((post, key) => {
+              if (post && post.tags) {
+                if (key <= 10) {
+                  return <MaterialPostCard key={key} post={post} />
+                }
+                return
               }
-              return
-            }
-            return `the post ${post.title} has no tags defined`
-          })}
+              return `the post ${post.title} has no tags defined`
+            })}
+          </Masonry>
         </Box>
       </Box>
-
       <Box
         width='100%'
         padding='100px 3vw'

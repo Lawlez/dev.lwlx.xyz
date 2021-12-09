@@ -15,7 +15,7 @@ import {
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import ShareIcon from '@mui/icons-material/Share'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-import makeStyles from '@mui/styles/makeStyles';
+import makeStyles from '@mui/styles/makeStyles'
 
 import { format } from 'fecha'
 import { PostData } from '../loader'
@@ -118,14 +118,14 @@ const MaterialPostCard: React.FC<{ post: PostData }> = ({ post }) => {
         </Hidden>
       )}
     </Card>
-  );
+  )
 }
 
 const useStyles = makeStyles(theme => ({
   card: {
     borderRadius: 16,
     marginBottom: 8,
-    height: 'fit-content',
+    height: 'auto',
   },
   cardDetails: {
     flex: 1,
