@@ -11,11 +11,11 @@ import {
   Collapse,
   CardActions,
   IconButton,
-} from '@material-ui/core'
-import FavoriteIcon from '@material-ui/icons/Favorite'
-import ShareIcon from '@material-ui/icons/Share'
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-import { makeStyles } from '@material-ui/core/styles'
+} from '@mui/material'
+import FavoriteIcon from '@mui/icons-material/Favorite'
+import ShareIcon from '@mui/icons-material/Share'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import makeStyles from '@mui/styles/makeStyles';
 
 import { format } from 'fecha'
 import { PostData } from '../loader'
@@ -91,7 +91,7 @@ const MaterialPostCard: React.FC<{ post: PostData }> = ({ post }) => {
           <ShareIcon />
         </IconButton>
         {post.description && (
-          <Hidden xsDown>
+          <Hidden mdDown>
             <IconButton
               className={clsx(classes.expand, {
                 [classes.expandOpen]: expanded,
@@ -107,7 +107,7 @@ const MaterialPostCard: React.FC<{ post: PostData }> = ({ post }) => {
         )}
       </CardActions>
       {post.description && (
-        <Hidden xsDown>
+        <Hidden mdDown>
           <Collapse in={expanded} timeout='auto' unmountOnExit>
             <CardContent>
               <Typography variant='subtitle2' paragraph color='textSecondary'>
@@ -118,7 +118,7 @@ const MaterialPostCard: React.FC<{ post: PostData }> = ({ post }) => {
         </Hidden>
       )}
     </Card>
-  )
+  );
 }
 
 const useStyles = makeStyles(theme => ({
