@@ -13,7 +13,7 @@ export const Tag: React.FC<{ tag: string }> = props => {
         marginBottom: 1,
         fontSize: '10pt',
         background: '#141414',
-        boxShadow: "4px 4px 8px rgb(4,4,4,0.6), -4px -4px 8px  rgba(58,58,58, 0.5)",
+        boxShadow: "4px 4px 8px rgb(4,4,4,0.6), -4px -4px 8px  rgba(48,48,48, 0.5)",
         ":hover": {
         background: '#141414',
         boxShadow: "4px 4px 4px  rgb(12,12,12,0.6), -4px -4px 4px rgba(28,28,28, 0.5)",

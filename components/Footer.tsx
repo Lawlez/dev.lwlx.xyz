@@ -19,7 +19,7 @@ export const Footer: React.FC = () => (
       padding: '24px',
       fontSize: '12pt',
       background: '#141414',
-      boxShadow: "9px 9px 12px rgb(4,4,4,0.6), -9px -9px 12px  rgba(58,58,58, 0.5)",
+      boxShadow: "9px 9px 12px rgb(4,4,4,0.6), -9px -9px 12px  rgba(48,48,48, 0.5)",
     }}
   >
     <p>{`© lwlx. ${date}`}</p>

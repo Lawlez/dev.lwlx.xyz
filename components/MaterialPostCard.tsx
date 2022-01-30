@@ -24,8 +24,9 @@ import { Tag } from './Tag'
 const MaterialPostCard: React.FC<{ post: PostData }> = ({ post }) => {
   const classes = useStyles()
   const [loaded, setIsLoaded] = React.useState(false)
+  const hasLiked = loaded && localStorage.getItem(`liked-${post.path}`) === 'true'
   const [expanded, setExpanded] = React.useState(false)
-  const [Liked, setLiked] = React.useState({ [post.path]: false })
+  const [Liked, setLiked] = React.useState({ [post.path]: hasLiked ? true : false })
 
   const handleExpandClick = () => setExpanded(!expanded)
 
@@ -37,9 +38,13 @@ const MaterialPostCard: React.FC<{ post: PostData }> = ({ post }) => {
 
   const likePost = (postId: string) => {
     setLiked(state => ({ ...state, [postId]: true }))
+    localStorage.setItem(`liked-${postId}`, 'true')
   }
 
-  React.useEffect(() => setIsLoaded(true), [])
+  React.useEffect(() => {
+    setLiked({ [post.path]: !!hasLiked })
+    setIsLoaded(true)
+  }, [])
 
   if (!loaded) {
     return null
@@ -49,7 +54,7 @@ const MaterialPostCard: React.FC<{ post: PostData }> = ({ post }) => {
     <Card
       className={classes.card}
     >
-      <CardActionArea component='a' href={`/${post.path}`}>
+      <CardActionArea component='a' href={`/${post.path}/`}>
         {post.thumbnailPhoto && (
           <CardMedia
             className={classes.cardMedia}
@@ -121,7 +126,7 @@ const useStyles = makeStyles(theme => ({
     marginBottom: 8,
     height: 'auto',
     background: '#141414',
-    boxShadow: "9px 9px 16px rgb(4,4,4,0.6), -9px -9px 16px  rgba(58,58,58, 0.5)",
+    boxShadow: "9px 9px 16px rgb(4,4,4,0.6), -9px -9px 16px  rgba(48,48,48, 0.5)",
   },
   cardDetails: {
     flex: 1,

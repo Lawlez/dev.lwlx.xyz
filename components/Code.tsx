@@ -38,7 +38,7 @@ const converted = {
     //background: '#04060a',
     borderRadius: 12,
     background: '#121212',
-    boxShadow: '9px 9px 13px rgba(58,58,58, 0.5), -9px -9px 12px rgb(4,4,4,0.6)',
+    boxShadow: '9px 9px 13px rgba(48,48,48, 0.5), -9px -9px 12px rgb(4,4,4,0.6)',
   },
   ':not(pre) > code[class*="language-"]': {
     padding: '.1em .3em',

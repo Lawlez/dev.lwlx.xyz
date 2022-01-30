@@ -18,7 +18,7 @@ export const Markdown: React.FC<{ source: string }> = props => {
         .lwlx-markdown p,
         .lwlx-markdown li {
           line-height: 32px;
-          font-size: 21px;
+          font-size: 16px;
           color: #ccc;
           overflow-wrap: break-word;
         }

@@ -26,7 +26,7 @@ export const Author: React.FC<{ post: PostData }> = props => {
             src={props.post.authorPhoto}
             style={{
               background: '#141414',
-              boxShadow: "6px 6px 8px rgb(4,4,4,0.6), -6px -6px 8px  rgba(58,58,58, 0.5)",
+              boxShadow: "6px 6px 8px rgb(4,4,4,0.6), -6px -6px 8px  rgba(48,48,48, 0.5)",
               width: '64px',
               height: '64px',
               borderRadius: '34px',
