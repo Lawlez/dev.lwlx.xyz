@@ -3,7 +3,7 @@ title: The Linux Filesystem
 subtitle: Where do i find X in Linux? Where should i place temporary data?
 description: The Linux Filesystem has many Folders you will bump into a lot, so it's good to know what each of them is meant for and what they are used for. This Knowledge will help you during the analysis of any Unix system.
 published: true
-datePublished: 1651853089380
+datePublished: 1651542089380
 author: lwlx
 authorTwitter: "0x0000005"
 authorPhoto: /profile
