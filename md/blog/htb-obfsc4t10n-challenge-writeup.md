@@ -3,10 +3,10 @@ title: HTB write up for the oBfsC4t10n[HARD] challenge
 subtitle: security through obscurity?
 description: write up for the oBfsC4t10n[HARD] challenge
 published: true
-datePublished: 1611316432536
+datePublished: 1651952772222
 author: lwlx
 authorTwitter: "0x0000005"
-authorPhoto: /profile
+authorPhoto: /default
 tags:
   - ctf
   - writeup
