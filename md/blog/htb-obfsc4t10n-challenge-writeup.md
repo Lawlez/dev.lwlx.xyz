@@ -124,7 +124,7 @@ self.close
 
 > xlmodule.CodeModule.AddFromString contains many obfuscated lines of assembly code, I deobfuscated it by printing it via VBS.
 
-Here is the actualy assembly code payload:
+Here is the actual assembly code payload:
 
 ```cpp
 Private Type PROCESS_INFORMATION
@@ -205,8 +205,16 @@ End Sub
 
 You can see the Variable myArray seems suspicous, when running the payload in Excel I get an error for 'myArray'
 
-Im stuck here at the moment... I was told i would not need windows..
+I was stuck here for a while but i later found out that we just need to start converting the myArray Variable even more, so we try and to a simple conversion to Hex at first to se what we get. The content of MyArray must have been signed byte array, so after conversion we end up with the raw bytes, which in turn we can convert into a payload file.
+
+![important files](/htb/obfuscation/deci-to-hex.shellcode.png)
+
+If you Have IDA Pro you could try and disassemble this file wiht it, but us beeing poor we go ahead and download `scdbg` a simple windows script which will helpt us achieve the same result.
+Sadly we have to switch on our Windows VM for this.. 
+
+
+
 
 @ me on twitter [@0x0000005](https://twitter.com/0x0000005)
 
-> This Post is marked as `WIP` and will be updated continously.
+> This Post was last updated on May 7th 2022.
