@@ -19,24 +19,22 @@ bannerPhoto: /htb/htb-obfuscation
 canonicalUrl:
 ---
 
-### `(WIP)`
-
 This is my Write Up for the "oBfsC4t10n" challenge from Hack The Box.
 
-We are given a _zip file_. after extraction we are presented with an **html** file telling us to download an **excel file**.
-The excel file has been included in the html as a **base64 encoded** string, lets just save that info for later `base64.txt` in case we need it.
+We are given a _zip file_. After extraction, we are presented with an **HTML** file telling us to download an **excel file**.
+The excel file has been included in the HTML as a **base64 encoded** string; let's save that info for later `base64.txt` in case we need it.
 
 > decoding `base64.txt` actually gives us a valid excel like file.
 
-After we checked the HTML and deemed the download save lets fetch the excel file.
+After we checked the HTML and deemed the download save, let's fetch the excel file.
 
 ## Enumeration
 
-Instead of trying to open or analyze the file on our own machine, lets go ahead and upload it to **ANY.RUN**.
+Instead of trying to open or analyze the file on our own machine, let us go ahead and upload it to **ANY.RUN**.
 
-> [https://ANY.RUN](https://ANY.RUN) is a **online Sandbox** service that allows you to open various suspicious files or programms to fully analyze what would happen, without the danger.
+> [https://ANY.RUN](https://ANY.RUN) is an **online Sandbox** service that allows you to open various suspicious files or programs to fully analyze what would happen without the danger.
 
-After Testing the file with **ANY.RUN** we were able to see how the exploit would work and what would be done. So we tested on a **Windows 7** Machine, after opening the file, the exploit imediately startet to run:
+After Testing the file with **ANY.RUN** we were able to see how the exploit would work and what would be done. So we tested on a **Windows 7** Machine, after opening the file, the exploit immediately started to run:
 
 ![excel-file-report](/htb/obfuscation/file-report.png)
 
@@ -52,15 +50,15 @@ I went ahead and _downloaded_ the `MSForms.exd` as well as the `LwTHLrGh.hta` fi
 
 ## Analyzing `LwTHLrGh.hta`
 
-> .hta is a propriatary file format used by microsoft, its called '**HT**ML **A**pplication' and supports HTML code as well as **Visual Basic** or **JScript**. This format was meant to be used by Internet Explorer.
+> .hta is a proprietary file format used by Microsoft, its called '**HT**ML **A**pplication' and supports HTML code as well as **Visual Basic** or **JScript**. This format was meant to be used by Internet Explorer.
 >
-> The **default file-association** for the .hta extension is the Microsoft HTML Application Host (**mshta.exe**). If you have not disabled or changed this file association, in effect the HTA file behaves like an executable when double-clicked. An **HTA runs** as a **fully trusted application** and as a result has a lot **more privileges than a normal HTML** file.
+> The **default file-association** for the .hta extension is the Microsoft HTML Application Host (**mshta.exe**). If you have not disabled or changed this file association, in effect, the HTA file behaves like an executable when double-clicked. An **HTA runs** as a **fully trusted application** and, as a result, has a lot **more privileges than a normal HTML** file.
 
 Sounds dangerous, nice!
 
-So lets disect this bitch!
+So let's dissect this bitch!
 
-When opening the file we see it has a rather clear structure, a huge VB Script and **even comments**. How nice of the hacker not to obfuscate his code too much, thanks [@0xdf](https://twitter.com/0xdf_). ;-)
+When opening the file, we see it has a relatively clear structure, a huge VB Script, and **even comments**. How nice of the hacker not to obfuscate his code too much, thanks [@0xdf](https://twitter.com/0xdf_). ;-)
 
 ```jsx
 "<html><head>
@@ -72,11 +70,11 @@ When opening the file we see it has a rather clear structure, a huge VB Script a
 </script></head></html>"
 ```
 
-so naturally, since its practiacally all the code, we strip the vbcode out of the .hta to make it readable.
+So naturally, since it's practically all the code, we strip the vbcode out of the .hta to make it readable.
 
-Thank god we know VB, otherwise this would be a pain from here on now. ;-) Thankfully, since the autor has left some comments, indicating how the attack works, we should be able to cope with it.
+Thank god we know VB. Otherwise, this would be a pain from here on now. ;-) Thankfully, since the author has left some comments indicating how the attack works, we should be able to cope with it.
 
-The very first thing he does is effectively creating a backup of the AccessVBOM key **if** it has been set before.
+The first thing he does is to effectively create a backup of the AccessVBOM key **if** it has been set before.
 
 ```vb
 ' Get the old AccessVBOM value
@@ -99,7 +97,7 @@ WshShell.RegWrite RegPath, 1, "REG_DWORD"
 ```
 
 Then he gets to the juicy part.
-To Exploit the Security setting he just turned off, he creates a new Excel Workboo, with macros of course.
+To Exploit the Security setting he just turned off, he creates a new Excel Workbook, with macros, of course.
 He then proceeds to add VBComponents to the Excel, allowing him to add an Assembly Code Module.
 
 ```VB
@@ -110,7 +108,7 @@ xlmodule.CodeModule.AddFromString ... 80 more lines...
 
 ```
 
-In his last step this good boy restores the systems registry to its previous state.
+In his last step, this good boy restores the systems registry to its previous state.
 
 ```vb
 ' Restore the registry to its old state
@@ -122,7 +120,7 @@ end if
 self.close
 ```
 
-> xlmodule.CodeModule.AddFromString contains many obfuscated lines of assembly code, I deobfuscated it by printing it via VBS.
+> xlmodule.CodeModule.AddFromString contains many obfuscated lines of assembly code, and I deobfuscated it by printing it via VBS.
 
 Here is the actual assembly code payload:
 
@@ -203,18 +201,25 @@ Sub Workbook_Open()
 End Sub
 ```
 
-You can see the Variable myArray seems suspicous, when running the payload in Excel I get an error for 'myArray'
+You can see the Variable myArray seems suspicious, when running the payload in Excel, I get an error for 'myArray'
 
-I was stuck here for a while but i later found out that we just need to start converting the myArray Variable even more, so we try and to a simple conversion to Hex at first to se what we get. The content of MyArray must have been signed byte array, so after conversion we end up with the raw bytes, which in turn we can convert into a payload file.
+I was stuck here for a while, but i later found out that we just need to start converting the myArray Variable even more, so we try and do a simple conversion to Hex at first to see what we get. 
+![important files](/htb/obfuscation/deci-to-hex-shellcode.jpg)
 
-![important files](/htb/obfuscation/deci-to-hex.shellcode.png)
+The content of MyArray must have been signed byte array, so after conversion, we end up with the raw bytes, which we can convert into a payload file.
 
-If you Have IDA Pro you could try and disassemble this file wiht it, but us beeing poor we go ahead and download `scdbg` a simple windows script which will helpt us achieve the same result.
-Sadly we have to switch on our Windows VM for this.. 
+![important files](/htb/obfuscation/xxd-conversion-toshellcode.jpg)
 
+If you Have IDA Pro, you could try and disassemble this file with it, but us being poor we go ahead and download `scdbg`, a simple windows script that will help us achieve the same result.
+Sadly we have to switch on our Windows VM for this. 
 
+![important files](/htb/obfuscation/shellcode-debuged.jpg)
+
+As you can see, this finally yields us the Flag! Congrats to all of us, yay. 
+
+This was one of the most difficult Reversing challenge i've tried to date. What I also really liked about this one is that this is a very real-world scenario, Phishing is still one of the most common methods to get people hacked, and the chance that you would come across a Virus contained in a file like the one above is pretty high.
 
 
 @ me on twitter [@0x0000005](https://twitter.com/0x0000005)
 
-> This Post was last updated on May 7th 2022.
+> This Post was first published on Janury 22nd 2022 and was last updated on May 7th 2022.
