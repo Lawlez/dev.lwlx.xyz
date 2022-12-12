@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic'
 import { PostData, loadBlogPosts } from '../loader'
 //import { generateRSS } from "../rssUtil";
 import { globals } from '../globals'
-import { Box } from '@mui/system'
+import { Box } from '@mui/material'
 import Masonry from '@mui/lab/Masonry'
 
 const MaterialPostCard = dynamic(import('@components/MaterialPostCard'))

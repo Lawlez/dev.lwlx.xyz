@@ -4,8 +4,8 @@ import { Header } from '../components/Header'
 import { Footer } from '../components/Footer'
 import { globals } from '../globals'
 import theme from '../theme'
-import { ThemeProvider } from '@mui/material/styles'
-import { Box } from '@mui/system'
+import { ThemeProvider } from '@mui/material'
+import { Box } from '@mui/material'
 import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';
 

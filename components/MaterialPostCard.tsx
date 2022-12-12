@@ -6,7 +6,7 @@ import {
   CardContent,
   CardMedia,
   Typography,
-  Hidden,
+  Box,
   Divider,
   Collapse,
   CardActions,
@@ -90,7 +90,7 @@ const MaterialPostCard: React.FC<{ post: PostData }> = ({ post }) => {
           <ShareIcon />
         </IconButton>
         {post.description && (
-          <Hidden mdDown>
+          <Box sx={{ display: { xs: 'none', md: 'block' } }}>
             <IconButton
               className={clsx(classes.expand, {
                 [classes.expandOpen]: expanded,
@@ -102,11 +102,11 @@ const MaterialPostCard: React.FC<{ post: PostData }> = ({ post }) => {
             >
               <ExpandMoreIcon />
             </IconButton>
-          </Hidden>
+          </Box>
         )}
       </CardActions>
       {post.description && (
-        <Hidden mdDown>
+        <Box sx={{ display: { xs: 'none', md: 'block' } }}>
           <Collapse in={expanded} timeout='auto' unmountOnExit>
             <CardContent>
               <Typography variant='subtitle2' paragraph color='textSecondary'>
@@ -114,7 +114,7 @@ const MaterialPostCard: React.FC<{ post: PostData }> = ({ post }) => {
               </Typography>
             </CardContent>
           </Collapse>
-        </Hidden>
+        </Box>
       )}
     </Card>
   )
@@ -142,8 +142,8 @@ const useStyles = makeStyles(theme => ({
     alignSelf: 'flex-end',
     transform: 'rotate(0deg)',
     marginLeft: 'auto',
-    transition: (theme as extendedTheme).transitions.create('transform', {
-      duration: (theme as extendedTheme).transitions.duration.shortest,
+    transition: (theme as extendedTheme)?.transitions?.create('transform', {
+      duration: (theme as extendedTheme)?.transitions?.duration.shortest,
     }),
   },
   expandOpen: {
