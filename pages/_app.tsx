@@ -29,7 +29,7 @@ const App: React.FC = ({ Component, pageProps }: any) => {
           <link
             href='https://fonts.gstatic.com/s/firacode/v10/uU9eCBsR6Z2vfE9aq3bL0fxyUs4tcw4W_D1sJVD7MOzlojwUKQ.woff'
             rel='preload'
-            crossOrigin={'crossorigin'}
+            crossOrigin={'anonymous'}
             type='font/woff2'
             as='font'
           />
