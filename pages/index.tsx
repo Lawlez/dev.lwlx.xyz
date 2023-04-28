@@ -45,7 +45,7 @@ const Home = (props: { introduction: string; posts: PostData[] }) => {
           }}>
             {props.posts.map((post, key) => {
               if (post && post.tags) {
-                if (key <= 10) {
+                if (key <= 20) {
                   return <MaterialPostCard key={key} post={post} />
                 }
                 return
@@ -55,6 +55,7 @@ const Home = (props: { introduction: string; posts: PostData[] }) => {
           </Masonry>
         </Box>
       </Box>
+      {/** 
       <Box
         width='100%'
         padding='100px 3vw'
@@ -78,7 +79,7 @@ const Home = (props: { introduction: string; posts: PostData[] }) => {
             })}
           </Masonry>
       </Box>
-
+          **/}
       <Box
         width='100%'
         padding='32px 3vw'
