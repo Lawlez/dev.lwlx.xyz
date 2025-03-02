@@ -1,6 +1,6 @@
 {
   "name": "dev.lwlx.xyz",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A Fast AF dev blog with Next.js",
   "repository": {
     "type": "git",
@@ -19,34 +19,34 @@
     "export": "next export"
   },
   "dependencies": {
-    "@emotion/react": "^11.10.8",
-    "@emotion/styled": "^11.10.8",
-    "@mui/icons-material": "^5.11.16",
-    "@mui/lab": "^5.0.0-alpha.128",
-    "@mui/material": "^5.12.2",
-    "@mui/styles": "^5.12.0",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/icons-material": "^5.16.14",
+    "@mui/lab": "^5.0.0-alpha.175",
+    "@mui/material": "^5.16.14",
+    "@mui/styles": "^5.16.14",
     "clsx": "^1.2.1",
     "fecha": "^4.2.3",
-    "glob": "^7.2.0",
+    "glob": "^7.2.3",
     "gray-matter": "^4.0.3",
-    "next": "^12",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-markdown": "5.x",
-    "react-syntax-highlighter": "^15.3.0"
+    "next": "^12.3.4",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-markdown": "^5.0.3",
+    "react-syntax-highlighter": "^15.6.1"
   },
   "devDependencies": {
     "@bundle-analyzer/webpack-plugin": "^0.5.1",
     "@types/glob": "^7.2.0",
     "@types/node": "^14",
-    "@types/react": "^18.2.0",
+    "@types/react": "^18.3.18",
     "@types/react-syntax-highlighter": "^13.5.2",
     "@types/rss": "^0.0.28",
-    "@types/showdown": "^1.9.3",
+    "@types/showdown": "^1.9.4",
     "raw-loader": "^4.0.2",
     "rss": "^1.2.2",
     "showdown": "^1.9.1",
-    "typescript": "^5.0.4"
+    "typescript": "^5.8.2"
   },
   "engines": {
     "node": ">=18.0.0",
