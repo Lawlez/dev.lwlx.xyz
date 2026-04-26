@@ -19,9 +19,11 @@ const theme = createTheme({
     background: {},
   },
   components: {
-    overrides: {
-      Container: {
-        background: '#141414',
+    MuiContainer: {
+      styleOverrides: {
+        root: {
+          background: '#141414',
+        },
       },
     },
   },
