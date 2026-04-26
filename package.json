@@ -15,7 +15,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "build:static": "STATIC_EXPORT=true next build",
+    "start": "next start",
+    "deploy:cloudflare": "STATIC_EXPORT=true next build && npx wrangler pages deploy out --project-name=dev-lwlx-xyz"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
