@@ -1,36 +1,27 @@
 <p align="center">
-  <h1 align="center">dev.lwlx.xyz</h1>
+  <h1 align="center">dev.lwlx.xyz v2.0.0</h1>
 </p>
 <p align="center">
-  A developer blog with <br/>Next.js<br/>React<br/>TypeScript<br/>Markdown<br/>syntax highlighting<br/>SEO<br/>RSS generation
+  A high-performance developer blog modernized for 2026.<br/>
+  <b>Next.js 16 (App Router)</b> • <b>React 19</b> • <b>MUI v9</b><br/>
+  <b>unified/remark/rehype</b> • <b>Shiki Highlighting</b> • <b>TypeScript</b>
 </p>
 <p align="center">
-if you're happy and you know it, star this repo
+Visual Continuity • Speed Focused
 </p>
 <br/>
-<br/>
-<br/>
 
 
-- Works as a Markdown-based static-site generator out of the box: just add new blog posts to `/md/blog`
-- Supports exporting to fully static assets (powered by Next.js)
-- Hot reload (powered by Next.js)
-- Makes it easy to write custom pages/code in React + TypeScript
-- Provides a `Markdown.tsx` component with support for GitHub-style syntax highlighting
-- Automatic RSS feed generation
-- SEO best practices (title tag, meta tags, canonical URLs)
 
-# Get started
+- **Next.js 16 App Router**: Leverages React Server Components for zero-bundle markdown rendering.
+- **Unified Pipeline**: Modern markdown processing with `unified`, `remark`, and `rehype`.
+- **Shiki Highlighting**: Beautiful, accurate syntax highlighting with a custom dark theme.
+- **MUI v9**: Sleek, modern components using the latest Material UI standards.
+- **Node.js Primary**: Optimized for running as a Node.js server with full SSR support.
+- **Static Export**: Optional `output: 'export'` support for static hosting.
+- **SEO & Performance**: Optimized metadata, auto-generated sitemap, and robots.txt.
+- **RSS Generation**: Automatic RSS feed generation via the unified pipeline.
 
-To get started:
-
-1. Fork this repo
-2. ```
-   git clone git@github.com:yourusername/devii.git my-blog
-   cd my-blog
-   yarn install
-   ```
-3. Start the development server with `yarn dev`. This should start a server on `http://localhost:3000`.
 
 ## Powered by Next.js
 
@@ -43,25 +34,29 @@ Here's is an abbreviated version of the project structure. Certain config files 
 ```
 .
 ├── README.md
-├── public // all static assets (images, css, etc) go here
-├── pages // every .tsx component in this dir becomes a page of the final site
-|   ├── index.tsx // the home page (which has access to the list of all blog posts)
+├── public // static assets (images, fonts, etc.)
+├── app // App Router directory
+|   ├── layout.tsx // Root layout (Metadata, Google Analytics)
+|   ├── Providers.tsx // Client-side providers (MUI Theme, Emotion Cache)
+|   ├── page.tsx // Homepage (Server Component)
+|   ├── HomeContent.tsx // Interactive homepage UI (Client Component)
 |   ├── blog
-|       ├── [blog].md // a template component that renders the blog posts under `/md/blog`
+|       ├── [slug]
+|           ├── page.tsx // Blog post route (Static Params + Metadata)
+|   ├── sitemap.ts // Auto-generated sitemap.xml
+|   ├── robots.ts // robots.txt
 ├── md
 |   ├── blog
-|       ├── devii.md // this page!
-        ├── whatever.md // every MD file in this directory becomes a blog post
+|       ├── post.md // MD files are read by fs on the server
 ├── components
 |   ├── BlogPost.tsx
-|   ├── Code.tsx
 |   ├── Footer.tsx
 |   ├── Header.tsx
-|   ├── Markdown.tsx
-|   ├── Meta.tsx
-|   ├── <various>
-├── loader.ts // contains utility functions for loading/parsing Markdown
-├── node_modules
+|   ├── Markdown.tsx // Renders processed HTML
+|   ├── MaterialPostCard.tsx // Modernized with MUI sx prop
+├── lib
+|   ├── markdown.ts // Unified/Remark/Rehype/Shiki pipeline
+├── loader.ts // Server-side markdown loading (fs-based)
 ├── tsconfig.json
 ├── package.json
 ```
@@ -74,9 +69,17 @@ The file `[blog].ts` follows the Next.js convention of using square brackets to 
 
 ## Styling
 
-dev.lwlx.xyz is unopinionated about styling. Because your dev.lwlx.xyz site is a standard React app under the hood, you can use your favorite library from `npm` to do styling.
+dev.lwlx.xyz v2.0 uses **MUI v9** for its design system. All legacy `makeStyles` (JSS) styling has been removed in favor of the modern `sx` prop and `styled()` API. This ensures full compatibility with the App Router and React Server Components.
 
-dev.lwlx.xyz provides certain styles by default, notably in the Markdown renderer (`/components/Markdown.tsx`). Those styles are implemented using Next's built-in styling solution `styled-jsx`. Unfortunately it was necessary to make those styles global, since `styled-jsx` [doesn't play nice](https://github.com/vercel/styled-jsx/issues/573) with third-party components (in this case `react-markdown`).
+The markdown rendering in `/components/Markdown.tsx` uses standard CSS classes to style the output of the unified pipeline, maintaining the signature dark neumorphic look.
+
+## Performance & SEO
+
+By using the App Router, most of the blog is rendered as **React Server Components**. This means:
+- The markdown parser (`unified`) runs only on the server.
+- The syntax highlighter (`Shiki`) runs only on the server.
+- The client receives pure HTML for the blog content, significantly reducing the JavaScript bundle size.
+- SEO is handled via the new `generateMetadata` API, providing dynamic tags for every post.
 
 ## Frontmatter support
 
@@ -120,33 +123,19 @@ View `/loader.ts` to see how this works.
 
 ## Google Analytics
 
-Just add your Google Analytics ID (e.g. 'G-999999999-1') to `globals.ts` and dev.lwlx.xyz will automatically add the appropriate Google Analytics snippet to your site. Go to `/pages/_app.ts` to see how this works or customize this behavior.
+Just add your Google Analytics ID (e.g. 'G-999999999-1') to `globals.ts` and dev.lwlx.xyz will automatically inject the script using the `next/script` component. Check `app/layout.tsx` to see how this is implemented.
 
 
-## GitHub-style code blocks
+## Syntax Highlighting
 
-You can easily drop code blocks into your blog posts using triple-backtick syntax ([just like GitHub](https://help.github.com/en/github/writing-on-github/creating-and-highlighting-code-blocks)). No more embedding CodePen iframes! 🚀
+We use **Shiki** via `rehype-pretty-code` for syntax highlighting. This provides VS Code-caliber highlighting accuracy. A custom Shiki theme `lwlx-dark` in `lib/markdown.ts` ensures the code blocks match the site's aesthetic.
 
-Works out-of-the-box for all programming languages. Specify your language with a "language tag". So this:
+Highlighting features:
+- **Title tags**: add `title="filename.js"` to your code blocks.
+- **Line numbers**: enabled by default for all blocks.
+- **Themed output**: uses the exact color palette as the rest of the site.
 
-  <pre>
-  ```ts
-  // pretty neat huh?
-  const test = (arg: string) => {
-    return arg.length > 5;
-  };
-  ```</pre>
-
-turns into
-
-```ts
-// pretty neat huh?
-const test = (arg: string) => {
-  return arg.length > 5;
-};
-```
-
-View `/components/Code.tsx` to see how this works or customize this behavior.
+View `lib/markdown.ts` to customize the pipeline or theme colors.
 
 ## Markdown loading
 
@@ -174,9 +163,11 @@ There are a few utility functions in `loader.ts` that dev.lwlx.xyz uses. All fun
 - `loadMarkdownFile`: loads a Markdown file but doesn't parse it. Returns the string content. Useful if you want to implement some parts of a page in Markdown and other parts in React
 - `loadMarkdownFiles`: accepts a [glob](https://docs.python.org/3/library/glob.html) pattern and loads all the files inside `/md/` whose names match the pattern. Used internally by `loadBlogPosts`
 
-## Static generation
+## Static Generation
 
-You can generate a fully static version of your site using `yarn build && yarn export`. This step is entirely powered by Next.js. The static site is exported to the `out` directory.
+To generate a fully static version of the site, update `next.config.ts` to include `output: 'export'`. Then run `yarn build`. The static assets will be written to the `/out` directory.
+
+By default, the app is configured to run as a Node.js server, which is recommended for the best performance and future feature compatibility.
 
 ## Global configs
 
@@ -190,11 +181,11 @@ There is a `globals.ts` file in the project root containing some settings/config
 - `email`: Your email, used as the "webMaster" and "managingEditor" field of the generated RSS feed, e.g. `alyssa@example.com`;
 - `url`: The base URL of your website, used to "compute" default canonical links from relative paths, e.g. 'https://lwlx.xyz';
 
-## RSS feed generation
+## RSS Feed Generation
 
-An RSS feed is auto-generated from your blog post feed. This feed is generated using the `rss` module (for converting JSON to RSS format) and `showdown` for converting the markdown files to RSS-compatible HTML.
+An RSS feed is auto-generated in the `public/` directory during the build process. It uses the `rss` module and the same `unified` markdown pipeline used for the blog posts, ensuring the feed content precisely matches the site content.
 
-For RSS generation to work, all your posts must contain a `datePublished` timestamp in their frontmatter metadata. To examine or customize the RSS generation, check out the `rssUtil.ts` file in the root directory.
+Check out `rssUtil.ts` to customize the feed generation logic.
 
 ## SEO
 
@@ -214,12 +205,13 @@ Head to the GitHub repo to get started: [https://github.com/Lawlez/dev.lwlx.xyz]
 
 ### `yarn dev`
 
-Starts the development server. Equivalent to `next dev`.
+Starts the development server on `http://localhost:3000`.
 
 ### `yarn build`
 
-Creates an optimized build of your site. Equivalent to `next build`.
+Creates an optimized production build of your site.
 
-### `yarn export`
+### `yarn start`
 
-Exports your site to static files. All files are written to `/out`. Use your static file hosting service of choice (Firebase Hosting, Amazon S3, Vercel) to deploy your site. Equivalent to `next export`.
+Starts the production Node.js server.
+
