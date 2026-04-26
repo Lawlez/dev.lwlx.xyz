@@ -2,11 +2,11 @@ import React from 'react'
 import { Markdown } from './Markdown'
 import { PostData } from '../loader'
 import { PostMeta } from './PostMeta'
-import Image from '@atoms/Image'
+import Image from './atoms/Image'
 import { Author } from './Author'
 import { globals } from '../globals'
 
-export const BlogPost: React.FunctionComponent<{ post: PostData }> = ({ post }) => {
+export const BlogPost: React.FunctionComponent<{ post: PostData; contentHtml: string }> = ({ post, contentHtml }) => {
   const { title, subtitle } = post
   return (
     <div
@@ -18,7 +18,7 @@ export const BlogPost: React.FunctionComponent<{ post: PostData }> = ({ post }) 
         padding: '0px 0px 100px 0px',
       }}
     >
-      <style jsx global>{`
+      <style>{`
         .blog-post {
           width: 100%;
           max-width: 1080px;
@@ -29,11 +29,16 @@ export const BlogPost: React.FunctionComponent<{ post: PostData }> = ({ post }) 
         {post.bannerPhoto && (
           <Image
             src={post.bannerPhoto}
+            alt={post.title}
+            priority
+            width={1080}
+            height={490}
             style={{
               width: '100%',
               maxWidth: '100%',
               margin: '0px',
               maxHeight: 490,
+              objectFit: 'cover',
             }}
           />
         )}
@@ -78,7 +83,7 @@ export const BlogPost: React.FunctionComponent<{ post: PostData }> = ({ post }) 
         </div>
 
         <div style={{ width: '100%', padding: '0px 2vw' }}>
-          <Markdown source={post.content} />
+          <Markdown html={contentHtml} />
         </div>
       </div>
     </div>

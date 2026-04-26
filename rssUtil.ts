@@ -1,8 +1,8 @@
 import RSS from 'rss';
 import fs from 'fs';
-import showdown from 'showdown';
 import { globals } from './globals';
 import { PostData } from './loader';
+import { markdownToHtml } from './lib/markdown';
 
 export const generateRSS = async (posts: PostData[]) => {
   posts.map((post) => {
@@ -29,8 +29,7 @@ export const generateRSS = async (posts: PostData[]) => {
 
   let isValid = true;
   for (const post of posts) {
-    const converter = new showdown.Converter();
-    const html = converter.makeHtml(post.content);
+    const html = await markdownToHtml(post.content);
     if (!post.datePublished) {
       isValid = false;
       console.warn(

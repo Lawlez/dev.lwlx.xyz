@@ -1,11 +1,14 @@
 import React from "react";
-import { format } from "fecha";
 import { PostData } from "../loader";
 import { Tag } from "./Tag";
 import Box from '@mui/material/Box'
 
 export const PostCard: React.FC<{ post: PostData }> = (props) => {
   const post = props.post;
+  const dateStr = post.datePublished
+    ? new Intl.DateTimeFormat('en-US', { month: 'long', day: 'numeric', year: 'numeric' }).format(new Date(post.datePublished))
+    : '';
+
   return (
     <Box component="a"
       href={`/${post.path}`}
@@ -89,10 +92,7 @@ export const PostCard: React.FC<{ post: PostData }> = (props) => {
             }}
           />
           <Box component="p" style={{ opacity: 0.42, textAlign: "center", margin: "0px" }}>
-            published&nbsp;
-            {props.post.datePublished
-              ? format(new Date(props.post.datePublished), "MMMM Do, YYYY")
-              : ""}
+            published&nbsp;{dateStr}
           </Box>
           <Box sx={{ flex: 1 }}></Box>
           <Box sx={{ marginTop: "8px"}}>
