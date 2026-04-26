@@ -1,13 +1,10 @@
 'use client'
 
 import React from 'react'
-import dynamic from 'next/dynamic'
 import { PostData } from '../loader'
 import { globals } from '../globals'
 import Box from '@mui/material/Box'
-import Masonry from '@mui/lab/Masonry'
-
-const MaterialPostCard = dynamic(() => import('../components/MaterialPostCard'), { ssr: false })
+import MaterialPostCard from '../components/MaterialPostCard'
 
 export const HomeContent: React.FC<{ posts: PostData[] }> = ({ posts }) => {
   return (
@@ -29,20 +26,30 @@ export const HomeContent: React.FC<{ posts: PostData[] }> = ({ posts }) => {
         >
           newest posts
         </h2>
-        <Box sx={{ width: '100%', left: 24, position: 'relative', marginTop: 8 }}>
-          <Masonry columns={{xs:1, sm: 2, md:3, xl: 4}} spacing={6} style={{
-            flexFlow: 'wrap',
-          }}>
-            {posts.map((post, key) => {
-              if (post && post.tags) {
-                if (key <= 20) {
-                  return <MaterialPostCard key={key} post={post} />
-                }
-                return null
-              }
-              return null
-            })}
-          </Masonry>
+        <Box
+          sx={{
+            width: '100%',
+            marginTop: 8,
+            columnCount: { xs: 1, sm: 2, md: 3, xl: 4 },
+            columnGap: '24px',
+          }}
+        >
+          {posts.map((post) => {
+            if (post && post.tags) {
+              return (
+                <Box
+                  key={post.path}
+                  sx={{
+                    breakInside: 'avoid',
+                    marginBottom: '24px',
+                  }}
+                >
+                  <MaterialPostCard post={post} />
+                </Box>
+              )
+            }
+            return null
+          })}
         </Box>
       </Box>
       <Box

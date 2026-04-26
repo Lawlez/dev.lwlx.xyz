@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Script from 'next/script'
 import Providers from './Providers'
 import { globals } from '../globals'
+import './globals.css'
 
 export const metadata: Metadata = {
   title: {
@@ -36,7 +37,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link
           rel="preconnect"
-          href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap"
+          href="https://fonts.googleapis.com"
         />
         <link
           href="https://fonts.gstatic.com/s/firacode/v10/uU9eCBsR6Z2vfE9aq3bL0fxyUs4tcw4W_D1sJVD7MOzlojwUKQ.woff"
@@ -46,20 +47,9 @@ export default function RootLayout({
           as="font"
         />
         <link
-          href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap"
           rel="stylesheet"
         />
-        <style>{`
-          html,
-          body {
-            min-height: 100%;
-            font-family: Fira Code, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-              Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-          }
-          * {
-            box-sizing: border-box;
-          }
-        `}</style>
       </head>
       <body>
         <Providers>

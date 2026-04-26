@@ -4,6 +4,10 @@ import { loadPost, getBlogSlugs } from '../../../loader'
 import { markdownToHtml } from '../../../lib/markdown'
 import { globals } from '../../../globals'
 
+/** Check if an image path is actually valid (not empty, not just '/') */
+const validImagePath = (p?: string | null): p is string =>
+  !!p && p.trim() !== '/'
+
 type Props = {
   params: Promise<{ slug: string }>
 }
@@ -33,7 +37,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: post.description || undefined,
       url: `${globals.url}/blog/${slug}`,
       siteName: globals.siteName,
-      images: post.bannerPhoto
+      images: validImagePath(post.bannerPhoto)
         ? [`${globals.url}${post.bannerPhoto}.webp`]
         : undefined,
       type: 'article',
@@ -44,7 +48,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: post.description || undefined,
       site: globals.twitterHandle,
       creator: globals.twitterHandle,
-      images: post.bannerPhoto
+      images: validImagePath(post.bannerPhoto)
         ? [`${globals.url}${post.bannerPhoto}.webp`]
         : undefined,
     },

@@ -27,8 +27,8 @@ const Image: React.FC<{
   width,
   height,
 }) => {
-  // Guard against empty/undefined src
-  if (!src) return null
+  // Guard against empty, undefined, or root-only paths like "/"
+  if (!src || src.trim() === '/') return null
 
   // If the src already has an extension, use it directly
   const hasExtension = /\.(webp|jpg|jpeg|png|gif|svg|avif)$/i.test(src)

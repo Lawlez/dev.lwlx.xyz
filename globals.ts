@@ -1,5 +1,5 @@
 export namespace globals {
-  export const version = "2";
+  export const version = "2.0.0";
   export const yourName = "lwlx.";
   export const siteName = `dev.lwlx.xyz`;
   export const siteDescription = "Dev / Sec / Ops | Cybersecurity blog";

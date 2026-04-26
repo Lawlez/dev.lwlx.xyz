@@ -20,10 +20,14 @@ import { PostData } from '../loader'
 import { Tag } from './Tag'
 
 const MaterialPostCard: React.FC<{ post: PostData }> = ({ post }) => {
-  const [loaded, setIsLoaded] = React.useState(false)
-  const hasLiked = loaded && localStorage.getItem(`liked-${post.path}`) === 'true'
   const [expanded, setExpanded] = React.useState(false)
-  const [Liked, setLiked] = React.useState({ [post.path]: hasLiked ? true : false })
+  const [liked, setLiked] = React.useState(false)
+
+  // Defer localStorage read to client-side only, after mount
+  React.useEffect(() => {
+    const stored = localStorage.getItem(`liked-${post.path}`)
+    if (stored === 'true') setLiked(true)
+  }, [post.path])
 
   const handleExpandClick = () => setExpanded(!expanded)
 
@@ -34,23 +38,15 @@ const MaterialPostCard: React.FC<{ post: PostData }> = ({ post }) => {
   }
 
   const likePost = (postId: string) => {
-    setLiked(state => ({ ...state, [postId]: true }))
+    setLiked(true)
     localStorage.setItem(`liked-${postId}`, 'true')
-  }
-
-  React.useEffect(() => {
-    setLiked({ [post.path]: !!hasLiked })
-    setIsLoaded(true)
-  }, [])
-
-  if (!loaded) {
-    return null
   }
 
   const dateStr = post.datePublished
     ? new Intl.DateTimeFormat('en-US', { month: 'long', day: 'numeric', year: 'numeric' }).format(new Date(post.datePublished))
     : ''
 
+  // Always render the card — don't return null while waiting for useEffect
   return (
     <Card
       sx={{
@@ -88,7 +84,7 @@ const MaterialPostCard: React.FC<{ post: PostData }> = ({ post }) => {
           size='small'
           onClick={() => likePost(post.path)}
         >
-          <FavoriteIcon color={Liked[post.path] ? 'error' : 'inherit'} />
+          <FavoriteIcon color={liked ? 'error' : 'inherit'} />
         </IconButton>
         <IconButton aria-label='share' size='small' onClick={() => sharePost(post)}>
           <ShareIcon />
