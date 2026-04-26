@@ -11,13 +11,15 @@ const MaterialPostCard = dynamic(() => import('../components/MaterialPostCard'),
 
 export const HomeContent: React.FC<{ posts: PostData[] }> = ({ posts }) => {
   return (
-    <Box width='100%'>
+    <Box sx={{ width: '100%' }}>
       <Box
-        width='100%'
-        padding='100px 3vw'
-        display='flex'
-        flexDirection='column'
-        alignItems='center'
+        sx={{
+          width: '100%',
+          padding: '100px 3vw',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
       >
         <h2
           style={{
@@ -36,19 +38,21 @@ export const HomeContent: React.FC<{ posts: PostData[] }> = ({ posts }) => {
                 if (key <= 20) {
                   return <MaterialPostCard key={key} post={post} />
                 }
-                return
+                return null
               }
-              return `the post ${post.title} has no tags defined`
+              return null
             })}
           </Masonry>
         </Box>
       </Box>
       <Box
-        width='100%'
-        padding='32px 3vw'
-        display='flex'
-        flexDirection='column'
-        alignItems='center'
+        sx={{
+          width: '100%',
+          padding: '32px 3vw',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
       >
         <h2
           style={{

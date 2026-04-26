@@ -115,7 +115,7 @@ const MaterialPostCard: React.FC<{ post: PostData }> = ({ post }) => {
         <Box sx={{ display: { xs: 'none', md: 'block' } }}>
           <Collapse in={expanded} timeout='auto' unmountOnExit>
             <CardContent>
-              <Typography variant='subtitle2' paragraph color='textSecondary'>
+              <Typography variant='subtitle2' sx={{ mb: 2 }} color='textSecondary'>
                 {post.description}
               </Typography>
             </CardContent>

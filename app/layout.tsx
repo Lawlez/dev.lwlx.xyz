@@ -1,11 +1,6 @@
 import type { Metadata } from 'next'
-import { ThemeProvider } from '@mui/material/styles'
-import CssBaseline from '@mui/material/CssBaseline'
-import Box from '@mui/material/Box'
-import Container from '@mui/material/Container'
-import theme from '../theme'
-import { Header } from '../components/Header'
-import { Footer } from '../components/Footer'
+import Script from 'next/script'
+import Providers from './Providers'
 import { globals } from '../globals'
 
 export const metadata: Metadata = {
@@ -54,24 +49,6 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap"
           rel="stylesheet"
         />
-        {globals.googleAnalyticsId && (
-          <script
-            async
-            src={`https://www.googletagmanager.com/gtag/js?id=${globals.googleAnalyticsId}`}
-          />
-        )}
-        {globals.googleAnalyticsId && (
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', '${globals.googleAnalyticsId}');
-            `,
-            }}
-          />
-        )}
         <style>{`
           html,
           body {
@@ -85,23 +62,29 @@ export default function RootLayout({
         `}</style>
       </head>
       <body>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <Box
-            display="flex"
-            flexDirection="column"
-            justifyContent="center"
-            alignItems="center"
-            minHeight="100vh"
-          >
-            <Header />
-            <Container disableGutters>
-              {children}
-            </Container>
-            <Box flex={1} />
-            <Footer />
-          </Box>
-        </ThemeProvider>
+        <Providers>
+          {children}
+        </Providers>
+        {globals.googleAnalyticsId && (
+          <Script
+            src={`https://www.googletagmanager.com/gtag/js?id=${globals.googleAnalyticsId}`}
+            strategy="afterInteractive"
+          />
+        )}
+        {globals.googleAnalyticsId && (
+          <Script
+            id="google-analytics"
+            strategy="afterInteractive"
+            dangerouslySetInnerHTML={{
+              __html: `
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${globals.googleAnalyticsId}');
+              `,
+            }}
+          />
+        )}
       </body>
     </html>
   )

@@ -26,8 +26,10 @@ const Image: React.FC<{
   fill = false,
   width,
   height,
-  ...restProps
 }) => {
+  // Guard against empty/undefined src
+  if (!src) return null
+
   // If the src already has an extension, use it directly
   const hasExtension = /\.(webp|jpg|jpeg|png|gif|svg|avif)$/i.test(src)
   const imageSrc = hasExtension ? src : `${src}.webp`
@@ -40,7 +42,6 @@ const Image: React.FC<{
         fill
         priority={priority}
         style={{ objectFit: 'cover', ...style }}
-        {...restProps}
       />
     )
   }
@@ -53,7 +54,6 @@ const Image: React.FC<{
       height={height || 630}
       priority={priority}
       style={{ width: '100%', height: 'auto', ...style }}
-      {...restProps}
     />
   )
 }
