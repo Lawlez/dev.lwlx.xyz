@@ -1,20 +1,19 @@
 import React from 'react'
-import ReactMarkdown from 'react-markdown/with-html'
-import Code from './Code'
 import { globals } from '../globals'
 
-export const Markdown: React.FC<{ source: string }> = props => {
+/**
+ * Renders pre-processed HTML content from the unified markdown pipeline.
+ * Preserves all original .lwlx-markdown CSS styling.
+ */
+export const Markdown: React.FC<{ html: string }> = ({ html }) => {
   return (
-    <div style={{ width: '100%' }} className='lwlx-markdown'>
-      <ReactMarkdown
-        key='content'
-        source={props.source}
-        renderers={{
-          code: Code,
-        }}
-        escapeHtml={false}
+    <>
+      <div
+        className='lwlx-markdown'
+        style={{ width: '100%' }}
+        dangerouslySetInnerHTML={{ __html: html }}
       />
-      <style jsx global>{`
+      <style>{`
         .lwlx-markdown p,
         .lwlx-markdown li {
           line-height: 32px;
@@ -121,6 +120,20 @@ export const Markdown: React.FC<{ source: string }> = props => {
 
         .lwlx-markdown pre {
           margin: 12px 0px !important;
+          padding: 1em;
+          overflow: auto;
+          border-radius: 12px;
+          background: #121212;
+          box-shadow: 9px 9px 13px rgba(48,48,48, 0.5), -9px -9px 12px rgb(4,4,4,0.6);
+        }
+
+        .lwlx-markdown pre code {
+          background-color: transparent;
+          color: #C9C0BE;
+          padding: 0;
+          border-radius: 0;
+          font-size: 0.95em;
+          line-height: 1.5;
         }
 
         .lwlx-markdown ol pre,
@@ -151,7 +164,8 @@ export const Markdown: React.FC<{ source: string }> = props => {
           border-top: solid 1px #00000020;
         }
 
-        .lwlx-markdown thead td {
+        .lwlx-markdown thead td,
+        .lwlx-markdown thead th {
           padding: 8px;
           background: #f07693;
           font-size: 16px;
@@ -162,13 +176,51 @@ export const Markdown: React.FC<{ source: string }> = props => {
           color: #f07693;
         }
 
+        /* rehype-pretty-code: line numbers */
+        .lwlx-markdown pre [data-line] {
+          padding: 0 1em;
+        }
+        .lwlx-markdown pre [data-line-numbers] [data-line]::before {
+          counter-increment: line;
+          content: counter(line);
+          display: inline-block;
+          width: 1rem;
+          margin-right: 1.5rem;
+          text-align: right;
+          color: #4e5c63;
+        }
+        .lwlx-markdown pre [data-line-numbers] {
+          counter-reset: line;
+        }
+
+        /* rehype-pretty-code: code block titles */
+        .lwlx-markdown figcaption[data-rehype-pretty-code-title] {
+          padding: 0.5em 1em;
+          background: #0a0a0a;
+          border-radius: 12px 12px 0 0;
+          color: #f07693;
+          font-size: 0.85em;
+          font-family: 'Fira Code', monospace;
+        }
+        .lwlx-markdown figcaption[data-rehype-pretty-code-title] + pre {
+          border-radius: 0 0 12px 12px;
+          margin-top: 0 !important;
+        }
+
         @media only screen and (min-width: 768px) {
-          // Desktop font settings
           .lwlx-markdown code {
             background-color: #f07693f0;
             color: #222;
             padding: 3px 3px;
             border-radius: 2px;
+            font-size: 16px;
+          }
+
+          .lwlx-markdown pre code {
+            background-color: transparent;
+            color: #C9C0BE;
+            padding: 0;
+            border-radius: 0;
             font-size: 16px;
           }
 
@@ -222,6 +274,6 @@ export const Markdown: React.FC<{ source: string }> = props => {
           }
         }
       `}</style>
-    </div>
+    </>
   )
 }

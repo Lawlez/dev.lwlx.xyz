@@ -1,6 +1,6 @@
 {
   "name": "dev.lwlx.xyz",
-  "version": "1.0.2",
+  "version": "2.0.0",
   "description": "A Fast AF dev blog with Next.js",
   "repository": {
     "type": "git",
@@ -15,37 +15,34 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "export": "next export"
+    "start": "next start"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
-    "@mui/icons-material": "^5.16.14",
-    "@mui/lab": "^5.0.0-alpha.175",
-    "@mui/material": "^5.16.14",
-    "@mui/styles": "^5.16.14",
-    "clsx": "^1.2.1",
-    "fecha": "^4.2.3",
-    "glob": "^7.2.3",
+    "@mui/icons-material": "^9.0.0",
+    "@mui/lab": "9.0.0-beta.2",
+    "@mui/material": "^9.0.0",
+    "clsx": "^2.1.1",
+    "glob": "^10.4.0",
     "gray-matter": "^4.0.3",
-    "next": "^12.3.4",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-markdown": "^5.0.3",
-    "react-syntax-highlighter": "^15.6.1"
+    "next": "^16.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "rehype-pretty-code": "^0.14.0",
+    "rehype-raw": "^7.0.0",
+    "rehype-stringify": "^10.0.0",
+    "remark-gfm": "^4.0.0",
+    "remark-parse": "^11.0.0",
+    "remark-rehype": "^11.0.0",
+    "shiki": "^3.0.0",
+    "unified": "^11.0.0"
   },
   "devDependencies": {
-    "@bundle-analyzer/webpack-plugin": "^0.5.1",
-    "@types/glob": "^7.2.0",
-    "@types/node": "^14",
-    "@types/react": "^18.3.18",
-    "@types/react-syntax-highlighter": "^13.5.2",
-    "@types/rss": "^0.0.28",
-    "@types/showdown": "^1.9.4",
-    "raw-loader": "^4.0.2",
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "@types/rss": "^0.0.32",
     "rss": "^1.2.2",
-    "showdown": "^1.9.1",
     "typescript": "^5.8.2"
   },
   "engines": {
@@ -66,8 +63,5 @@
     "nextjs",
     "syntax highlighting"
   ],
-  "resolutions": {
-    "@types/react": "18.2.0",
-    "@types/react-dom": "18.2.0"
-  }
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }

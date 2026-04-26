@@ -1,5 +1,6 @@
+'use client'
+
 import React from 'react'
-import clsx from 'clsx'
 import {
   Card,
   CardActionArea,
@@ -15,18 +16,18 @@ import {
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import ShareIcon from '@mui/icons-material/Share'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-import makeStyles from '@mui/styles/makeStyles'
-import { DefaultTheme } from '@mui/styles'
-import { format } from 'fecha'
 import { PostData } from '../loader'
 import { Tag } from './Tag'
 
 const MaterialPostCard: React.FC<{ post: PostData }> = ({ post }) => {
-  const classes = useStyles()
-  const [loaded, setIsLoaded] = React.useState(false)
-  const hasLiked = loaded && localStorage.getItem(`liked-${post.path}`) === 'true'
   const [expanded, setExpanded] = React.useState(false)
-  const [Liked, setLiked] = React.useState({ [post.path]: hasLiked ? true : false })
+  const [liked, setLiked] = React.useState(false)
+
+  // Defer localStorage read to client-side only, after mount
+  React.useEffect(() => {
+    const stored = localStorage.getItem(`liked-${post.path}`)
+    if (stored === 'true') setLiked(true)
+  }, [post.path])
 
   const handleExpandClick = () => setExpanded(!expanded)
 
@@ -37,27 +38,29 @@ const MaterialPostCard: React.FC<{ post: PostData }> = ({ post }) => {
   }
 
   const likePost = (postId: string) => {
-    setLiked(state => ({ ...state, [postId]: true }))
+    setLiked(true)
     localStorage.setItem(`liked-${postId}`, 'true')
   }
 
-  React.useEffect(() => {
-    setLiked({ [post.path]: !!hasLiked })
-    setIsLoaded(true)
-  }, [])
+  const dateStr = post.datePublished
+    ? new Intl.DateTimeFormat('en-US', { month: 'long', day: 'numeric', year: 'numeric' }).format(new Date(post.datePublished))
+    : ''
 
-  if (!loaded) {
-    return null
-  }
-
+  // Always render the card — don't return null while waiting for useEffect
   return (
     <Card
-      className={classes.card}
+      sx={{
+        borderRadius: '16px',
+        marginBottom: 1,
+        height: 'auto',
+        background: '#141414',
+        boxShadow: '9px 9px 16px rgb(4,4,4,0.6), -9px -9px 16px  rgba(48,48,48, 0.5)',
+      }}
     >
       <CardActionArea component='a' href={`/${post.path}/`}>
         {post.thumbnailPhoto && (
           <CardMedia
-            className={classes.cardMedia}
+            sx={{ minHeight: 160, maxHeight: 260 }}
             image={post.thumbnailPhoto}
             title={post.title}
           />
@@ -67,10 +70,7 @@ const MaterialPostCard: React.FC<{ post: PostData }> = ({ post }) => {
           {post.subtitle && <Typography variant='subtitle1'>{post.subtitle}</Typography>}
           <Divider />
           <p style={{ opacity: 0.42, textAlign: 'center', margin: '0px' }}>
-            published&nbsp;
-            {post.datePublished
-              ? format(new Date(post.datePublished), 'MMMM Do, YYYY')
-              : ''}
+            published&nbsp;{dateStr}
           </p>
           <div style={{ marginTop: '8px' }}>
             {post.tags &&
@@ -78,13 +78,13 @@ const MaterialPostCard: React.FC<{ post: PostData }> = ({ post }) => {
           </div>
         </CardContent>
       </CardActionArea>
-      <CardActions className={classes.cardActions}>
+      <CardActions sx={{ justifyContent: 'space-between' }}>
         <IconButton
           aria-label='add to favorites'
           size='small'
           onClick={() => likePost(post.path)}
         >
-          <FavoriteIcon color={Liked[post.path] ? 'error' : 'inherit'} />
+          <FavoriteIcon color={liked ? 'error' : 'inherit'} />
         </IconButton>
         <IconButton aria-label='share' size='small' onClick={() => sharePost(post)}>
           <ShareIcon />
@@ -92,9 +92,11 @@ const MaterialPostCard: React.FC<{ post: PostData }> = ({ post }) => {
         {post.description && (
           <Box sx={{ display: { xs: 'none', md: 'block' } }}>
             <IconButton
-              className={clsx(classes.expand, {
-                [classes.expandOpen]: expanded,
-              })}
+              sx={{
+                transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)',
+                marginLeft: 'auto',
+                transition: 'transform 0.15s ease-in-out',
+              }}
               onClick={handleExpandClick}
               aria-expanded={expanded}
               aria-label='show more'
@@ -109,7 +111,7 @@ const MaterialPostCard: React.FC<{ post: PostData }> = ({ post }) => {
         <Box sx={{ display: { xs: 'none', md: 'block' } }}>
           <Collapse in={expanded} timeout='auto' unmountOnExit>
             <CardContent>
-              <Typography variant='subtitle2' paragraph color='textSecondary'>
+              <Typography variant='subtitle2' sx={{ mb: 2 }} color='textSecondary'>
                 {post.description}
               </Typography>
             </CardContent>
@@ -118,51 +120,6 @@ const MaterialPostCard: React.FC<{ post: PostData }> = ({ post }) => {
       )}
     </Card>
   )
-}
-
-const useStyles = makeStyles(theme => ({
-  card: {
-    borderRadius: 16,
-    marginBottom: 8,
-    height: 'auto',
-    background: '#141414',
-    boxShadow: "9px 9px 16px rgb(4,4,4,0.6), -9px -9px 16px  rgba(48,48,48, 0.5)",
-  },
-  cardDetails: {
-    flex: 1,
-  },
-  cardMedia: {
-    minHeight: 160,
-    maxHeight: 260,
-  },
-  cardActions: {
-    justifyContent: 'space-between',
-  },
-  expand: {
-    alignSelf: 'flex-end',
-    transform: 'rotate(0deg)',
-    marginLeft: 'auto',
-    transition: (theme as extendedTheme)?.transitions?.create('transform', {
-      duration: (theme as extendedTheme)?.transitions?.duration.shortest,
-    }),
-  },
-  expandOpen: {
-    transform: 'rotate(180deg)',
-  },
-}))
-
-interface extendedTheme extends DefaultTheme {
-  transitions:{
-    create: (property:string, duration?:{
-      duration?:number,
-    })=>string
-    duration:{
-      enter:number,
-      exit:number,
-      short:number,
-      shortest:number,
-    }
-  }
 }
 
 export default MaterialPostCard

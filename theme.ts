@@ -1,6 +1,5 @@
 import { createTheme } from '@mui/material/styles'
 
-
 const theme = createTheme({
   palette: {
     mode: 'dark',
@@ -18,14 +17,18 @@ const theme = createTheme({
     },
     background: {},
   },
+  typography: {
+    fontFamily: "'Fira Code', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif",
+  },
   components: {
-    overrides: {
-      Container: {
-        background: '#141414',
+    MuiContainer: {
+      styleOverrides: {
+        root: {
+          background: '#141414',
+        },
       },
     },
   },
 })
-
 
 export default theme

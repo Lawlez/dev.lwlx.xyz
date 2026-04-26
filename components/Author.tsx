@@ -1,10 +1,13 @@
 import React from 'react'
-import { format } from 'fecha'
-import { PostData } from 'loader'
-import { globals } from 'globals'
-import Image from '@atoms/Image'
+import { PostData } from '../loader'
+import { globals } from '../globals'
+import Image from './atoms/Image'
 
 export const Author: React.FC<{ post: PostData }> = props => {
+  const dateStr = props.post.datePublished
+    ? new Intl.DateTimeFormat('en-GB', { day: '2-digit', month: 'long', year: 'numeric' }).format(new Date(props.post.datePublished))
+    : ''
+
   return (
     <div
       style={{
@@ -24,6 +27,9 @@ export const Author: React.FC<{ post: PostData }> = props => {
         {props.post.authorPhoto && (
           <Image
             src={props.post.authorPhoto}
+            alt={props.post.author || 'Author'}
+            width={64}
+            height={64}
             style={{
               background: '#141414',
               boxShadow: '6px 6px 8px rgb(4,4,4,0.6), -6px -6px 8px  rgba(48,48,48, 0.5)',
@@ -34,14 +40,14 @@ export const Author: React.FC<{ post: PostData }> = props => {
             }}
           />
         )}
-        <AuthorLines post={props.post} />
+        <AuthorLines post={props.post} dateStr={dateStr} />
       </div>
     </div>
   )
 }
 
-export const AuthorLines: React.FC<{ post: PostData }> = props => {
-  const lineStyle = {
+export const AuthorLines: React.FC<{ post: PostData; dateStr: string }> = ({ post, dateStr }) => {
+  const lineStyle: React.CSSProperties = {
     margin: '2px',
     padding: 0,
     lineHeight: 1.2,
@@ -49,21 +55,19 @@ export const AuthorLines: React.FC<{ post: PostData }> = props => {
   }
   return (
     <div>
-      <p style={{ ...lineStyle }}>{props.post.author ? props.post.author : ''}</p>
+      <p style={{ ...lineStyle }}>{post.author ? post.author : ''}</p>
       <p style={{ opacity: 0.6, ...lineStyle }}>
-        {props.post.datePublished
-          ? format(new Date(props.post.datePublished), 'DD. MMMM YYYY')
-          : ''}
+        {dateStr}
       </p>
       <p style={{ ...lineStyle }}>
-        {props.post.authorTwitter && (
+        {post.authorTwitter && (
           <a
             style={{
               textDecoration: 'none',
               color: globals.primaryColor,
             }}
-            href={`https://twitter.com/${props.post.authorTwitter}`}
-          >{`@${props.post.authorTwitter}`}</a>
+            href={`https://twitter.com/${post.authorTwitter}`}
+          >{`@${post.authorTwitter}`}</a>
         )}
       </p>
     </div>
