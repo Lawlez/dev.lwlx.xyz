@@ -3,7 +3,7 @@ title: Types of SQL Injection (SQLi)
 subtitle: dissection of In-band, Inferential, and Out-of-band attacks
 description: A deep dive into SQL Injection categories, including detailed examples for MySQL, MSSQL, and Oracle, plus a handy payload cheat sheet.
 published: true
-datePublished: 1714205000000
+datePublished: 1777075200000
 author: lwlx
 authorTwitter: "0x0000005"
 authorPhoto: /profile
