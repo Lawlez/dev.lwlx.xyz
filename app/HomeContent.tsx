@@ -14,7 +14,7 @@ export const HomeContent: React.FC<{ posts: PostData[] }> = ({ posts }) => {
           width: '100%',
           padding: '100px 3vw',
           display: 'flex',
-          flexDirection: 'column',
+          flexDirection: 'row',
           alignItems: 'center',
         }}
       >
