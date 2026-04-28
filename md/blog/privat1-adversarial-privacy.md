@@ -94,28 +94,43 @@ Additionally, optional modules (`steg.py`) inject **Least Significant Bit (LSB) 
        │
        ▼
  ┌───────────────────────────────────────────────┐
- │ Stage 1: Structural Transformations           │
- │ ├─ Random Perspective Warp                    │
- │ └─ Optional: Metadata / Steganography (steg)  │
+ │ Stage 1: Structural Distortions               │
+ │ ├─ Apply Pixelation                           │
+ │ ├─ Apply Pixel Shift                          │
+ │ ├─ Apply Pixel Pattern Mask                   │
+ │ ├─ Random Perspective Transform               │
+ │ └─ Gaussian Blur Smoothing                    │
  └───────────────────────────────────────────────┘
        │
        ▼
  ┌───────────────────────────────────────────────┐
- │ Stage 2: Adversarial Generation               │
- │ ├─ Downsample to Model Input Size (224x224)   │
- │ └─ Apply Selected Attack (PGD, FGM, CW, etc.) │
+ │ Stage 2: Adversarial Attacks                  │
+ │ ├─ Parse Attack List (e.g. PGD, FGM)          │
+ │ ├─ Adjust Epsilon (e.g. scale for FGM)        │
+ │ └─ Apply Adversarial Step (Iterative)         │
  └───────────────────────────────────────────────┘
-       │ [ Adversarial Delta ]
+       │
        ▼
  ┌───────────────────────────────────────────────┐
- │ Stage 3: Upscale-Delta Compositing            │
- │ ├─ Upscale Delta to Native Resolution         │
- │ ├─ Gaussian Blur Smoothing                    │
- │ └─ Alpha Blending & Image Reconstruction      │
+ │ Stage 3: Assets & Distractors                 │
+ │ └─ Embed Distractor Assets                    │
+ └───────────────────────────────────────────────┘
+       │
+       ▼
+ ┌───────────────────────────────────────────────┐
+ │ Stage 4: Output & Metadata Management         │
+ │ ├─ Generate Random Output Filename            │
+ │ └─ Steganography / Remove Original Metadata   │
  └───────────────────────────────────────────────┘
        │
        ▼
 [ Output: Protected Image (Adversarial) ]
+       │
+       ▼
+ ┌───────────────────────────────────────────────┐
+ │ Stage 5: Verification (Optional)              │
+ │ └─ Run verify.py to ensure misclassification  │
+ └───────────────────────────────────────────────┘
 ```
 
 ---
