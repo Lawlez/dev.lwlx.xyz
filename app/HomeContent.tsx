@@ -14,7 +14,7 @@ export const HomeContent: React.FC<{ posts: PostData[] }> = ({ posts }) => {
           width: '100%',
           padding: '100px 3vw',
           display: 'flex',
-          flexDirection: 'row',
+          flexDirection: 'column',
           alignItems: 'center',
         }}
       >
@@ -30,20 +30,20 @@ export const HomeContent: React.FC<{ posts: PostData[] }> = ({ posts }) => {
           sx={{
             width: '100%',
             marginTop: 8,
-            columnCount: { xs: 1, sm: 2, md: 3, xl: 4 },
-            columnGap: '24px',
+            display: 'grid',
+            gridTemplateColumns: {
+              xs: 'repeat(1, 1fr)',
+              sm: 'repeat(2, 1fr)',
+              md: 'repeat(3, 1fr)',
+              xl: 'repeat(4, 1fr)',
+            },
+            gap: '24px',
           }}
         >
           {posts.map((post) => {
             if (post && post.tags) {
               return (
-                <Box
-                  key={post.path}
-                  sx={{
-                    breakInside: 'avoid',
-                    marginBottom: '24px',
-                  }}
-                >
+                <Box key={post.path}>
                   <MaterialPostCard post={post} />
                 </Box>
               )
